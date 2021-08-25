@@ -60,7 +60,7 @@ function RegisterPage() {
           <Form.Item
             label="Email"
             name="email"
-            rules={[{ required: true, message: "Bạn chưa nhập email!" }]}
+            rules={[{ required: true, message: "Bạn chưa nhập email ahihi!" }]}
           >
             <Input />
           </Form.Item>
