@@ -50,7 +50,7 @@ function LoginPage() {
             label="Email"
             name="email"
             rules={[
-              { required: true, message: "Bạn chưa nhập email!" },
+              { required: true, message: "Bạn chưa nhập email ahihi!" },
               { type: 'email', message: "Email không hợp lệ!" },
             ]}
           >
@@ -75,14 +75,13 @@ function LoginPage() {
           <div style={{ display: 'inline-block', marginBottom: 16 }}>
             Bạn chưa có tài khoản?&nbsp;
             <Link to="/register">
-              Bấm vào đây để đăng ký
+              Bấm vào đây để đăng ký nha
             </Link>
           </div>
 
           <Button
             type="primary"
             htmlType="submit"
-            block
             loading={responseAction.login.load}
           >
             Đăng nhập
