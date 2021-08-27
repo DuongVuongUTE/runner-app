@@ -2,7 +2,7 @@ import React from "react";
 import * as Style from "./style";
 
 function ArticlesHome({ articlesList }) {
-  function renderArticles() {
+  function renderArticlesList() {
     return articlesList.map((article, index) => {
       return (
         <Style.ArticleItem key={index}>
@@ -20,7 +20,7 @@ function ArticlesHome({ articlesList }) {
       );
     });
   }
-  return <Style.ArticleList>{renderArticles()}</Style.ArticleList>;
+  return <Style.ArticleList>{renderArticlesList()}</Style.ArticleList>;
 }
 
 export default ArticlesHome;
