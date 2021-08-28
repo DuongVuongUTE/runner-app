@@ -195,9 +195,8 @@ function ProductPage() {
               onChange={(e) => handleSearchProduct(e.target.value)}
               value={searchKey}
               suffix={<Icons.SearchOutlined />}
-              style={{ marginBottom: 16 }}
             />
-            <div style={{ flexShrink: 0, minWidth: "250px" }}>
+            <div className="select-sort">
               <Select
                 style={{ width: "100%" }}
                 onChange={handleChange}
