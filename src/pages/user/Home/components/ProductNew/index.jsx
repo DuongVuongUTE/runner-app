@@ -6,10 +6,10 @@ import * as Style from "./style";
 
 function ProductNew({ productList }) {
   function renderProductNew() {
-    return productList.map((product, index) => {
+    return productList.data.map((product, index) => {
       return (
         <Style.ProductItem key={`${product.name}-${index}`}>
-          <CardProduct product={product} />
+          <CardProduct path={`/product/${product.id}`} product={product} />
         </Style.ProductItem>
       );
     });

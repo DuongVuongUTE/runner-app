@@ -1,43 +1,60 @@
 import { put, takeEvery, debounce } from "redux-saga/effects";
-import axios from 'axios';
-import { REQUEST, SUCCESS, FAILURE, PRODUCT_ACTION } from '../constants';
-import { SERVER_API_URL } from './apiUrl';
+import axios from "axios";
+import { REQUEST, SUCCESS, FAILURE, PRODUCT_ACTION } from "../constants";
+import { SERVER_API_URL } from "./apiUrl";
 
-import { PRODUCT_LIMIT } from '../../constants/product';
+import { PRODUCT_LIMIT } from "../../constants/product";
 
 function* getProductListSaga(action) {
   try {
     const page = action.payload?.page;
     const categoriesSelected = action.payload?.categoriesSelected;
+    const typesSelected = action.payload?.typesSelected;
     const priceRange = action.payload?.priceRange;
     const searchKey = action.payload?.searchKey;
     const more = action.payload?.more;
-    let categoryParams = '';
+    let categoryParams = "";
     if (categoriesSelected) {
       categoriesSelected.forEach((categoryId, categoryIndex) => {
-        const andParams = categoryIndex < categoriesSelected.length - 1 ? '&' : '';
-        categoryParams = categoryParams + `categoryId=${categoryId}${andParams}`;
+        const andParams =
+          categoryIndex < categoriesSelected.length - 1 ? "&" : "";
+        categoryParams =
+          categoryParams + `categoryId=${categoryId}${andParams}`;
       });
     }
-    const url = categoriesSelected?.length > 0
-      ? `${SERVER_API_URL}/products?${categoryParams}`
-      : `${SERVER_API_URL}/products`
+    let typeParams = "";
+    if (typesSelected) {
+      typesSelected.forEach((typeId, typeIndex) => {
+        const andParams = typeIndex < typesSelected.length - 1 ? "&" : "";
+        typeParams = typeParams + `typeId=${typeId}${andParams}`;
+      });
+    }
+
+    let url = `${SERVER_API_URL}/products`;
+    url = categoriesSelected?.length > 0 ? url + `?${categoryParams}` : url;
+    if (typesSelected?.length > 0) {
+      if (categoriesSelected?.length > 0) {
+        url = url + `&${typeParams}`;
+      } else {
+        url = url + `?${typeParams}`;
+      }
+    }
     const result = yield axios({
-      method: 'GET',
+      method: "GET",
       url,
       params: {
-        _sort: 'id',
-        _order: 'desc',
-        ...page && {
+        _sort: "id",
+        _order: "desc",
+        ...(page && {
           _page: page,
           _limit: PRODUCT_LIMIT,
-        },
-        ...priceRange && {
+        }),
+        ...(priceRange && {
           price_gte: priceRange[0],
           price_lte: priceRange[1],
-        },
-        ...searchKey && { q: searchKey }
-      }
+        }),
+        ...(searchKey && { q: searchKey }),
+      },
     });
     yield put({
       type: SUCCESS(PRODUCT_ACTION.GET_PRODUCT_LIST),
@@ -48,22 +65,30 @@ function* getProductListSaga(action) {
       },
     });
   } catch (e) {
-    yield put({ type: FAILURE(PRODUCT_ACTION.GET_PRODUCT_LIST), payload: e.message });
+    yield put({
+      type: FAILURE(PRODUCT_ACTION.GET_PRODUCT_LIST),
+      payload: e.message,
+    });
   }
 }
 
 function* getProductDetailSaga(action) {
   try {
     const { id } = action.payload;
-    const result = yield axios.get(`${SERVER_API_URL}/products/${id}?_expand=category`);
+    const result = yield axios.get(
+      `${SERVER_API_URL}/products/${id}?_expand=category`
+    );
     yield put({
       type: SUCCESS(PRODUCT_ACTION.GET_PRODUCT_DETAIL),
       payload: {
-        data: result.data
+        data: result.data,
       },
     });
   } catch (e) {
-    yield put({ type: FAILURE(PRODUCT_ACTION.GET_PRODUCT_DETAIL), payload: e.message });
+    yield put({
+      type: FAILURE(PRODUCT_ACTION.GET_PRODUCT_DETAIL),
+      payload: e.message,
+    });
   }
 }
 
@@ -78,7 +103,10 @@ function* createProductSaga(action) {
       },
     });
   } catch (e) {
-    yield put({ type: FAILURE(PRODUCT_ACTION.CREATE_PRODUCT), payload: e.message });
+    yield put({
+      type: FAILURE(PRODUCT_ACTION.CREATE_PRODUCT),
+      payload: e.message,
+    });
   }
 }
 
@@ -90,10 +118,13 @@ function* editProductSaga(action) {
       type: SUCCESS(PRODUCT_ACTION.EDIT_PRODUCT),
       payload: {
         data: result.data,
-      }
+      },
     });
   } catch (e) {
-    yield put({ type: FAILURE(PRODUCT_ACTION.EDIT_PRODUCT), payload: e.message });
+    yield put({
+      type: FAILURE(PRODUCT_ACTION.EDIT_PRODUCT),
+      payload: e.message,
+    });
   }
 }
 
@@ -103,16 +134,26 @@ function* deleteProductSaga(action) {
     yield axios.delete(`${SERVER_API_URL}/products/${id}`);
     yield put({
       type: SUCCESS(PRODUCT_ACTION.DELETE_PRODUCT),
-      payload: { id }
+      payload: { id },
     });
   } catch (e) {
-    yield put({ type: FAILURE(PRODUCT_ACTION.DELETE_PRODUCT), payload: e.message });
+    yield put({
+      type: FAILURE(PRODUCT_ACTION.DELETE_PRODUCT),
+      payload: e.message,
+    });
   }
 }
 
 export default function* productSaga() {
-  yield debounce(300 ,REQUEST(PRODUCT_ACTION.GET_PRODUCT_LIST), getProductListSaga);
-  yield takeEvery(REQUEST(PRODUCT_ACTION.GET_PRODUCT_DETAIL), getProductDetailSaga);
+  yield debounce(
+    300,
+    REQUEST(PRODUCT_ACTION.GET_PRODUCT_LIST),
+    getProductListSaga
+  );
+  yield takeEvery(
+    REQUEST(PRODUCT_ACTION.GET_PRODUCT_DETAIL),
+    getProductDetailSaga
+  );
   yield takeEvery(REQUEST(PRODUCT_ACTION.CREATE_PRODUCT), createProductSaga);
   yield takeEvery(REQUEST(PRODUCT_ACTION.EDIT_PRODUCT), editProductSaga);
   yield takeEvery(REQUEST(PRODUCT_ACTION.DELETE_PRODUCT), deleteProductSaga);

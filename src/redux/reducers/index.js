@@ -8,6 +8,7 @@ import cartReducer from "./cart.reducer";
 import commonReducer from "./common.reducer";
 
 import rootSaga from "../sagas";
+import typeReducer from "./type.reducer";
 
 let sagaMiddleware = createSagaMiddleware();
 
@@ -18,6 +19,7 @@ const store = configureStore({
     categoryReducer: categoryReducer,
     cartReducer: cartReducer,
     commonReducer: commonReducer,
+    typeReducer: typeReducer,
   },
   middleware: [...getDefaultMiddleware({ thunk: false }), sagaMiddleware],
 });

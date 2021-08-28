@@ -2,13 +2,14 @@ import React, { useState } from "react";
 import { Badge, Button, Popover, Tooltip, Radio, Space } from "antd";
 import * as Icons from "@ant-design/icons";
 import * as Style from "./styles";
+import history from "../../utils/history";
 
-function CardProduct({ product }) {
+function CardProduct({ product, path }) {
   const [ratio, setRatio] = useState(1);
   return (
     <Badge.Ribbon style={{ zIndex: 5 }} text="New" color="red">
       <Style.CardProduct>
-        <Style.ProductImage>
+        <Style.ProductImage onClick={() => history.push(path)}>
           <img
             src={product.images[0]}
             className="visible content"
@@ -21,7 +22,7 @@ function CardProduct({ product }) {
           />
         </Style.ProductImage>
         <Style.ProductContent>
-          <h3>{product.name}</h3>
+          <h3 onClick={() => history.push(path)}>{product.name}</h3>
           <strong>{(product.price * ratio).toLocaleString()}₫</strong>
         </Style.ProductContent>
         <div className="product-more">
@@ -52,7 +53,9 @@ function CardProduct({ product }) {
               type="primary"
               shape="circle"
               icon={<Icons.ShoppingCartOutlined />}
-            />
+            >
+              {/* Thêm vào giỏ hàng */}
+            </Button>
 
             <Tooltip title="Thêm yêu thích" placement="rightTop">
               <Button

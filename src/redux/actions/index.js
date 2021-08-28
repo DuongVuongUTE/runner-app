@@ -4,3 +4,4 @@ export * from "./category.action";
 export * from "./cart.action";
 export * from "./order.action";
 export * from "./common.action";
+export * from "./type.action";
