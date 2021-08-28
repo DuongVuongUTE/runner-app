@@ -12,10 +12,10 @@ SwiperCore.use([EffectFade, Navigation]);
 
 function ProductSlider({ productList }) {
   function renderProduct() {
-    return productList.map((product, index) => {
+    return productList.data.map((product, index) => {
       return (
         <SwiperSlide key={`${product.name}-${index}`}>
-          <CardProduct product={product} />
+          <CardProduct path={`/product/${product.id}`} product={product} />
         </SwiperSlide>
       );
     });

@@ -14,7 +14,7 @@ import NotFoundPage from "./pages/NotFound";
 
 import HomePage from "./pages/user/Home";
 import AboutPage from "./pages/user/About";
-import ProductPage from "./pages/user/Product";
+import ProductPage from "./pages/user/ProductList";
 import ProductDetailPage from "./pages/user/ProductDetail";
 import CartPage from "./pages/user/Cart";
 import CheckoutPage from "./pages/user/Checkout";

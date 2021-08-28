@@ -1,15 +1,9 @@
 import { useState, useEffect } from "react";
-import { useSelector, useDispatch } from 'react-redux';
-import {
-  Row,
-  Button,
-  Table,
-  Space,
-  Popconfirm,
-} from "antd";
-import moment from 'moment';
+import { useSelector, useDispatch } from "react-redux";
+import { Row, Button, Table, Space, Popconfirm } from "antd";
+import moment from "moment";
 
-import ModifyProductModal from './components/ModifyProductModal';
+import ModifyProductModal from "./components/ModifyProductModal";
 
 import {
   getCategoryListAction,
@@ -17,11 +11,11 @@ import {
   createProductAction,
   editProductAction,
   deleteProductAction,
-} from '../../../redux/actions';
+} from "../../../redux/actions";
 
 function ProductListPage(props) {
   // "", "create", "edit"
-  const [isShowModifyModal, setIsShowModifyModal] = useState('');
+  const [isShowModifyModal, setIsShowModifyModal] = useState("");
   const [modifyProductData, setModifyProductData] = useState({});
 
   const { categoryList } = useSelector((state) => state.categoryReducer);
@@ -35,50 +29,56 @@ function ProductListPage(props) {
   }, []);
 
   function handleSubmitForm(values) {
-    if (isShowModifyModal === 'create') {
-      dispatch(createProductAction({
-        data: values,
-      }));
+    if (isShowModifyModal === "create") {
+      dispatch(
+        createProductAction({
+          data: values,
+        })
+      );
     } else {
-      dispatch(editProductAction({
-        id: modifyProductData.id,
-        data: values,
-      }));
+      dispatch(
+        editProductAction({
+          id: modifyProductData.id,
+          data: values,
+        })
+      );
     }
-    setIsShowModifyModal('');
+    setIsShowModifyModal("");
   }
 
   const tableColumn = [
     {
-      title: 'Name',
-      dataIndex: 'name',
-      key: 'name',
+      title: "Name",
+      dataIndex: "name",
+      key: "name",
     },
     {
-      title: 'Category',
-      dataIndex: 'categoryId',
-      key: 'categoryId',
+      title: "Category",
+      dataIndex: "categoryId",
+      key: "categoryId",
       render: (value) => {
-        const categoryData = categoryList.data.find((item) => item.id === value);
+        const categoryData = categoryList.data.find(
+          (item) => item.id === value
+        );
         if (categoryData) return categoryData.name;
       },
     },
     {
-      title: 'Price',
-      dataIndex: 'price',
-      key: 'price',
+      title: "Price",
+      dataIndex: "price",
+      key: "price",
       render: (value) => value.toLocaleString(),
     },
     {
-      title: 'Create At',
-      dataIndex: 'createdAt',
-      key: 'createdAt',
-      render: (value) => value && moment(value).format('DD/MM/YYYY HH:mm'),
+      title: "Create At",
+      dataIndex: "createdAt",
+      key: "createdAt",
+      render: (value) => value && moment(value).format("DD/MM/YYYY HH:mm"),
     },
     {
-      title: 'Action',
-      dataIndex: 'action',
-      key: 'action',
+      title: "Action",
+      dataIndex: "action",
+      key: "action",
       render: (_, record) => {
         return (
           <Space>
@@ -86,7 +86,7 @@ function ProductListPage(props) {
               type="primary"
               ghost
               onClick={() => {
-                setIsShowModifyModal('edit');
+                setIsShowModifyModal("edit");
                 setModifyProductData(record);
               }}
             >
@@ -102,8 +102,8 @@ function ProductListPage(props) {
               <Button danger>Delete</Button>
             </Popconfirm>
           </Space>
-        )
-      }
+        );
+      },
     },
   ];
 
@@ -111,9 +111,12 @@ function ProductListPage(props) {
     return {
       key: productIndex,
       ...productItem,
-    }
-  })
-  console.log('🚀 ~ file: index.jsx ~ line 114 ~ tableData ~ tableData', tableData);
+    };
+  });
+  console.log(
+    "🚀 ~ file: index.jsx ~ line 114 ~ tableData ~ tableData",
+    tableData
+  );
 
   return (
     <div>
@@ -123,8 +126,8 @@ function ProductListPage(props) {
           <Button
             type="primary"
             onClick={() => {
-              setIsShowModifyModal('create');
-              setModifyProductData({ name: '', price: 0 });
+              setIsShowModifyModal("create");
+              setModifyProductData({ name: "", price: 0 });
             }}
           >
             Add Product

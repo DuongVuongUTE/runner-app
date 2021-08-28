@@ -41,96 +41,329 @@
   "categories": [
     {
       "id": 1,
-      "name": "iPhone"
+      "name": "Nike"
     },
     {
       "id": 2,
-      "name": "Samsung"
+      "name": "Adidas"
     },
     {
-      "name": "Xiaomi",
-      "createdAt": 1628339995854,
-      "updatedAt": 1628339995854,
+      "name": "Biti's",
       "id": 3
+    }
+  ],
+  "types": [
+    {
+      "id": 1,
+      "name": "Hunter",
+      "description": "Giày biti's Hunter nâng niu bàn chân việt"
+    },
+    {
+      "id": 2,
+      "name": "Giày thể thao",
+      "description": "Giày thể thao nâng niu bàn chân việt"
+    },
+    {
+      "id": 3,
+      "name": "Giày chạy bộ",
+      "description": "Giày chạy bộ nâng niu bàn chân việt"
+    },
+    {
+      "id": 4,
+      "name": "Giày đá bóng",
+      "description": "Giày đá bóng nâng niu bàn chân việt"
+    },
+    {
+      "id": 5,
+      "name": "Sandal",
+      "description": "Sandal nâng niu bàn chân việt"
+    },
+    {
+      "id": 6,
+      "name": "Dép",
+      "description": "Dép nâng niu bàn chân việt"
     }
   ],
   "products": [
     {
       "id": 1,
-      "name": "iPhone 12",
+      "description": "Đây là mô tả",
+      "name": "Nike Air Max 1 Anniversary",
+      "price": 4200000,
+      "images": [
+        "https://khangdev1998.github.io/shoe/image/product1.png",
+        "https://khangdev1998.github.io/shoe/image/product2.png"
+      ],
+      "typeId": 2,
+      "color": "white",
       "categoryId": 1,
-      "price": 10000000
+      "size": [
+        {
+          "id": 1,
+          "num": 34,
+          "ratio": 1
+        },
+        {
+          "id": 1,
+          "num": 35,
+          "ratio": 1.1
+        },
+        {
+          "id": 1,
+          "num": 36,
+          "ratio": 1.3
+        },
+        {
+          "id": 1,
+          "num": 37,
+          "ratio": 1.05
+        }
+      ]
     },
     {
       "id": 2,
-      "name": "iPhone 12 Pro",
+      "description": "Đây là mô tả",
+      "name": "Nike Air Max 1 Se \"Just Do It\"",
+      "price": 4900000,
+      "color": "white",
+      "typeId": 2,
       "categoryId": 1,
-      "price": 20000000
+      "images": [
+        "https://khangdev1998.github.io/shoe/image/product3.png",
+        "https://khangdev1998.github.io/shoe/image/product4.png"
+      ],
+      "size": [
+        {
+          "id": 1,
+          "num": 40,
+          "ratio": 1.1
+        },
+        {
+          "id": 1,
+          "num": 41,
+          "ratio": 1.2
+        },
+        {
+          "id": 1,
+          "num": 42,
+          "ratio": 1.15
+        },
+        {
+          "id": 1,
+          "num": 43,
+          "ratio": 1
+        }
+      ]
     },
     {
       "id": 3,
-      "name": "iPhone 12 Mini",
+      "description": "Đây là mô tả",
+      "name": "The 10: Nike Air Presto \"Off White\"",
+      "price": 8000000,
       "categoryId": 1,
-      "price": 5000000
+      "typeId": 2,
+      "color": "white",
+      "images": [
+        "https://khangdev1998.github.io/shoe/image/product5.png",
+        "https://khangdev1998.github.io/shoe/image/product6.png"
+      ],
+      "size": [
+        {
+          "id": 1,
+          "num": 40,
+          "ratio": 1.1
+        },
+        {
+          "id": 1,
+          "num": 41,
+          "ratio": 1.2
+        },
+        {
+          "id": 1,
+          "num": 42,
+          "ratio": 1.15
+        },
+        {
+          "id": 1,
+          "num": 43,
+          "ratio": 1
+        }
+      ]
     },
     {
       "id": 4,
-      "name": "Galaxy S21",
-      "categoryId": 2,
-      "price": 10000000
+      "description": "Đây là mô tả",
+      "name": "Nike Wmns Air Huarache City Move",
+      "price": 5200000,
+      "categoryId": 1,
+      "typeId": 2,
+      "images": [
+        "https://khangdev1998.github.io/shoe/image/product7.png",
+        "https://khangdev1998.github.io/shoe/image/product8.png"
+      ],
+      "color": "#eb2c93",
+      "size": [
+        {
+          "id": 1,
+          "num": 40,
+          "ratio": 1.1
+        },
+        {
+          "id": 1,
+          "num": 41,
+          "ratio": 1.2
+        },
+        {
+          "id": 1,
+          "num": 42,
+          "ratio": 1.15
+        },
+        {
+          "id": 1,
+          "num": 43,
+          "ratio": 1
+        }
+      ]
     },
     {
       "id": 5,
-      "name": "Galaxy Note 20",
-      "categoryId": 2,
-      "price": 20000000
+      "description": "Đây là mô tả",
+      "name": "Nike Air Max 90 Essential \"Grape\"",
+      "price": 4800000,
+      "categoryId": 1,
+      "typeId": 2,
+      "color": "white",
+      "images": [
+        "https://khangdev1998.github.io/shoe/image/product9.png",
+        "https://khangdev1998.github.io/shoe/image/product10.png"
+      ],
+      "size": [
+        {
+          "id": 1,
+          "num": 40,
+          "ratio": 1.1
+        },
+        {
+          "id": 1,
+          "num": 41,
+          "ratio": 1.2
+        },
+        {
+          "id": 1,
+          "num": 42,
+          "ratio": 1.15
+        },
+        {
+          "id": 1,
+          "num": 43,
+          "ratio": 1
+        }
+      ]
     },
     {
       "id": 6,
-      "name": "Galaxy S10",
+      "description": "Đây là mô tả",
+      "name": "Nike Air Max 97 Premium",
+      "price": 8400000,
+      "typeId": 2,
+      "categoryId": 1,
+      "color": "blue",
+      "images": [
+        "https://khangdev1998.github.io/shoe/image/product11.png",
+        "https://khangdev1998.github.io/shoe/image/product12.png"
+      ],
+      "size": [
+        {
+          "id": 1,
+          "num": 40,
+          "ratio": 1.1
+        },
+        {
+          "id": 1,
+          "num": 41,
+          "ratio": 1.2
+        },
+        {
+          "id": 1,
+          "num": 42,
+          "ratio": 1.15
+        },
+        {
+          "id": 1,
+          "num": 43,
+          "ratio": 1
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "description": "Đây là mô tả",
+      "name": "Adidas Nmd Xr1 W \"Pearl Grey\"",
+      "price": 5750000,
+      "typeId": 2,
       "categoryId": 2,
-      "price": 5000000,
-      "updatedAt": 1627994800449
+      "color": "white",
+      "images": [
+        "https://khangdev1998.github.io/shoe/image/product13.png",
+        "https://khangdev1998.github.io/shoe/image/product14.png"
+      ],
+      "size": [
+        {
+          "id": 1,
+          "num": 40,
+          "ratio": 1.1
+        },
+        {
+          "id": 1,
+          "num": 41,
+          "ratio": 1.2
+        },
+        {
+          "id": 1,
+          "num": 42,
+          "ratio": 1.15
+        },
+        {
+          "id": 1,
+          "num": 43,
+          "ratio": 1
+        }
+      ]
     },
     {
-      "name": "Xiaomi Mi 11 Ultra",
-      "categoryId": 3,
-      "price": 25000000,
-      "createdAt": 1628340146846,
-      "updatedAt": 1628340146847,
-      "id": 7
-    },
-    {
-      "name": "3213",
-      "categoryId": 3,
-      "price": 4123,
-      "createdAt": 1628340987525,
-      "updatedAt": 1628340987525,
-      "id": 8
-    },
-    {
-      "name": "Xiaomi Mi Mix 4",
-      "categoryId": 3,
-      "price": 30000000,
-      "createdAt": 1628341401332,
-      "updatedAt": 1628341401332,
-      "id": 9
-    },
-    {
-      "name": "Xiaomi mi 10",
-      "categoryId": 3,
-      "price": 4123123,
-      "createdAt": 1628341786040,
-      "updatedAt": 1628341786040,
-      "id": 10
-    },
-    {
-      "name": "Xiaomi Ahihi",
-      "categoryId": 3,
-      "price": 10000000,
-      "createdAt": 1628512038217,
-      "updatedAt": 1628512038217,
-      "id": 11
+      "id": 8,
+      "description": "Đây là mô tả",
+      "name": "Nike W's Air Huarache Run \"Triple White\"",
+      "price": 7950000,
+      "categoryId": 1,
+      "typeId": 2,
+      "color": "white",
+      "images": [
+        "https://khangdev1998.github.io/shoe/image/product15.png",
+        "https://khangdev1998.github.io/shoe/image/product16.png"
+      ],
+      "size": [
+        {
+          "id": 1,
+          "num": 40,
+          "ratio": 1.1
+        },
+        {
+          "id": 1,
+          "num": 41,
+          "ratio": 1.2
+        },
+        {
+          "id": 1,
+          "num": 42,
+          "ratio": 1.15
+        },
+        {
+          "id": 1,
+          "num": 43,
+          "ratio": 1
+        }
+      ]
     }
   ],
   "todos": [],

@@ -4,12 +4,12 @@ export const CardProduct = styled.div`
   position: relative;
   @keyframes showMore {
     from {
-      transform: translateY(15px);
+      transform: scaleY(0);
       opacity: 0;
       visibility: hidden;
     }
     to {
-      transform: translateY(0);
+      transform: scaleY(1);
       opacity: 1;
       visibility: visible;
     }
@@ -31,7 +31,8 @@ export const CardProduct = styled.div`
     background-color: #fff;
     box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
     display: none;
-    animation: showMore 0.3s ease-in-out;
+    transform-origin: top;
+    animation: showMore 0.3s;
     .size {
       display: flex;
       strong {
@@ -45,6 +46,7 @@ export const CardProduct = styled.div`
     .product-button {
       margin-top: 10px;
       display: flex;
+      flex-wrap: wrap;
       align-items: center;
       justify-content: center;
       gap: 15px;
