@@ -22,6 +22,8 @@ import CheckoutPage from "./pages/user/Checkout";
 import DashboardPage from "./pages/admin/Dashboard";
 import ProductListPage from "./pages/admin/ProductList";
 import CategoryListPage from "./pages/admin/CategoryList";
+import UserListPage from "./pages/admin/UserList";
+import AdminListPage from "./pages/admin/AdminList";
 
 import "antd/dist/antd.css";
 import "swiper/swiper.min.css";
@@ -66,7 +68,16 @@ function App() {
             path="/admin/categories"
             component={CategoryListPage}
           />
-
+          <AdminLayout
+            exact
+            path="/admin/account/users"
+            component={UserListPage}
+          />
+          <AdminLayout
+            exact
+            path="/admin/account/admins"
+            component={AdminListPage}
+          />
           <FullLayout exact path="/login" component={LoginPage} />
           <FullLayout exact path="/register" component={RegisterPage} />
           <FullLayout component={NotFoundPage} />

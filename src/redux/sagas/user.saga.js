@@ -80,9 +80,26 @@ function* getUserInfoSaga(action) {
     yield put({ type: FAILURE(USER_ACTION.GET_USER_INFO), payload: e.message });
   }
 }
-
+function* getUserListSage(action){
+  try {
+    const {role} = action.payload;
+    const result = yield axios.get(`${SERVER_API_URL}/users?role=${role}`);
+    yield put({
+      type: SUCCESS(USER_ACTION.GET_USER_LIST),
+      payload: {
+        data: result.data,
+      },
+    });
+  } catch (e) {
+    yield put({
+      type: FAILURE(USER_ACTION.GET_USER_LIST),
+      payload: e.message,
+    });
+  }
+}
 export default function* userSaga() {
   yield takeEvery(REQUEST(USER_ACTION.LOGIN), loginSaga);
   yield takeEvery(REQUEST(USER_ACTION.REGISTER), registerSaga);
   yield takeEvery(REQUEST(USER_ACTION.GET_USER_INFO), getUserInfoSaga);
+  yield takeEvery(REQUEST(USER_ACTION.GET_USER_LIST), getUserListSage);
 }

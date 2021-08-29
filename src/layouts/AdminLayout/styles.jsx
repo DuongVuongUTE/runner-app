@@ -1,20 +1,17 @@
 import styled, { css } from 'styled-components';
 
-export const AdminContainer = styled.div`
-  position: relative;
-  display: flex;
-`;
+import { Layout, Menu, Breadcrumb } from 'antd';
 
-export const AdminContent = styled.div`
-  width: 100%;
-  transition: all 0.3s;
+export const ComponentsLayout=styled.div`
+  & .logo {
+    height: 32px;
+    margin: 16px;
+    background: rgba(255, 255, 255, 0.3);
+  }
+`
 
-  ${(props) => props.show && css`
-    margin-left: 300px;
-    width: calc(100% - 300px);
-  `}
-`;
-
-export const MainContainer = styled.div`
-  min-height: calc(100vh - 120px);
-`;
+export const SiteLayout = styled(Layout)`
+  & .site-layout-background {
+  background: #fff;
+}
+`
