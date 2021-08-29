@@ -23,7 +23,8 @@ import hotline from "../../assets/images/hotline.jpg";
 
 import * as Style from "./styles";
 
-function Header() {
+function Header({ type }) {
+  console.log("🚀 ~ file: index.jsx ~ line 27 ~ Header ~ type", type)
   const { productList } = useSelector((state) => state.productReducer);
 
   const dispatch = useDispatch();
@@ -192,10 +193,11 @@ function Header() {
 
   return (
     <>
-      <TopBar
+      {!(type === 'admin') && (<TopBar
         text="Miễn phí vận chuyển với đơn hàng nội thành > 300k - Đổi trả trong 30 ngày -
       Đảm bảo chất lượng"
-      />
+      />)}
+
       <Style.Header className={sticky ? "sticky" : null}>
         <Style.HeaderContainer>
           <div className="menu-container menu-hide-desktop">
@@ -240,7 +242,7 @@ function Header() {
           <Style.HeaderLogo onClick={() => history.push("/")}>
             Runner
           </Style.HeaderLogo>
-          <Style.HeaderList>{renderListNav()}</Style.HeaderList>
+          {!(type === 'admin') && (<Style.HeaderList>{renderListNav()}</Style.HeaderList>)}
           <div className="menu-container">
             <Style.HeaderAction>
               <Popover
@@ -262,16 +264,18 @@ function Header() {
                   <Icons.SearchOutlined />
                 </Style.HeaderButton>
               </Popover>
-              <Popover
-                placement="bottomRight"
-                content={CartContent}
-                title="Giỏ hàng"
-                trigger="hover"
-              >
-                <Style.HeaderButton>
-                  <Icons.ShoppingCartOutlined />
-                </Style.HeaderButton>
-              </Popover>
+              {!(type ==='admin') && (
+                <Popover
+                  placement="bottomRight"
+                  content={CartContent}
+                  title="Giỏ hàng"
+                  trigger="hover"
+                >
+                  <Style.HeaderButton>
+                    <Icons.ShoppingCartOutlined />
+                  </Style.HeaderButton>
+                </Popover>
+              )}
 
               <Dropdown overlay={menu} placement="bottomRight" arrow>
                 <Style.HeaderButton>
