@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Badge, Button, Popover, Tooltip, Radio, Space } from "antd";
+import { Badge, Button, Popover, Tooltip, Radio, Space, Rate } from "antd";
 import * as Icons from "@ant-design/icons";
 import * as Style from "./styles";
 import history from "../../utils/history";
@@ -26,46 +26,11 @@ function CardProduct({ product, path }) {
           <strong>
             {(product.price * ratio).toLocaleString() || product.price}₫
           </strong>
+          <Space align="center" className="card-info">
+            <span className="brand">{product.category?.name}</span>
+            <Rate className="star" allowHalf disabled defaultValue={4.5} />
+          </Space>
         </Style.ProductContent>
-        {/* <div className="product-more">
-          <div className="size">
-            <strong>Size</strong>
-            <Radio.Group
-              onChange={(e) => {
-                const getSize = product.size.find(
-                  (item) => item.num === e.target.value
-                );
-
-                setRatio(getSize.ratio);
-              }}
-              size="small"
-              buttonStyle="solid"
-            >
-              {product.size.map((item, index) => {
-                return (
-                  <Radio.Button key={`${item.id}-${index}`} value={item.num}>
-                    {item.num}
-                  </Radio.Button>
-                );
-              })}
-            </Radio.Group>
-          </div>
-          <div className="product-button">
-            <Button
-              type="primary"
-              shape="circle"
-              icon={<Icons.ShoppingCartOutlined />}
-            ></Button>
-
-            <Tooltip title="Thêm yêu thích" placement="rightTop">
-              <Button
-                type="primary"
-                shape="circle"
-                icon={<Icons.HeartOutlined />}
-              />
-            </Tooltip>
-          </div>
-        </div> */}
       </Style.CardProduct>
     </Badge.Ribbon>
   );

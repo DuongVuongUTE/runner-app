@@ -12,8 +12,6 @@ export const ProductImage = styled.div`
   position: relative;
   padding-top: 100%;
   cursor: pointer;
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
   overflow: hidden;
   .content {
     position: absolute;
@@ -37,7 +35,7 @@ export const ProductImage = styled.div`
 `;
 export const ProductContent = styled.div`
   padding: 10px 10px 15px;
-  text-align: center;
+  text-align: left;
   h3 {
     color: #000;
     font-size: 14px;
@@ -47,7 +45,6 @@ export const ProductContent = styled.div`
     width: -webkit-fit-content;
     width: -moz-fit-content;
     width: fit-content;
-    margin: auto;
     display: -webkit-box;
     -webkit-line-clamp: 1;
     -webkit-box-orient: vertical;
@@ -61,7 +58,22 @@ export const ProductContent = styled.div`
   }
   strong {
     display: block;
-    margin-top: 10px;
+    padding-top: 10px;
     word-break: break-word;
+  }
+  .star {
+    font-size: 10px;
+    .ant-rate-star:not(:last-child) {
+      margin-right: 4px;
+    }
+  }
+  .card-info {
+    width: 100%;
+    justify-content: space-between;
+    margin-top: 20px;
+    .brand {
+      font-weight: 500;
+      color: #002878;
+    }
   }
 `;

@@ -1,7 +1,9 @@
 import styled from "styled-components";
 import { Container } from "../../styles/styles";
 
-export const Footer = styled.div``;
+export const Footer = styled.div`
+  border-top: 4px solid #002878;
+`;
 
 export const FooterContainer = styled(Container)`
   display: grid;

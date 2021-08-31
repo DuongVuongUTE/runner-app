@@ -11,16 +11,16 @@ export const HeroTitle = styled.h2`
   position: absolute;
   top: 50%;
   left: 50%;
+  width: 100%;
+  text-align: center;
   transform: translate(-50%, -50%);
   font-size: 24px;
   color: #fff;
   margin-bottom: 30px;
 `;
 export const ProductLayout = styled.div`
-  position: sticky;
-  top: 0;
-  overflow: hidden;
   display: flex;
+  padding: 0 0 30px 0;
   gap: 30px;
   .ant-collapse-item {
     border: 1px solid #e3e7ef;

@@ -8,12 +8,12 @@ import {
   Menu,
   Dropdown,
   Button,
-  Popover,
   Empty,
   Input,
   Tag,
   Space,
   Drawer,
+  Badge,
 } from "antd";
 import history from "../../utils/history";
 
@@ -22,6 +22,7 @@ import TopBar from "../../components/Topbar";
 import hotline from "../../assets/images/hotline.jpg";
 
 import * as Style from "./styles";
+import Avatar from "antd/lib/avatar/avatar";
 
 function Header({ type }) {
   console.log("🚀 ~ file: index.jsx ~ line 27 ~ Header ~ type", type);
@@ -73,83 +74,7 @@ function Header({ type }) {
       </Menu.Item>
     </Menu>
   );
-  const CartContent = (
-    <Empty
-      image="https://gw.alipayobjects.com/zos/antfincdn/ZHrcdLPrvN/empty.svg"
-      imageStyle={{
-        height: 60,
-      }}
-      description={<span>Giỏ hàng trống</span>}
-    >
-      <Button onClick={() => history.push("/product")} type="primary">
-        Mua ngay
-      </Button>
-    </Empty>
-  );
-  const onChangeSearch = (e) => {
-    const { value } = e.target;
-    setSearchValue(value);
-    dispatch(
-      getProductListAction({
-        searchKey: value,
-      })
-    );
-  };
-  const searchContent = (
-    <>
-      <Input
-        placeholder="Tìm kiếm..."
-        prefix={<Icons.SearchOutlined />}
-        value={searchValue}
-        onChange={(e) => onChangeSearch(e)}
-      />
-      <div style={{ maxWidth: 300 }}>
-        {searchValue && (
-          <>
-            <span style={{ paddingTop: 5, display: "inline-block" }}>
-              <Tag
-                icon={<Icons.SearchOutlined />}
-                color="#55acee"
-                closable
-                visible={Boolean(searchValue)}
-                onClose={() => {
-                  setSearchValue("");
-                  dispatch(
-                    getProductListAction({
-                      page: 1,
-                      searchKey: undefined,
-                    })
-                  );
-                }}
-              >
-                {searchValue}
-              </Tag>
-            </span>
-            <div style={{ maxHeight: 250, overflowY: "auto" }}>
-              {productList.data.length > 0 ? (
-                productList.data.map((item) => (
-                  <div key={item.id}>
-                    <h4>{item.name}</h4>
-                    <p>{item.price}</p>
-                  </div>
-                ))
-              ) : (
-                <div>
-                  <Empty
-                    image="https://gw.alipayobjects.com/zos/antfincdn/ZHrcdLPrvN/empty.svg"
-                    imageStyle={{
-                      height: 60,
-                    }}
-                    description={<span>Không tìm thấy!</span>}
-                  />
-                </div>
-              )}
-            </div>
-          </>
-        )}
-      </div>
-    </>
-  );
+
   const ListNav = [
     {
       title: "Trang chủ",
@@ -220,6 +145,29 @@ function Header({ type }) {
             onClose={onClose}
             visible={visible}
           >
+            <div className="user-mobile">
+              {"1" ? (
+                <>
+                  {" "}
+                  <Dropdown overlay={menu} placement="bottomRight" arrow>
+                    <Space align="center" className="avatar-mobile">
+                      <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
+                      <strong>Dương Vương</strong>
+                    </Space>
+                  </Dropdown>
+                </>
+              ) : (
+                <Button
+                  type="primary"
+                  danger
+                  block
+                  className="btn-login"
+                  onClick={() => history.push("/login")}
+                >
+                  Đăng nhập
+                </Button>
+              )}
+            </div>
             <ul>
               {ListNav.map((nav, index) => {
                 return (
@@ -235,14 +183,14 @@ function Header({ type }) {
                   </li>
                 );
               })}
-              <div
-                style={{
-                  background: `url(${hotline}) no-repeat center`,
-                  backgroundSize: "cover",
-                  paddingTop: "100%",
-                }}
-              ></div>
             </ul>
+            <div
+              style={{
+                background: `url(${hotline}) no-repeat center`,
+                backgroundSize: "cover",
+                paddingTop: "100%",
+              }}
+            ></div>
           </Drawer>
           <Style.HeaderLogo onClick={() => history.push("/")}>
             Runner
@@ -252,43 +200,32 @@ function Header({ type }) {
           )}
           <div className="menu-container">
             <Style.HeaderAction>
-              <Popover
-                placement="bottomRight"
-                content={searchContent}
-                title="Tìm kiếm"
-                trigger="hover"
-                onVisibleChange={() => {
-                  setSearchValue("");
-                  dispatch(
-                    getProductListAction({
-                      page: 1,
-                      searchKey: undefined,
-                    })
-                  );
-                }}
-              >
-                <Style.HeaderButton>
-                  <Icons.SearchOutlined />
-                </Style.HeaderButton>
-              </Popover>
               {!(type === "admin") && (
-                <Popover
-                  placement="bottomRight"
-                  content={CartContent}
-                  title="Giỏ hàng"
-                  trigger="hover"
-                >
-                  <Style.HeaderButton>
-                    <Icons.ShoppingCartOutlined />
-                  </Style.HeaderButton>
-                </Popover>
+                <Badge count={3}>
+                  <Button
+                    type="primary"
+                    shape="circle"
+                    icon={<Icons.ShoppingCartOutlined />}
+                  ></Button>
+                </Badge>
               )}
-
-              <Dropdown overlay={menu} placement="bottomRight" arrow>
-                <Style.HeaderButton>
-                  <Icons.UserOutlined />
-                </Style.HeaderButton>
-              </Dropdown>
+              <div className="user-action">
+                {"" ? (
+                  <>
+                    {" "}
+                    <Dropdown overlay={menu} placement="bottomRight" arrow>
+                      <Space align="center">
+                        <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
+                        <strong>Dương Vương</strong>
+                      </Space>
+                    </Dropdown>
+                  </>
+                ) : (
+                  <Button type="primary" onClick={() => history.push("/login")}>
+                    Đăng nhập
+                  </Button>
+                )}
+              </div>
             </Style.HeaderAction>
           </div>
         </Style.HeaderContainer>

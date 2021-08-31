@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Container } from "../../../styles/styles";
 import BreadcrumbUI from "../../../components/Breadcrumb";
-import { Collapse, Checkbox, Input, Select, Space } from "antd";
+import { Collapse, Checkbox, Input, Select, Space, Row, Button } from "antd";
 import * as Icons from "@ant-design/icons";
 
 import { useSelector, useDispatch } from "react-redux";
@@ -13,6 +13,7 @@ import {
 
 import * as Style from "./styles";
 import CardProduct from "../../../components/Card";
+import { PRODUCT_LIMIT } from "../../../constants/product";
 const { Panel } = Collapse;
 
 function callback(key) {
@@ -51,7 +52,7 @@ function ProductPage() {
 
   useEffect(() => {
     dispatch(getCategoryListAction());
-    dispatch(getProductListAction());
+    dispatch(getProductListAction({ page: 1 }));
     dispatch(getTypeListAction());
   }, []);
 
@@ -59,7 +60,7 @@ function ProductPage() {
     setCategoriesSelect(value);
     dispatch(
       getProductListAction({
-        // page: 1,
+        page: 1,
         categoriesSelected: value,
         typesSelected,
         searchKey,
@@ -73,7 +74,7 @@ function ProductPage() {
     setTypesSelect(value);
     dispatch(
       getProductListAction({
-        // page: 1,
+        page: 1,
         categoriesSelected,
         typesSelected: value,
         searchKey,
@@ -91,7 +92,9 @@ function ProductPage() {
     setSearchKey(value);
     dispatch(
       getProductListAction({
+        page: 1,
         categoriesSelected,
+        typesSelected,
         searchKey: value,
       })
     );
@@ -122,6 +125,18 @@ function ProductPage() {
         onChange={(value) => handleFilterType(value)}
         value={typesSelected}
       />
+    );
+  }
+
+  function handleShowMore() {
+    dispatch(
+      getProductListAction({
+        page: productList.page + 1,
+        searchKey: searchKey,
+        categoriesSelected,
+        typesSelected,
+        more: true,
+      })
     );
   }
 
@@ -277,6 +292,11 @@ function ProductPage() {
               </div>
             </div>
             <Style.ProductList>{renderProductList()}</Style.ProductList>
+            {productList.data.length % PRODUCT_LIMIT === 0 && (
+              <Row justify="center" style={{ marginTop: 16 }}>
+                <Button onClick={() => handleShowMore()}>Show more</Button>
+              </Row>
+            )}
           </Style.ProductContent>
         </Style.ProductLayout>
       </Container>

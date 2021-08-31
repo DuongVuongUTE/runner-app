@@ -13,6 +13,16 @@ export const ProductList = styled.div`
     margin-bottom: calc(var(--spacing) + 10px);
     width: calc((100% / var(--column)) - var(--spacing));
   }
+  @media screen and (max-width: 1080px) {
+    --spacing: 15px;
+    --column: 4;
+    justify-content: center;
+  }
+
+  @media screen and (max-width: 920px) {
+    --spacing: 15px;
+    --column: 3;
+  }
 
   @media screen and (max-width: 767px) {
     --spacing: 15px;
