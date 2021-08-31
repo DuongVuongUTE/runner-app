@@ -7,6 +7,7 @@ export const TopBar = styled.div`
 export const TopBarText = styled.span`
   color: ${(props) => props.theme.colors.whiteColor};
   text-align: center;
+  height: 50px;
   text-transform: capitalize;
   font-weight: 500;
   padding: 10px 15px;

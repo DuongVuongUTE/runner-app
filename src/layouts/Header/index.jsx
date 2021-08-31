@@ -24,7 +24,7 @@ import hotline from "../../assets/images/hotline.jpg";
 import * as Style from "./styles";
 
 function Header({ type }) {
-  console.log("🚀 ~ file: index.jsx ~ line 27 ~ Header ~ type", type)
+  console.log("🚀 ~ file: index.jsx ~ line 27 ~ Header ~ type", type);
   const { productList } = useSelector((state) => state.productReducer);
 
   const dispatch = useDispatch();
@@ -34,7 +34,7 @@ function Header({ type }) {
   }, []);
 
   const [searchValue, setSearchValue] = useState("");
-  const [sticky, setSticky] = useState(false);
+  const [sticky, setSticky] = useState(true);
   const [visible, setVisible] = useState(false);
   const showDrawer = () => {
     setVisible(true);
@@ -43,12 +43,15 @@ function Header({ type }) {
     setVisible(false);
   };
 
+  let prevScrollpos = window.pageYOffset;
   window.addEventListener("scroll", function () {
-    if (window.scrollY >= 70) {
+    const currentScrollPos = window.pageYOffset;
+    if (prevScrollpos > currentScrollPos || prevScrollpos === 0) {
       setSticky(true);
     } else {
       setSticky(false);
     }
+    prevScrollpos = currentScrollPos;
   });
 
   const menu = (
@@ -193,12 +196,14 @@ function Header({ type }) {
 
   return (
     <>
-      {!(type === 'admin') && (<TopBar
-        text="Miễn phí vận chuyển với đơn hàng nội thành > 300k - Đổi trả trong 30 ngày -
+      {/* {!(type === "admin") && (
+        <TopBar
+          text="Miễn phí vận chuyển với đơn hàng nội thành > 300k - Đổi trả trong 30 ngày -
       Đảm bảo chất lượng"
-      />)}
+        />
+      )} */}
 
-      <Style.Header className={sticky ? "sticky" : null}>
+      <Style.Header className={sticky ? null : "sticky"}>
         <Style.HeaderContainer>
           <div className="menu-container menu-hide-desktop">
             <Button
@@ -242,7 +247,9 @@ function Header({ type }) {
           <Style.HeaderLogo onClick={() => history.push("/")}>
             Runner
           </Style.HeaderLogo>
-          {!(type === 'admin') && (<Style.HeaderList>{renderListNav()}</Style.HeaderList>)}
+          {!(type === "admin") && (
+            <Style.HeaderList>{renderListNav()}</Style.HeaderList>
+          )}
           <div className="menu-container">
             <Style.HeaderAction>
               <Popover
@@ -264,7 +271,7 @@ function Header({ type }) {
                   <Icons.SearchOutlined />
                 </Style.HeaderButton>
               </Popover>
-              {!(type ==='admin') && (
+              {!(type === "admin") && (
                 <Popover
                   placement="bottomRight"
                   content={CartContent}
@@ -286,6 +293,7 @@ function Header({ type }) {
           </div>
         </Style.HeaderContainer>
       </Style.Header>
+      <Style.SpacingTop />
     </>
   );
 }

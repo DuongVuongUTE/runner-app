@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Button, Col, Image, Row, Tabs } from "antd";
+import { Button, Col, Image, Row, Tabs, Radio } from "antd";
 import * as Icons from "@ant-design/icons";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { useParams } from "react-router-dom";
@@ -22,6 +22,12 @@ function ProductDetailPage() {
   const { id } = useParams();
   const { userInfo } = useSelector((state) => state.userReducer);
   const { productDetail } = useSelector((state) => state.productReducer);
+  const [optionSelected, setOptionSelected] = useState({});
+  const [swiper, setSwiper] = useState(null);
+
+  const slideTo = (index) => {
+    if (swiper) swiper.slideTo(index);
+  };
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(
@@ -30,12 +36,16 @@ function ProductDetailPage() {
       })
     );
   }, []);
-  const [swiper, setSwiper] = useState(null);
-
-  const slideTo = (index) => {
-    if (swiper) swiper.slideTo(index);
-  };
-  console.log(swiper);
+  useEffect(() => {
+    if (productDetail.data.id) {
+      setOptionSelected(productDetail.data.productOptions[0] || {});
+    }
+  }, [productDetail.data]);
+  function renderProductOptions() {
+    return productDetail.data.productOptions?.map((item, index) => {
+      return <Radio.Button value={item}>{item.size}</Radio.Button>;
+    });
+  }
   return (
     <Container>
       {productDetail.load ? (
@@ -45,13 +55,14 @@ function ProductDetailPage() {
           <Button onClick={() => history.goBack()}>Quay lại</Button>
           <Style.ProductDetail>
             <Row gutter={[16, 16]}>
-              <Col xl={{ span: 8 }} lg={{ span: 12 }} sm={{ span: 24 }}>
+              <Col xl={{ span: 12 }} lg={{ span: 12 }} sm={{ span: 24 }}>
                 <Image.PreviewGroup>
                   <Swiper onSwiper={setSwiper}>
                     {productDetail.data?.images?.map((image) => {
                       return (
-                        <SwiperSlide>
+                        <SwiperSlide className="slide-item">
                           <Image
+                            className="slide-image"
                             src={image}
                             placeholder={<div className="bg-animate" />}
                           />
@@ -61,6 +72,7 @@ function ProductDetailPage() {
                   </Swiper>
                 </Image.PreviewGroup>
                 <Swiper
+                  style={{ marginTop: 10 }}
                   spaceBetween={10}
                   slidesPerView={4}
                   className="mySwiper"
@@ -79,7 +91,7 @@ function ProductDetailPage() {
                   })}
                 </Swiper>
               </Col>
-              <Col xl={{ span: 16 }} lg={{ span: 12 }} sm={{ span: 24 }}>
+              <Col xl={{ span: 12 }} lg={{ span: 12 }} sm={{ span: 24 }}>
                 <h3>Tên sản phẩm: {` ${productDetail.data.name}`}</h3>
                 <p>Mô tả: {` ${productDetail.data.description}`}</p>
                 <p>
@@ -87,9 +99,18 @@ function ProductDetailPage() {
                   <Style.Color color={productDetail.data.color} />
                 </p>
                 <p>
+                  <Radio.Group
+                    onChange={(e) => setOptionSelected(e.target.value)}
+                    value={optionSelected}
+                  >
+                    {renderProductOptions()}
+                  </Radio.Group>
+                </p>
+                <p>
                   Giá:{" "}
-                  {productDetail.data.price >= 0 &&
-                    productDetail.data.price.toLocaleString()}
+                  {optionSelected.price?.toLocaleString() ||
+                    productDetail.data.price?.toLocaleString() ||
+                    0}
                 </p>
                 <Button onClick={() => history.push("/cart")} type="primary">
                   Add to cart

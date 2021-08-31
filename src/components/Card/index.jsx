@@ -8,7 +8,7 @@ function CardProduct({ product, path }) {
   const [ratio, setRatio] = useState(1);
   return (
     <Badge.Ribbon style={{ zIndex: 5 }} text="New" color="red">
-      <Style.CardProduct>
+      <Style.CardProduct onClick={() => history.push(path)}>
         <Style.ProductImage onClick={() => history.push(path)}>
           <img
             src={product.images[0]}
@@ -23,9 +23,11 @@ function CardProduct({ product, path }) {
         </Style.ProductImage>
         <Style.ProductContent>
           <h3 onClick={() => history.push(path)}>{product.name}</h3>
-          <strong>{(product.price * ratio).toLocaleString()}₫</strong>
+          <strong>
+            {(product.price * ratio).toLocaleString() || product.price}₫
+          </strong>
         </Style.ProductContent>
-        <div className="product-more">
+        {/* <div className="product-more">
           <div className="size">
             <strong>Size</strong>
             <Radio.Group
@@ -53,9 +55,7 @@ function CardProduct({ product, path }) {
               type="primary"
               shape="circle"
               icon={<Icons.ShoppingCartOutlined />}
-            >
-              {/* Thêm vào giỏ hàng */}
-            </Button>
+            ></Button>
 
             <Tooltip title="Thêm yêu thích" placement="rightTop">
               <Button
@@ -65,7 +65,7 @@ function CardProduct({ product, path }) {
               />
             </Tooltip>
           </div>
-        </div>
+        </div> */}
       </Style.CardProduct>
     </Badge.Ribbon>
   );

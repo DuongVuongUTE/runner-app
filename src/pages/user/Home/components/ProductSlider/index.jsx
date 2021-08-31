@@ -24,7 +24,7 @@ function ProductSlider({ productList }) {
     <Style.SliderProduct>
       <Swiper
         slidesPerView={1}
-        spaceBetween={30}
+        spaceBetween={15}
         navigation={true}
         breakpoints={{
           0: {
@@ -33,7 +33,7 @@ function ProductSlider({ productList }) {
           },
           767: {
             slidesPerView: 3,
-            spaceBetween: 20,
+            spaceBetween: 15,
           },
           1024: {
             slidesPerView: 4,

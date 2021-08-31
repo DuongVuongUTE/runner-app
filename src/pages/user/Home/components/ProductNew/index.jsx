@@ -7,11 +7,13 @@ import * as Style from "./style";
 function ProductNew({ productList }) {
   function renderProductNew() {
     return productList.data.map((product, index) => {
-      return (
-        <Style.ProductItem key={`${product.name}-${index}`}>
-          <CardProduct path={`/product/${product.id}`} product={product} />
-        </Style.ProductItem>
-      );
+      if (index <= 9) {
+        return (
+          <Style.ProductItem key={`${product.name}-${index}`}>
+            <CardProduct path={`/product/${product.id}`} product={product} />
+          </Style.ProductItem>
+        );
+      }
     });
   }
   return <Style.ProductList>{renderProductNew()}</Style.ProductList>;

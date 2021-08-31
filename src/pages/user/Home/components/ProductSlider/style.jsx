@@ -12,13 +12,8 @@ export const SliderProduct = styled.div`
   }
 
   .mySwiper {
-    padding: 15px 20px;
-    margin: -15px -20px;
-
-    &:hover {
-      padding-bottom: 300px;
-      margin-bottom: -300px;
-    }
+    padding: 30px 20px;
+    margin: -30px -20px;
   }
   @media screen and (max-width: 768px) {
     .swiper-button-prev,

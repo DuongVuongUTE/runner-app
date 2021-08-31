@@ -2,28 +2,19 @@ import styled from "styled-components";
 import { Container } from "../../styles/styles";
 
 export const Header = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  transition: all 0.25s linear;
   height: ${(props) => props.theme.size.headerSize};
   background-color: ${(props) => props.theme.colors.whiteColor};
   transition: all 0.3s ease-in-out;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  z-index: 100;
   &.sticky {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    width: 100%;
-    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
-    z-index: 100;
-    animation: headerAnimate 0.25s linear;
-  }
-  @keyframes headerAnimate {
-    0% {
-      transform: translateY(-20px);
-      opacity: 0;
-    }
-    100% {
-      transform: translateY(0);
-      opacity: 1;
-    }
+    transform: translateY(-100%);
   }
 `;
 
@@ -143,4 +134,8 @@ export const HeaderButton = styled.span`
   @media screen and (max-width: 920px) {
     font-size: 18px;
   }
+`;
+
+export const SpacingTop = styled.div`
+  padding-top: ${(props) => props.theme.size.headerSize};
 `;
