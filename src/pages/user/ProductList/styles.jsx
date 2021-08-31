@@ -1,10 +1,25 @@
 import styled from "styled-components";
 
-export const ProductTitle = styled.h2`
+export const Hero = styled.div`
+  position: relative;
+  padding-top: 150px;
+  background-image: linear-gradient(to right, #cb5eee, #4be1ec);
+  margin-bottom: 45px;
+`;
+
+export const HeroTitle = styled.h2`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   font-size: 24px;
+  color: #fff;
   margin-bottom: 30px;
 `;
 export const ProductLayout = styled.div`
+  position: sticky;
+  top: 0;
+  overflow: hidden;
   display: flex;
   gap: 30px;
   .ant-collapse-item {
@@ -14,11 +29,41 @@ export const ProductLayout = styled.div`
 export const ProductFilter = styled.div`
   width: 250px;
   flex-shrink: 0;
-  .ant-checkbox-group-item {
-    display: flex;
-  }
   h3 {
     padding: 10px 0;
+    border-bottom: 3px solid #003a8c;
+  }
+  .title-collapse {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+  }
+  .ant-collapse-header {
+    border-bottom: 2px transparent solid;
+    transition: all 0.4s ease-in-out;
+  }
+  .ant-collapse-item-active {
+    border: 1px solid #003a8c;
+    .title-collapse,
+    .ant-collapse-arrow {
+      font-weight: 500;
+      color: #003a8c;
+    }
+    .ant-collapse-header {
+      border-bottom: 1px solid #003a8c;
+      &::before {
+        content: "";
+        position: absolute;
+        top: -1px;
+        left: -1px;
+        width: 3px;
+        height: calc(100% + 2px);
+        background-color: #003a8c;
+      }
+    }
+  }
+  .ant-checkbox-group-item {
+    display: flex;
   }
   @media screen and (max-width: 767px) {
     display: none;

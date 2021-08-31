@@ -1,8 +1,8 @@
 import styled from "styled-components";
 
 export const ProductList = styled.div`
-  --spacing: 25px;
-  --column: 4;
+  --spacing: 20px;
+  --column: 5;
   display: flex;
   flex-wrap: wrap;
   padding-top: 20px;

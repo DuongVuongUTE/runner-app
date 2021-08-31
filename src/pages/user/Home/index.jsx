@@ -74,13 +74,13 @@ function HomePage() {
       {/* Slider */}
       <SliderHome />
       {/* Giày mới */}
-      <SectionHome title="Sản phẩm mới" text="xem thêm">
+      <SectionHome title="Sản phẩm mới" text="xem thêm" params="/product">
         <ProductNew productList={productList} />
       </SectionHome>
       {/* category */}
       <CategoryHome />
       {/* Giày nam */}
-      <SectionHome title="Giày nam" text="xem thêm">
+      <SectionHome title="Giày nam" text="xem thêm" params="/men">
         <ProductSlider productList={productList} />
       </SectionHome>
       {/* Form đăng ký nhận thông báo */}
@@ -90,11 +90,11 @@ function HomePage() {
         text=" Đăng ký nhận bản tin của Runner Inn để cập nhật những sản phẩm mới, nhận thông tin ưu đãi đặc biệt và thông tin giảm giá khác."
       />
       {/* Giày nữ */}
-      <SectionHome title="Giày nữ" text="xem thêm">
+      <SectionHome title="Giày nữ" text="xem thêm" params="/woman">
         <ProductSlider productList={productList} />
       </SectionHome>
       {/* Giày trẻ em */}
-      <SectionHome title="Giày trẻ em" text="xem thêm">
+      <SectionHome title="Giày trẻ em" text="xem thêm" params="/kids">
         <ProductSlider productList={productList} />
       </SectionHome>
       {/* Bài viết */}

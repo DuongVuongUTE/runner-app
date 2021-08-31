@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Container } from "../../../styles/styles";
 import BreadcrumbUI from "../../../components/Breadcrumb";
-import { Collapse, Checkbox, Input, Select } from "antd";
+import { Collapse, Checkbox, Input, Select, Space } from "antd";
 import * as Icons from "@ant-design/icons";
 
 import { useSelector, useDispatch } from "react-redux";
@@ -156,63 +156,131 @@ function ProductPage() {
     });
   }
   return (
-    <Container>
-      <BreadcrumbUI />
-      <Style.ProductTitle>Tất cả sản phẩm</Style.ProductTitle>
-      <Style.ProductLayout>
-        <Style.ProductFilter>
-          <>
-            <h3>Lọc theo</h3>
-            <Collapse onChange={callback} ghost expandIconPosition="right">
-              <Panel header="Thương hiệu" key="1">
-                <div>{renderCategoryCheckbox()}</div>
-              </Panel>
-              <Panel header="Loại sản phẩm" key="2">
-                <div>{renderTypeCheckbox()}</div>
-              </Panel>
-              <Panel header="Giới tính" key="3">
-                <div>{renderGenderCheckbox()}</div>
-              </Panel>
-              <Panel header="Size" key="4">
-                <div>{text}</div>
-              </Panel>
-              <Panel header="Color" key="5">
-                <div>{text}</div>
-              </Panel>
-              <Panel header="Khoảng giá" key="6">
-                <div>{text}</div>
-              </Panel>
-              <Panel header="Đánh giá" key="7">
-                <div>{text}</div>
-              </Panel>
-            </Collapse>
-          </>
-        </Style.ProductFilter>
-        <Style.ProductContent>
-          <div className="search-sort">
-            <Input
-              placeholder="Search..."
-              onChange={(e) => handleSearchProduct(e.target.value)}
-              value={searchKey}
-              suffix={<Icons.SearchOutlined />}
-            />
-            <div className="select-sort">
-              <Select
-                style={{ width: "100%" }}
-                onChange={handleChange}
-                placeholder="Sắp xếp theo..."
-              >
-                <Select.Option value="1">Giá cao đến thấp</Select.Option>
-                <Select.Option value="2">Giá thấp đến cao</Select.Option>
-                <Select.Option value="3">Mới nhất</Select.Option>
-                <Select.Option value="4">Cũ nhất</Select.Option>
-              </Select>
+    <>
+      <Style.Hero src="">
+        <Style.HeroTitle>Tất cả sản phẩm</Style.HeroTitle>
+      </Style.Hero>
+      <Container>
+        <Style.ProductLayout>
+          <Style.ProductFilter>
+            <>
+              <h3>
+                <Icons.FilterOutlined /> Lọc theo
+              </h3>
+              <Collapse onChange={callback} ghost expandIconPosition="right">
+                <Panel
+                  header={
+                    <>
+                      <div class="title-collapse">
+                        <span>Thương hiệu</span>
+                      </div>
+                    </>
+                  }
+                  key="1"
+                >
+                  <div>{renderCategoryCheckbox()}</div>
+                </Panel>
+                <Panel
+                  header={
+                    <>
+                      <div class="title-collapse">
+                        <span>Loại sản phẩm</span>
+                      </div>
+                    </>
+                  }
+                  key="2"
+                >
+                  <div>{renderTypeCheckbox()}</div>
+                </Panel>
+                <Panel
+                  header={
+                    <>
+                      <div class="title-collapse">
+                        <span>Giới tính</span>
+                      </div>
+                    </>
+                  }
+                  key="3"
+                >
+                  <div>{renderGenderCheckbox()}</div>
+                </Panel>
+                <Panel
+                  header={
+                    <>
+                      <div class="title-collapse">
+                        <span>Size</span>
+                      </div>
+                    </>
+                  }
+                  key="4"
+                >
+                  <div>{text}</div>
+                </Panel>
+                <Panel
+                  header={
+                    <>
+                      <div class="title-collapse">
+                        <span>Color</span>
+                      </div>
+                    </>
+                  }
+                  key="5"
+                >
+                  <div>{text}</div>
+                </Panel>
+                <Panel
+                  header={
+                    <>
+                      <div class="title-collapse">
+                        <span>Khoảng giá</span>
+                      </div>
+                    </>
+                  }
+                  key="6"
+                >
+                  <div>{text}</div>
+                </Panel>
+                <Panel
+                  header={
+                    <>
+                      <div class="title-collapse">
+                        <span>Đánh giá</span>
+                      </div>
+                    </>
+                  }
+                  key="7"
+                >
+                  <div>{text}</div>
+                </Panel>
+              </Collapse>
+            </>
+          </Style.ProductFilter>
+          <Style.ProductContent>
+            <div className="search-sort">
+              <Input
+                placeholder="Search..."
+                onChange={(e) => handleSearchProduct(e.target.value)}
+                value={searchKey}
+                suffix={<Icons.SearchOutlined />}
+              />
+              <div className="select-sort">
+                <Select
+                  style={{ width: "100%" }}
+                  onChange={handleChange}
+                  placeholder="Sắp xếp theo..."
+                >
+                  <Select.Option value="1">Giá cao đến thấp</Select.Option>
+                  <Select.Option value="2">Giá thấp đến cao</Select.Option>
+                  <Select.Option value="3">Mới nhất</Select.Option>
+                  <Select.Option value="4">Cũ nhất</Select.Option>
+                </Select>
+              </div>
             </div>
-          </div>
-          <Style.ProductList>{renderProductList()}</Style.ProductList>
-        </Style.ProductContent>
-      </Style.ProductLayout>
-    </Container>
+            <Style.ProductList>{renderProductList()}</Style.ProductList>
+          </Style.ProductContent>
+        </Style.ProductLayout>
+      </Container>
+    </>
   );
 }
 

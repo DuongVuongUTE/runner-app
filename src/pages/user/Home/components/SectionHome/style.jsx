@@ -6,6 +6,7 @@ export const Section = styled.div`
 
 export const SectionHeading = styled.div`
   text-align: center;
+  margin-bottom: 20px;
 `;
 export const SectionTitle = styled.h2`
   font-size: 28px;
@@ -36,12 +37,9 @@ export const SectionTitle = styled.h2`
     font-size: 19px;
   }
 `;
-export const SectionText = styled.span`
-  text-decoration: none;
-  margin-top: 15px;
-  display: inline-block;
-  color: #272727;
-  font-weight: 400;
-  font-size: 14px;
-  cursor: pointer;
+export const Button = styled.span`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 30px;
 `;

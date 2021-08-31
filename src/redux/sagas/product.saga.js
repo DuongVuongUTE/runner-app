@@ -45,6 +45,7 @@ function* getProductListSaga(action) {
       params: {
         _sort: "id",
         _order: "desc",
+        _expand: "category",
         ...(page && {
           _page: page,
           _limit: PRODUCT_LIMIT,
@@ -75,9 +76,14 @@ function* getProductListSaga(action) {
 function* getProductDetailSaga(action) {
   try {
     const { id } = action.payload;
-    const result = yield axios.get(
-      `${SERVER_API_URL}/products/${id}?_expand=category`
-    );
+    const result = yield axios({
+      method: "GET",
+      url: `${SERVER_API_URL}/products/${id}`,
+      params: {
+        _embed: "productOptions",
+        _expand: "category",
+      },
+    });
     yield put({
       type: SUCCESS(PRODUCT_ACTION.GET_PRODUCT_DETAIL),
       payload: {

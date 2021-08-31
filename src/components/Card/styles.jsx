@@ -2,63 +2,9 @@ import styled from "styled-components";
 
 export const CardProduct = styled.div`
   position: relative;
-  @keyframes showMore {
-    from {
-      transform: scaleY(0);
-      opacity: 0;
-      visibility: hidden;
-    }
-    to {
-      transform: scaleY(1);
-      opacity: 1;
-      visibility: visible;
-    }
-  }
+  cursor: pointer;
   &:hover {
     box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
-  }
-  .product-more {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    padding: 10px;
-    gap: 5px;
-    z-index: 10;
-    border-top: 1px solid red;
-    background-color: #fff;
-    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
-    display: none;
-    transform-origin: top;
-    animation: showMore 0.3s;
-    .size {
-      display: flex;
-      strong {
-        display: block;
-        flex-shrink: 0;
-        padding-top: 4px;
-        margin-right: 10px;
-        word-break: break-word;
-      }
-    }
-    .product-button {
-      margin-top: 10px;
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: center;
-      gap: 15px;
-    }
-  }
-  &:hover .product-more {
-    display: block;
-  }
-  @media screen and (max-width: 767px) {
-    &:hover .product-more {
-      display: none;
-    }
   }
 `;
 

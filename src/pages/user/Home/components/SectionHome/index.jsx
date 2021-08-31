@@ -1,17 +1,21 @@
+import { Button } from "antd";
 import React from "react";
 
 import { Container } from "../../../../../styles/styles";
+import history from "../../../../../utils/history";
 
 import * as Style from "./style";
 
-function SectionHome({ title, text, children, noContainer }) {
+function SectionHome({ title, text, params, children, noContainer }) {
   return (
     <Style.Section>
       <Style.SectionHeading>
         <Style.SectionTitle>{title}</Style.SectionTitle>
-        <Style.SectionText>{text}</Style.SectionText>
       </Style.SectionHeading>
       {noContainer ? <>{children}</> : <Container>{children}</Container>}
+      <Style.Button>
+        <Button onClick={() => history.push(params)}>{text}</Button>
+      </Style.Button>
     </Style.Section>
   );
 }
