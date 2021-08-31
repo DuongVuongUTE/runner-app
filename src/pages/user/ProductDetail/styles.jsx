@@ -3,6 +3,34 @@ import styled from "styled-components";
 
 export const Section = styled.div`
   padding: 30px 0;
+  .list-info {
+    position: relative;
+    height: 300px;
+    overflow: hidden;
+    &::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      height: 100px;
+      width: 100%;
+      background-color: rgba(255, 255, 255, 0.6);
+      z-index: 1;
+    }
+    &.active {
+      height: auto;
+      &::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        height: 0;
+        width: 100%;
+        background-color: rgba(255, 255, 255, 0.6);
+        z-index: 1;
+      }
+    }
+  }
 `;
 export const ProductDetail = styled.div`
   padding: 15px 0;
@@ -27,13 +55,13 @@ export const ProductDetail = styled.div`
   }
 `;
 export const Color = styled.div`
-  margin-top: 10px;
+  margin: 10px 5px 5px;
   height: 20px;
   box-shadow: 0 0 0 3px white,
     0 0 0 4px
       ${(props) =>
         props.color
-          ? props.color === "multiColor"
+          ? props.color === "#ffffff" || props.color === "multiColor"
             ? "#002878"
             : props.color
           : "white"},

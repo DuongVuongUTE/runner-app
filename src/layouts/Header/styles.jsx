@@ -35,6 +35,9 @@ export const HeaderContainer = styled(Container)`
     .menu-hide-desktop {
       display: block;
     }
+    .user-action {
+      display: none;
+    }
   }
 `;
 

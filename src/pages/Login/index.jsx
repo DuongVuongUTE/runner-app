@@ -1,9 +1,9 @@
-import { useEffect } from 'react';
-import { Form, Input, Button, Checkbox, } from "antd";
-import { useSelector, useDispatch } from 'react-redux';
+import { useEffect } from "react";
+import { Form, Input, Button, Checkbox } from "antd";
+import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 
-import { loginAction } from '../../redux/actions';
+import { loginAction } from "../../redux/actions";
 
 function LoginPage() {
   const { responseAction } = useSelector((state) => state.userReducer);
@@ -16,21 +16,23 @@ function LoginPage() {
     if (responseAction.login.error) {
       loginForm.setFields([
         {
-          name: 'email',
-          errors: [' ']
+          name: "email",
+          errors: [" "],
         },
         {
-          name: 'password',
-          errors: [responseAction.login.error]
+          name: "password",
+          errors: [responseAction.login.error],
         },
       ]);
     }
-  }, [responseAction.login])
+  }, [responseAction.login]);
 
   function handleSubmit(values) {
-    dispatch(loginAction({
-      data: values,
-    }));
+    dispatch(
+      loginAction({
+        data: values,
+      })
+    );
   }
 
   return (
@@ -51,7 +53,7 @@ function LoginPage() {
             name="email"
             rules={[
               { required: true, message: "Bạn chưa nhập email ahihi!" },
-              { type: 'email', message: "Email không hợp lệ!" },
+              { type: "email", message: "Email không hợp lệ!" },
             ]}
           >
             <Input />
@@ -65,18 +67,13 @@ function LoginPage() {
             <Input.Password />
           </Form.Item>
 
-          <Form.Item
-            name="remember"
-            valuePropName="checked"
-          >
+          <Form.Item name="remember" valuePropName="checked">
             <Checkbox>Ghi nhớ tài khoản</Checkbox>
           </Form.Item>
-          
-          <div style={{ display: 'inline-block', marginBottom: 16 }}>
+
+          <div style={{ display: "inline-block", marginBottom: 16 }}>
             Bạn chưa có tài khoản?&nbsp;
-            <Link to="/register">
-              Bấm vào đây để đăng ký nha
-            </Link>
+            <Link to="/register">Bấm vào đây để đăng ký nha</Link>
           </div>
 
           <Button
