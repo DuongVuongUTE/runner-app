@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { Form, Input, Button, Checkbox } from "antd";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
+import loginImage from "../../assets/images/login-wallpaper.jpeg";
 
 import { loginAction } from "../../redux/actions";
 
@@ -40,56 +41,62 @@ function LoginPage() {
 
   return (
     <Style.LoginContainer>
-      <div className="login-form">
-        <div className="login-title">
-          <h1 onClick={() => history.push("/")}>Runner Inn</h1>
-          <h2>Đăng nhập</h2>
+      <Style.LoginPage>
+        <div className="login-form">
+          <div className="login-title">
+            <h1 onClick={() => history.push("/")}>Runner Inn</h1>
+            <h2>Đăng nhập</h2>
+          </div>
+          <Form
+            className="form-login"
+            form={loginForm}
+            name="basic"
+            layout="vertical"
+            initialValues={{ remember: true }}
+            onFinish={(values) => handleSubmit(values)}
+          >
+            <Form.Item
+              label="Email"
+              name="email"
+              rules={[
+                { required: true, message: "Bạn chưa nhập email ahihi!" },
+                { type: "email", message: "Email không hợp lệ!" },
+              ]}
+            >
+              <Input />
+            </Form.Item>
+
+            <Form.Item
+              label="Mật khẩu"
+              name="password"
+              rules={[{ required: true, message: "Bạn chưa nhập tài khoản!" }]}
+            >
+              <Input.Password />
+            </Form.Item>
+
+            <Form.Item name="remember" valuePropName="checked">
+              <Checkbox>Ghi nhớ tài khoản</Checkbox>
+            </Form.Item>
+
+            <Button
+              type="primary"
+              htmlType="submit"
+              loading={responseAction.login.load}
+              block
+            >
+              Đăng nhập
+            </Button>
+          </Form>
+
+          <div className="form-redirect">
+            Bạn chưa có tài khoản?&nbsp;
+            <Link to="/register">Bấm vào đây để đăng ký nha</Link>
+          </div>
         </div>
-        <Form
-          className="form-login"
-          form={loginForm}
-          name="basic"
-          layout="vertical"
-          initialValues={{ remember: true }}
-          onFinish={(values) => handleSubmit(values)}
-        >
-          <Form.Item
-            label="Email"
-            name="email"
-            rules={[
-              { required: true, message: "Bạn chưa nhập email ahihi!" },
-              { type: "email", message: "Email không hợp lệ!" },
-            ]}
-          >
-            <Input />
-          </Form.Item>
-
-          <Form.Item
-            label="Mật khẩu"
-            name="password"
-            rules={[{ required: true, message: "Bạn chưa nhập tài khoản!" }]}
-          >
-            <Input.Password />
-          </Form.Item>
-
-          <Form.Item name="remember" valuePropName="checked">
-            <Checkbox>Ghi nhớ tài khoản</Checkbox>
-          </Form.Item>
-
-          <Button
-            type="primary"
-            htmlType="submit"
-            loading={responseAction.login.load}
-          >
-            Đăng nhập
-          </Button>
-        </Form>
-
-        <div className="form-redirect">
-          Bạn chưa có tài khoản?&nbsp;
-          <Link to="/register">Bấm vào đây để đăng ký nha</Link>
-        </div>
-      </div>
+      </Style.LoginPage>
+      <Style.LoginWallpaper>
+        <img src={loginImage} alt="" />
+      </Style.LoginWallpaper>
     </Style.LoginContainer>
   );
 }
