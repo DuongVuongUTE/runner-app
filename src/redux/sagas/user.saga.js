@@ -82,8 +82,8 @@ function* getUserInfoSaga(action) {
 }
 function* getUserListSage(action){
   try {
-    const {role} = action.payload;
-    const result = yield axios.get(`${SERVER_API_URL}/users?role=${role}`);
+    const role = action.payload?.role;
+    const result = yield axios.get(`${SERVER_API_URL}/users?${role && `role=${role}`}`);
     yield put({
       type: SUCCESS(USER_ACTION.GET_USER_LIST),
       payload: {

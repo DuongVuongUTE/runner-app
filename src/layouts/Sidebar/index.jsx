@@ -28,20 +28,15 @@ const SIDEBAR_MENU = [
   },
   {
     title: 'Account Manage',
-    path: '',
+    path: '/admin/accounts',
     icon: 'https://img.icons8.com/ios/25/000000/user.png',
-    subMenu: [
-      {
-        title: 'User',
-        path: '/admin/account/users',
-        // icon: 'https://img.icons8.com/ios/25/000000/categorize.png',
-      },
-      {
-        title: 'Admin',
-        path: '/admin/account/admins',
-        // icon: 'https://img.icons8.com/ios/25/000000/categorize.png',
-      }
-    ]
+    subMenu: []
+  },
+  {
+    title: 'Customer Manage',
+    path: '/admin/customers',
+    icon: 'https://img.icons8.com/ios/25/000000/user.png',
+    subMenu: []
   },
 ]
 
@@ -102,12 +97,12 @@ function Sidebar({ location, isShowSidebar }) {
       <Sider
         style={{ margin: '16px 0' }}
         width={270}
-        theme="light"
+        theme="dark"
         collapsible
         collapsed={collapsed}
         onCollapse={onCollapse}
       >
-        <Menu theme="light" defaultSelectedKeys={['1']} mode="inline">
+        <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
           {renderSidebarMenu()}
         </Menu>
       </Sider>
