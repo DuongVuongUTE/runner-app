@@ -3,7 +3,9 @@ import styled from "styled-components";
 export const LoginContainer = styled.div`
   display: flex;
   min-height: 100vh;
-  flex-direction: row;
+  flex-direction: row-reverse;
+  margin: 0 auto;
+  max-width: 1600px;
   @media screen and (max-width: 920px) {
     flex-direction: column-reverse;
   }
@@ -15,7 +17,7 @@ export const LoginPage = styled.div`
   flex-direction: column;
   justify-content: center;
   padding: 2rem;
-  background: #005fff;
+  background: linear-gradient(45deg, #30cfd0 0%, #330867 100%);
   @media screen and (max-width: 920px) {
     padding: 1rem;
   }
@@ -32,15 +34,32 @@ export const LoginPage = styled.div`
     .login-title {
       h1 {
         font-size: 18px;
-        color: #005fff;
+        color: transparent;
+        background-clip: text;
+        -webkit-background-clip: text;
+        background-image: linear-gradient(to right, #30cfd0 0%, #330867 50%);
         font-weight: 600;
         cursor: pointer;
         margin-bottom: 10px;
       }
       h2 {
         text-align: center;
+        color: transparent;
+        background-clip: text;
+        -webkit-background-clip: text;
+        line-height: 1.4;
+        background-image: linear-gradient(to right, #30cfd0 0%, #330867 50%);
         font-weight: 500;
         font-size: 24px;
+      }
+    }
+    .form-redirect {
+      a {
+        color: transparent;
+        background-clip: text;
+        -webkit-background-clip: text;
+        background-image: linear-gradient(to right, #0f5a5a 0%, #330867 90%);
+        font-weight: 500;
       }
     }
     @media screen and (max-width: 920px) {
