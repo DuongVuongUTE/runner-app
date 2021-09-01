@@ -1,48 +1,81 @@
 import styled from "styled-components";
 
 export const LoginContainer = styled.div`
-  position: relative;
   display: flex;
-  align-items: center;
-  justify-content: flex-end;
   min-height: 100vh;
-  background: linear-gradient(45deg, #f53e2d, #2d88ff);
-  &::after {
-    content: "";
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.3);
-    z-index: -1;
+  flex-direction: row;
+  @media screen and (max-width: 920px) {
+    flex-direction: column-reverse;
   }
+`;
+
+export const LoginPage = styled.div`
+  flex: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 2rem;
+  background: #005fff;
+  @media screen and (max-width: 920px) {
+    padding: 1rem;
+  }
+
   .login-form {
     display: flex;
     flex-direction: column;
-    height: 100vh;
-    width: 500px;
     gap: 30px;
-    padding: 15px;
-    background-color: #fff;
-    z-index: 1;
-    @media screen and (max-width: 1023px) {
-      width: 100%;
+    padding: 2rem;
+    box-shadow: 0px 1px 5px rgb(0 0 0 / 10%);
+    border-radius: 5px;
+    transition: 0.8s ease;
+    background: #fff;
+    .login-title {
+      h1 {
+        font-size: 18px;
+        color: #005fff;
+        font-weight: 600;
+        cursor: pointer;
+        margin-bottom: 10px;
+      }
+      h2 {
+        text-align: center;
+        font-weight: 500;
+        font-size: 24px;
+      }
+    }
+    @media screen and (max-width: 920px) {
+      padding: 1rem;
+      gap: 15px;
+      .login-title {
+        h1 {
+          margin-bottom: 20px;
+        }
+      }
     }
   }
-  .login-title {
-    h1 {
-      font-weight: 600;
-      color: #002878;
-      padding-bottom: 15px;
-      cursor: pointer;
-    }
-    h2 {
-    }
+`;
+
+export const LoginWallpaper = styled.div`
+  position: sticky;
+  top: 0;
+  flex: 3;
+  display: flex;
+  height: 100vh;
+  box-shadow: 1px 0px 5px rgba(0, 0, 0, 0.05);
+
+  img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
   }
-  .form-login {
-    flex: 1;
+  @media screen and (max-width: 1200px) {
+    flex: 2;
+  }
+  @media screen and (max-width: 920px) {
+    display: none;
+    img {
+      display: none;
+    }
   }
 `;
