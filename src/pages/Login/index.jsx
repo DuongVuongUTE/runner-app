@@ -81,6 +81,7 @@ function LoginPage() {
             <Button
               type="primary"
               htmlType="submit"
+              size="large"
               loading={responseAction.login.load}
               block
             >

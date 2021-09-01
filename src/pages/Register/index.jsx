@@ -122,6 +122,7 @@ function RegisterPage() {
               type="primary"
               htmlType="submit"
               block
+              size="large"
               loading={responseAction.register.load}
             >
               Đăng kí
