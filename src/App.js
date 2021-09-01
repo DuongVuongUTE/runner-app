@@ -33,6 +33,9 @@ import "swiper/components/pagination/pagination.min.css";
 
 import { lightTheme, darkTheme } from "./styles/themes";
 import { BackTop } from "antd";
+import jwtDecode from "jwt-decode";
+import { useEffect } from "react";
+import { getUserInfoAction } from "./redux/actions";
 
 const THEME = {
   light: lightTheme,
@@ -41,6 +44,16 @@ const THEME = {
 
 function App() {
   const { theme } = useSelector((state) => state.commonReducer);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+    if (userInfo) {
+      const decodedUserInfo = jwtDecode(userInfo.accessToken);
+      dispatch(getUserInfoAction({ id: decodedUserInfo.sub }));
+    }
+  }, []);
 
   return (
     <ThemeProvider theme={THEME[theme]}>
@@ -51,7 +64,7 @@ function App() {
           <DefaultLayout exact path="/about" component={AboutPage} />
           <DefaultLayout
             exact
-            path="/product/:id"
+            path="/product/:productID"
             component={ProductDetailPage}
           />
           <DefaultLayout exact path="/cart" component={CartPage} />

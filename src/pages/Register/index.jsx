@@ -2,15 +2,11 @@ import { useEffect } from "react";
 import { Form, Input, Select, Button, Checkbox } from "antd";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-
+import * as Style from "./style";
 import { registerAction } from "../../redux/actions";
-
+import history from "../../utils/history";
 function RegisterPage() {
   const { responseAction } = useSelector((state) => state.userReducer);
-  console.log(
-    "🚀 ~ file: index.jsx ~ line 14 ~ RegisterPage ~ responseAction",
-    responseAction
-  );
   const dispatch = useDispatch();
 
   const [registerForm] = Form.useForm();
@@ -31,10 +27,12 @@ function RegisterPage() {
       registerAction({
         data: {
           name: values.name,
+          avatar:
+            "https://thuthuatnhanh.com/wp-content/uploads/2020/09/avatar-cho-con-gai-mau-hong-cute.jpg",
           email: values.email,
           password: values.password,
           gender: values.gender,
-          cart: [],
+          carts: [],
           role: "user",
         },
       })
@@ -42,12 +40,14 @@ function RegisterPage() {
   }
 
   return (
-    <div className="login-container">
+    <Style.LoginContainer>
       <div className="login-form">
         <div className="login-title">
-          <h2>Register</h2>
+          <h1 onClick={() => history.push("/")}>Runner Inn</h1>
+          <h2>Đăng ký</h2>
         </div>
         <Form
+          className="form-login"
           form={registerForm}
           name="basic"
           layout="vertical"
@@ -114,11 +114,6 @@ function RegisterPage() {
             <Checkbox>Đồng ý với các điều khoản</Checkbox>
           </Form.Item>
 
-          <div style={{ display: "inline-block", marginBottom: 16 }}>
-            Bạn đã có tài khoản?&nbsp;
-            <Link to="/login">Đăng nhập</Link>
-          </div>
-
           <Button
             type="primary"
             htmlType="submit"
@@ -128,8 +123,12 @@ function RegisterPage() {
             Đăng kí
           </Button>
         </Form>
+        <div className="form-redirect">
+          Bạn đã có tài khoản?&nbsp;
+          <Link to="/login">Đăng nhập</Link>
+        </div>
       </div>
-    </div>
+    </Style.LoginContainer>
   );
 }
 

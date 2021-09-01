@@ -13,16 +13,19 @@ import {
   Input,
   Form,
   Rate,
+  Space,
+  InputNumber,
 } from "antd";
 import moment from "moment";
 import * as Icons from "@ant-design/icons";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { useParams } from "react-router-dom";
-
+import { v4 as uuidv4 } from "uuid";
 import Loading from "../../../components/Loading";
 
 import { useDispatch, useSelector } from "react-redux";
 import {
+  addToCartAction,
   getProductDetailAction,
   getProductListAction,
 } from "../../../redux/actions";
@@ -38,10 +41,12 @@ import CardProduct from "../../../components/Card";
 const { TabPane } = Tabs;
 const { TextArea } = Input;
 function ProductDetailPage() {
-  const { id } = useParams();
+  const { productID } = useParams();
   const { userInfo } = useSelector((state) => state.userReducer);
   const { productDetail } = useSelector((state) => state.productReducer);
   const { productList } = useSelector((state) => state.productReducer);
+  const { cartList } = useSelector((state) => state.cartReducer);
+  const [productCount, setProductCount] = useState(1);
   const [optionSelected, setOptionSelected] = useState({});
   const [viewMore, setViewMore] = useState(false);
   const [swiper, setSwiper] = useState(null);
@@ -53,11 +58,11 @@ function ProductDetailPage() {
   useEffect(() => {
     dispatch(
       getProductDetailAction({
-        id: id,
+        id: productID,
       })
     );
     dispatch(getProductListAction({ page: 1 }));
-  }, [id]);
+  }, [productID]);
   useEffect(() => {
     if (productDetail.data.id) {
       setOptionSelected(productDetail.data.productOptions[0] || {});
@@ -67,6 +72,42 @@ function ProductDetailPage() {
     return productDetail.data.productOptions?.map((item, index) => {
       return <Radio.Button value={item}>{item.size}</Radio.Button>;
     });
+  }
+
+  function handleAddToCart() {
+    const cartData = [...cartList.data];
+    const cartIndex = cartData.findIndex(
+      (item) => item.productId === productID
+    );
+    if (cartIndex !== -1) {
+      cartData.splice(cartIndex, 1, {
+        ...cartData[cartIndex],
+        count: cartData[cartIndex].count + productCount,
+      });
+      dispatch(
+        addToCartAction({
+          id: userInfo.data.id,
+          data: { cart: cartData },
+        })
+      );
+    } else {
+      const newCartData = [
+        ...cartData,
+        {
+          id: uuidv4(),
+          productId: productID,
+          name: productDetail.data.name,
+          price: productDetail.data.price,
+          count: productCount,
+        },
+      ];
+      dispatch(
+        addToCartAction({
+          id: userInfo.data.id,
+          data: { cart: newCartData },
+        })
+      );
+    }
   }
 
   const data = [
@@ -136,7 +177,7 @@ function ProductDetailPage() {
         <Style.Section>
           <Button onClick={() => history.goBack()}>Quay lại</Button>
           <Style.ProductDetail>
-            <Row gutter={[16, 16]}>
+            <Row gutter={[30, 30]}>
               <Col xl={{ span: 12 }} lg={{ span: 12 }} sm={{ span: 24 }}>
                 <Image.PreviewGroup>
                   <Swiper onSwiper={setSwiper}>
@@ -174,32 +215,81 @@ function ProductDetailPage() {
                 </Swiper>
               </Col>
               <Col xl={{ span: 12 }} lg={{ span: 12 }} sm={{ span: 24 }}>
-                <h3>Tên sản phẩm: {` ${productDetail.data.name}`}</h3>
-                <p>
-                  Rate: <Rate disabled allowHalf defaultValue={4.5} />
-                </p>
-                <p>Mô tả: {` ${productDetail.data.description}`}</p>
-                <p>
-                  Color:
-                  <Style.Color color={productDetail.data.color} />
-                </p>
-                <p>
-                  <Radio.Group
-                    onChange={(e) => setOptionSelected(e.target.value)}
-                    value={optionSelected}
-                  >
-                    {renderProductOptions()}
-                  </Radio.Group>
-                </p>
-                <p>
-                  Giá:{" "}
-                  {optionSelected.price?.toLocaleString() ||
-                    productDetail.data.price?.toLocaleString() ||
-                    0}
-                </p>
-                <Button onClick={() => history.push("/cart")} type="primary">
-                  Add to cart
-                </Button>
+                <div className="product-info">
+                  <h3>{` ${productDetail.data.name}`}</h3>
+                  <div className="product-rate">
+                    <Rate
+                      className="rate"
+                      disabled
+                      allowHalf
+                      defaultValue={4.5}
+                    />
+                    <span className="number-rate"> 0 Khách hàng đánh giá</span>
+                  </div>
+
+                  <div className="product-price">
+                    <strong>
+                      {optionSelected.price?.toLocaleString() ||
+                        productDetail.data.price?.toLocaleString() ||
+                        0}
+                      ₫
+                    </strong>
+                  </div>
+                  <div className="product-info-list">
+                    <div className="product-brand-item">
+                      <span className="product-info-tag">Thương hiệu:</span>
+                      <span className="product-info-text">{` ${productDetail.data.category?.name}`}</span>
+                    </div>
+                    <div className="product-type-item">
+                      <span className="product-info-tag">Loại giày:</span>
+                      <span className="product-info-text">{` ${productDetail.data.type?.name}`}</span>
+                    </div>
+                  </div>
+                  <div className="product-department">
+                    <span className="product-info-tag">Sản phẩm dành cho:</span>
+                    <span className="product-info-text">{` ${productDetail.data.department?.name}`}</span>
+                  </div>
+                  <div className="product-color">
+                    <span className="product-info-tag">Màu sắc:</span>
+                    <Style.Color color={productDetail.data.color} />
+                  </div>
+                  {productDetail.data.productOptions?.length > 0 && (
+                    <div className="product-option">
+                      <strong className="tag">Size</strong>
+                      <Radio.Group
+                        onChange={(e) => setOptionSelected(e.target.value)}
+                        value={optionSelected}
+                      >
+                        {renderProductOptions()}
+                      </Radio.Group>
+                    </div>
+                  )}
+
+                  <div className="product-action">
+                    <Space>
+                      <InputNumber
+                        min={1}
+                        onChange={(value) => setProductCount(value)}
+                        value={productCount}
+                      />
+
+                      <Button
+                        type="primary"
+                        icon={<Icons.ShoppingCartOutlined />}
+                        onClick={() => handleAddToCart()}
+                      >
+                        Thêm vào giỏ
+                      </Button>
+                    </Space>
+                    <Button
+                      type="primary"
+                      danger
+                      icon={<Icons.HeartOutlined />}
+                    >
+                      Thêm yêu thích
+                    </Button>
+                  </div>
+                </div>
               </Col>
             </Row>
             <Row style={{ margin: "30px 0 50px" }}>
@@ -215,20 +305,47 @@ function ProductDetailPage() {
                 >
                   <div className={viewMore ? "list-info active" : "list-info"}>
                     <div className="content">
-                      <h3>Tên sản phẩm: {` ${productDetail.data.name}`}</h3>
-                      <p>Mô tả: {` ${productDetail.data.description}`}</p>
-                      <p>
-                        Color:
-                        <Style.Color color={productDetail.data.color} />
-                      </p>
-
-                      <p>
-                        Giá:{" "}
-                        {optionSelected.price?.toLocaleString() ||
-                          productDetail.data.price?.toLocaleString() ||
-                          0}
-                      </p>
-                      <p>Thương hiệu: {productDetail.data.category?.name}</p>
+                      <span>Tên sản phẩm: </span>
+                      <h3>{` ${productDetail.data.name}`}</h3>
+                      <div>
+                        <span>Mô tả: </span>
+                        <p>{productDetail.data.description}</p>
+                      </div>
+                      <div>
+                        <Space align="center">
+                          <span>Giá: </span>
+                          <span>
+                            {optionSelected.price?.toLocaleString() ||
+                              productDetail.data.price?.toLocaleString() ||
+                              0}
+                            ₫
+                          </span>
+                        </Space>
+                      </div>
+                      <div>
+                        <Space align="center">
+                          <span>Thương hiệu:</span>
+                          <span>{` ${productDetail.data.category?.name}`}</span>
+                        </Space>
+                      </div>
+                      <div>
+                        <Space align="center">
+                          <span>Loại giày:</span>
+                          <span>{` ${productDetail.data.type?.name}`}</span>
+                        </Space>
+                      </div>
+                      <div>
+                        <Space align="center">
+                          <span>Sản phẩm dành cho:</span>
+                          <span>{` ${productDetail.data.department?.name}`}</span>
+                        </Space>
+                      </div>
+                      <div>
+                        <Space align="center">
+                          <span className="product-info-tag">Màu sắc:</span>
+                          <Style.Color color={productDetail.data.color} />
+                        </Space>
+                      </div>
                       <p>Ảnh sản phẩm</p>
                     </div>
                     <div
@@ -308,15 +425,15 @@ function ProductDetailPage() {
                 </TabPane>
               </Tabs>
             </Row>
-            <h2 style={{ marginBottom: 15 }}>Sản phẩm tương tự</h2>
-            <Row gutter={[16, 16]}>
+            <h2 className="text-border">Sản phẩm tương tự</h2>
+            <Row gutter={[15, 15]}>
               {productList.data.map((productItem, productIndex) => {
                 return (
                   <Col
                     xl={{ span: 6 }}
                     lg={{ span: 8 }}
                     sm={{ span: 12 }}
-                    xs={{ span: 24 }}
+                    xs={{ span: 12 }}
                     key={productIndex}
                   >
                     <CardProduct

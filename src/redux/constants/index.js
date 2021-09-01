@@ -6,3 +6,4 @@ export * from "./cart.constant";
 export * from "./order.constant";
 export * from "./common.constant";
 export * from "./type.constant";
+export * from "./department.constant";
