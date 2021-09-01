@@ -9,7 +9,7 @@ import {
   getUserListAction,
 } from "../../../redux/actions";
 
-function UserListPage(props) {
+function CustomerListPage(props) {
   // "", "create", "edit"
   // const [isShowModifyModal, setIsShowModifyModal] = useState("");
   const [modifyUserData, setModifyUserData] = useState({});
@@ -97,7 +97,7 @@ function UserListPage(props) {
   return (
     <div>
       <div style={{ padding: 16 }}>
-        <div>User Manage</div>
+        <div>Customer Manage</div>
         <Row justify="end" style={{ marginBottom: 16 }}>
           <Button
             type="primary"
@@ -126,4 +126,4 @@ function UserListPage(props) {
   );
 }
 
-export default UserListPage;
+export default CustomerListPage;

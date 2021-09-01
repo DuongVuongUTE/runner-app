@@ -356,7 +356,7 @@
       "id": 16,
       "description": "Đây là mô tả",
       "name": "Nike Zoom Span 3",
-      "price": 1050000,
+      "price": 1060000,
       "categoryId": 1,
       "typeId": 3,
       "color": "#000000",
@@ -436,7 +436,7 @@
       "id": 20,
       "description": "Đây là mô tả nữ",
       "name": "Nike Air Zoom G.T. Cut",
-      "price": 3450000,
+      "price": 3470001,
       "categoryId": 1,
       "typeId": 4,
       "color": "#e7352b",
@@ -530,6 +530,54 @@
       "size": 43,
       "price": 5000000,
       "id": 11
+    },
+    {
+      "title": "12",
+      "price": 120000,
+      "productId": "21",
+      "createdAt": 1630486695416,
+      "updatedAt": 1630486695417,
+      "id": 12
+    },
+    {
+      "title": "30",
+      "price": 2000000,
+      "productId": "21",
+      "createdAt": 1630486929753,
+      "updatedAt": 1630486929753,
+      "id": 13
+    },
+    {
+      "title": "12",
+      "price": 800000,
+      "productId": "21",
+      "createdAt": 1630486947102,
+      "updatedAt": 1630486947102,
+      "id": 14
+    },
+    {
+      "title": "12",
+      "price": 500000,
+      "productId": "21",
+      "createdAt": 1630487088090,
+      "updatedAt": 1630487088090,
+      "id": 15
+    },
+    {
+      "price": 450000,
+      "size": "12000",
+      "productId": "21",
+      "createdAt": 1630487282597,
+      "updatedAt": 1630487282597,
+      "id": 16
+    },
+    {
+      "size": "12000",
+      "price": 123000,
+      "productId": 21,
+      "createdAt": 1630487924438,
+      "updatedAt": 1630487924438,
+      "id": 17
     }
   ],
   "todos": [],

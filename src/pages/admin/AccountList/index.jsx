@@ -9,7 +9,7 @@ import {
   getUserListAction,
 } from "../../../redux/actions";
 
-function AdminListPage(props) {
+function AccountListPage(props) {
   // "", "create", "edit"
   // const [isShowModifyModal, setIsShowModifyModal] = useState("");
   const [modifyUserData, setModifyUserData] = useState({});
@@ -18,11 +18,7 @@ function AdminListPage(props) {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getUserListAction(
-      {
-        role:"admin"
-      }
-    ));
+    dispatch(getUserListAction());
   }, []);
 
   function handleSubmitForm(values) {
@@ -97,7 +93,7 @@ function AdminListPage(props) {
   return (
     <div>
       <div style={{ padding: 16 }}>
-        <div>User Manage</div>
+        <div>Account Manage</div>
         <Row justify="end" style={{ marginBottom: 16 }}>
           <Button
             type="primary"
@@ -126,4 +122,4 @@ function AdminListPage(props) {
   );
 }
 
-export default AdminListPage;
+export default AccountListPage;

@@ -8,7 +8,7 @@ import Sidebar from '../Sidebar';
 
 import * as Style from './styles';
 
-function AdminLayout({ exact, path, component: Component }) {
+function AdminLayout({ exact, path, component: Component,action }) {
   const { Content } = Layout;
 
   const [isShowSidebar, setIsShowSidebar] = useState(true);
@@ -37,8 +37,8 @@ function AdminLayout({ exact, path, component: Component }) {
               <Sidebar {...routeProps} isShowSidebar={isShowSidebar} />
               <Style.SiteLayout >
                 <Content style={{ margin: '16px' }}>
-                  <div className="site-layout-background" style={{ padding: 24, minHeight: 360 }}>
-                    <Component {...routeProps} />
+                  <div className="site-layout-background" style={{ padding: 24, minHeight: 360,height:'100%' }}>
+                    <Component {...routeProps} action={action} />
                   </div>
 
                 </Content>

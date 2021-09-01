@@ -1,51 +1,29 @@
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Row, Button, Table, Space, Popconfirm } from "antd";
+
+import history from "../../../utils/history";
+
 import moment from "moment";
 
-import ModifyProductModal from "./components/ModifyProductModal";
-
 import {
+  setProductSelectActionAdmin,
   getCategoryListAction,
-  getProductListAction,
-  createProductAction,
-  editProductAction,
-  deleteProductAction,
+  getProductListActionAdmin,
+  deleteProductActionAdmin
 } from "../../../redux/actions";
 
 function ProductListPage(props) {
-  // "", "create", "edit"
-  const [isShowModifyModal, setIsShowModifyModal] = useState("");
-  const [modifyProductData, setModifyProductData] = useState({});
 
   const { categoryList } = useSelector((state) => state.categoryReducer);
-  const { productList } = useSelector((state) => state.productReducer);
+  const { productList } = useSelector((state) => state.productReducerAdmin);
 
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getCategoryListAction());
-    dispatch(getProductListAction());
+    dispatch(getProductListActionAdmin());
   }, []);
-
-  function handleSubmitForm(values) {
-    if (isShowModifyModal === "create") {
-      dispatch(
-        createProductAction({
-          data: values,
-        })
-      );
-    } else {
-      dispatch(
-        editProductAction({
-          id: modifyProductData.id,
-          data: values,
-        })
-      );
-    }
-    setIsShowModifyModal("");
-  }
-
   const tableColumn = [
     {
       title: "Name",
@@ -85,16 +63,16 @@ function ProductListPage(props) {
             <Button
               type="primary"
               ghost
-              onClick={() => {
-                setIsShowModifyModal("edit");
-                setModifyProductData(record);
-              }}
+              onClick={() =>{
+                {dispatch(setProductSelectActionAdmin(record));}
+                history.push(`/admin/products/edit/${record.id}`)}
+              }
             >
               Edit
             </Button>
             <Popconfirm
               title="Are you sure to delete this product?"
-              onConfirm={() => dispatch(deleteProductAction({ id: record.id }))}
+              onConfirm={() => dispatch(deleteProductActionAdmin({ id: record.id }))}
               onCancel={() => null}
               okText="Yes"
               cancelText="No"
@@ -113,10 +91,6 @@ function ProductListPage(props) {
       ...productItem,
     };
   });
-  console.log(
-    "🚀 ~ file: index.jsx ~ line 114 ~ tableData ~ tableData",
-    tableData
-  );
 
   return (
     <div>
@@ -125,10 +99,7 @@ function ProductListPage(props) {
         <Row justify="end" style={{ marginBottom: 16 }}>
           <Button
             type="primary"
-            onClick={() => {
-              setIsShowModifyModal("create");
-              setModifyProductData({ name: "", price: 0 });
-            }}
+            onClick={()=>history.push('/admin/products/create')}
           >
             Add Product
           </Button>
@@ -139,13 +110,6 @@ function ProductListPage(props) {
           loading={productList.load}
         />
       </div>
-      <ModifyProductModal
-        isShowModifyModal={isShowModifyModal}
-        setIsShowModifyModal={setIsShowModifyModal}
-        handleSubmitForm={handleSubmitForm}
-        modifyProductData={modifyProductData}
-        categoryList={categoryList}
-      />
     </div>
   );
 }

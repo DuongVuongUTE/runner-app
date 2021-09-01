@@ -7,6 +7,7 @@ import cartSaga from "./cart.saga";
 import orderSaga from "./order.saga";
 import typeSaga from "./type.saga";
 import departmentSaga from "./department.saga";
+import adminProductSaga from "./admin/product.saga";
 
 export default function* rootSaga() {
   yield fork(productSaga);
@@ -16,4 +17,6 @@ export default function* rootSaga() {
   yield fork(orderSaga);
   yield fork(typeSaga);
   yield fork(departmentSaga);
+  yield fork(adminProductSaga);
+  
 }
