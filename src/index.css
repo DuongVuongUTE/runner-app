@@ -38,12 +38,10 @@ body {
 .ant-drawer-body .user-mobile .avatar-mobile {
   width: 100%;
   padding-bottom: 15px;
+  cursor: pointer;
 }
 .ant-drawer-body .user-mobile .btn-login {
   margin-bottom: 15px;
-}
-.ant-drawer-body .your-wishlist {
-  margin: 10px 0;
 }
 .ant-drawer-body ul {
   display: flex;
@@ -51,8 +49,8 @@ body {
   gap: 15px;
   padding: 15px 0;
   list-style: none;
-  border-top: 1px solid #444;
-  border-bottom: 1px solid #444;
+  border-top: 2px solid rgba(0, 0, 0, 0.4);
+  border-bottom: 2px solid rgba(0, 0, 0, 0.4);
 }
 .ant-drawer-body ul li span {
   display: block;

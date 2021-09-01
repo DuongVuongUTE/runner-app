@@ -5,6 +5,9 @@ import { Link } from "react-router-dom";
 
 import { loginAction } from "../../redux/actions";
 
+import * as Style from "./style";
+import history from "../../utils/history";
+
 function LoginPage() {
   const { responseAction } = useSelector((state) => state.userReducer);
 
@@ -36,12 +39,14 @@ function LoginPage() {
   }
 
   return (
-    <div className="login-container">
+    <Style.LoginContainer>
       <div className="login-form">
         <div className="login-title">
-          <h2>Login</h2>
+          <h1 onClick={() => history.push("/")}>Runner Inn</h1>
+          <h2>Đăng nhập</h2>
         </div>
         <Form
+          className="form-login"
           form={loginForm}
           name="basic"
           layout="vertical"
@@ -71,11 +76,6 @@ function LoginPage() {
             <Checkbox>Ghi nhớ tài khoản</Checkbox>
           </Form.Item>
 
-          <div style={{ display: "inline-block", marginBottom: 16 }}>
-            Bạn chưa có tài khoản?&nbsp;
-            <Link to="/register">Bấm vào đây để đăng ký nha</Link>
-          </div>
-
           <Button
             type="primary"
             htmlType="submit"
@@ -84,8 +84,13 @@ function LoginPage() {
             Đăng nhập
           </Button>
         </Form>
+
+        <div className="form-redirect">
+          Bạn chưa có tài khoản?&nbsp;
+          <Link to="/register">Bấm vào đây để đăng ký nha</Link>
+        </div>
       </div>
-    </div>
+    </Style.LoginContainer>
   );
 }
 

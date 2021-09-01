@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-import { getProductListAction } from "../../redux/actions";
+import { getProductListAction, logoutAction } from "../../redux/actions";
 import { useSelector, useDispatch } from "react-redux";
 
 import * as Icons from "@ant-design/icons";
@@ -25,16 +25,10 @@ import * as Style from "./styles";
 import Avatar from "antd/lib/avatar/avatar";
 
 function Header({ type }) {
-  console.log("🚀 ~ file: index.jsx ~ line 27 ~ Header ~ type", type);
-  const { productList } = useSelector((state) => state.productReducer);
-
+  const { cartList } = useSelector((state) => state.cartReducer);
+  const { userInfo } = useSelector((state) => state.userReducer);
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(getProductListAction({ page: 1 }));
-  }, []);
-
-  const [searchValue, setSearchValue] = useState("");
   const [sticky, setSticky] = useState(true);
   const [visible, setVisible] = useState(false);
   const showDrawer = () => {
@@ -55,6 +49,14 @@ function Header({ type }) {
     prevScrollpos = currentScrollPos;
   });
 
+  function handleLogout() {
+    localStorage.removeItem("userInfo");
+    dispatch(logoutAction());
+    if (type === "admin") {
+      history.push("/login");
+    }
+  }
+
   const menu = (
     <Menu>
       <Menu.Item>
@@ -68,7 +70,7 @@ function Header({ type }) {
         </Space>
       </Menu.Item>
       <Menu.Item>
-        <Space size={5} align="center">
+        <Space size={5} align="center" onClick={() => handleLogout()}>
           <Icons.LogoutOutlined /> <span>Đăng xuất</span>
         </Space>
       </Menu.Item>
@@ -146,13 +148,17 @@ function Header({ type }) {
             visible={visible}
           >
             <div className="user-mobile">
-              {"1" ? (
+              {userInfo.data.name ? (
                 <>
-                  {" "}
-                  <Dropdown overlay={menu} placement="bottomRight" arrow>
+                  <Dropdown
+                    overlay={menu}
+                    placement="bottomRight"
+                    arrow
+                    trigger={["click"]}
+                  >
                     <Space align="center" className="avatar-mobile">
-                      <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
-                      <strong>Dương Vương</strong>
+                      <Avatar src={userInfo.data?.avatar} />
+                      <strong>{userInfo.data?.name}</strong>
                     </Space>
                   </Dropdown>
                 </>
@@ -210,13 +216,17 @@ function Header({ type }) {
                 </Badge>
               )}
               <div className="user-action">
-                {"" ? (
+                {userInfo.data.name ? (
                   <>
-                    {" "}
-                    <Dropdown overlay={menu} placement="bottomRight" arrow>
-                      <Space align="center">
-                        <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
-                        <strong>Dương Vương</strong>
+                    <Dropdown
+                      overlay={menu}
+                      placement="bottomRight"
+                      arrow
+                      trigger={["click"]}
+                    >
+                      <Space align="center" style={{ cursor: "pointer" }}>
+                        <Avatar src={userInfo.data?.avatar} />
+                        <strong>{userInfo.data?.name}</strong>
                       </Space>
                     </Dropdown>
                   </>

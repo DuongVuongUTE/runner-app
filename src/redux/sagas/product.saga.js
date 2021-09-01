@@ -81,7 +81,7 @@ function* getProductDetailSaga(action) {
       url: `${SERVER_API_URL}/products/${id}`,
       params: {
         _embed: "productOptions",
-        _expand: "category",
+        _expand: ["department", "category", "type"],
       },
     });
     yield put({
