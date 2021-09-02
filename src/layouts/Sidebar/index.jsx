@@ -11,33 +11,34 @@ const SIDEBAR_MENU = [
   {
     title: 'Dashboard',
     path: '/admin',
-    icon: 'https://img.icons8.com/ios/25/000000/home--v1.png',
+    icon: 'https://img.icons8.com/fluency/25/000000/home.png',
     subMenu: []
   },
   {
-    title: 'Product Manage',
+    title: 'Quản Lý Sản Phẩm',
     path: '/admin/products',
-    icon: 'https://img.icons8.com/dotty/25/000000/product.png',
+    icon: 'https://img.icons8.com/color/25/000000/product--v3.png',
     subMenu: []
   },
   {
-    title: 'Category Manage',
+    title: 'Quán Lý Loại',
     path: '/admin/categories',
-    icon: 'https://img.icons8.com/ios/25/000000/categorize.png',
+    icon: 'https://img.icons8.com/fluency/25/000000/categorize.png',
     subMenu: []
   },
   {
-    title: 'Account Manage',
-    path: '/admin/accounts',
-    icon: 'https://img.icons8.com/ios/25/000000/user.png',
-    subMenu: []
-  },
-  {
-    title: 'Customer Manage',
+    title: 'Quản Lý Khách Hàng',
     path: '/admin/customers',
-    icon: 'https://img.icons8.com/ios/25/000000/user.png',
+    icon: 'https://img.icons8.com/fluency/25/000000/group.png',
     subMenu: []
   },
+  {
+    title: 'Quản Lý tài khoản',
+    path: '/admin/accounts',
+    icon: 'https://img.icons8.com/fluency/25/000000/guest-male.png',
+    subMenu: []
+  },
+  
 ]
 
 function Sidebar({ location, isShowSidebar }) {
@@ -94,7 +95,7 @@ function Sidebar({ location, isShowSidebar }) {
   }
   return (
     <>
-      <Sider
+      <Style.CustomSider
         style={{ margin: '16px 0' }}
         width={270}
         theme="dark"
@@ -102,10 +103,10 @@ function Sidebar({ location, isShowSidebar }) {
         collapsed={collapsed}
         onCollapse={onCollapse}
       >
-        <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
+        <Style.CustomMenu  defaultSelectedKeys={['1']} mode="inline">
           {renderSidebarMenu()}
-        </Menu>
-      </Sider>
+        </Style.CustomMenu>
+      </Style.CustomSider>
 
     </>
   );

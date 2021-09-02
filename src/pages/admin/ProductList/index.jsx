@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Row, Button, Table, Space, Popconfirm } from "antd";
-
+import { Row, Button, Table, Space, Popconfirm,List } from "antd";
+import ProductOptionItem from "../components/ProductOptionItem";
 import history from "../../../utils/history";
 
 import moment from "moment";
@@ -12,6 +12,8 @@ import {
   getProductListActionAdmin,
   deleteProductActionAdmin
 } from "../../../redux/actions";
+
+import * as Style from './styles'
 
 function ProductListPage(props) {
 
@@ -26,12 +28,12 @@ function ProductListPage(props) {
   }, []);
   const tableColumn = [
     {
-      title: "Name",
+      title: "Tên sản phẩm",
       dataIndex: "name",
       key: "name",
     },
     {
-      title: "Category",
+      title: "Loại",
       dataIndex: "categoryId",
       key: "categoryId",
       render: (value) => {
@@ -42,19 +44,26 @@ function ProductListPage(props) {
       },
     },
     {
-      title: "Price",
+      title: "Giá",
       dataIndex: "price",
       key: "price",
       render: (value) => value.toLocaleString(),
     },
     {
-      title: "Create At",
+      title: "Ngày tạo",
       dataIndex: "createdAt",
       key: "createdAt",
       render: (value) => value && moment(value).format("DD/MM/YYYY HH:mm"),
     },
     {
-      title: "Action",
+      title: "Ngày sửa",
+      dataIndex: "updatedAt",
+      key: "updatedAt",
+      render: (value) => value && moment(value).format("DD/MM/YYYY HH:mm"),
+    },
+
+    {
+
       dataIndex: "action",
       key: "action",
       render: (_, record) => {
@@ -63,12 +72,13 @@ function ProductListPage(props) {
             <Button
               type="primary"
               ghost
-              onClick={() =>{
-                {dispatch(setProductSelectActionAdmin(record));}
-                history.push(`/admin/products/edit/${record.id}`)}
+              onClick={() => {
+                { dispatch(setProductSelectActionAdmin(record)); }
+                history.push(`/admin/products/edit/${record.id}`)
+              }
               }
             >
-              Edit
+              Sửa
             </Button>
             <Popconfirm
               title="Are you sure to delete this product?"
@@ -77,7 +87,7 @@ function ProductListPage(props) {
               okText="Yes"
               cancelText="No"
             >
-              <Button danger>Delete</Button>
+              <Button danger>Xóa</Button>
             </Popconfirm>
           </Space>
         );
@@ -95,18 +105,38 @@ function ProductListPage(props) {
   return (
     <div>
       <div style={{ padding: 16 }}>
-        <div>Product Manage</div>
+        <Style.Title>Quản lý sản phẩm</Style.Title>
         <Row justify="end" style={{ marginBottom: 16 }}>
-          <Button
+          <Style.CustomButton
             type="primary"
-            onClick={()=>history.push('/admin/products/create')}
+            onClick={() => history.push('/admin/products/create')}
           >
-            Add Product
-          </Button>
+            Thêm mới
+          </Style.CustomButton>
         </Row>
         <Table
+          pagination={{ pageSize: 7 }}
           columns={tableColumn}
           dataSource={tableData}
+          expandable={{
+            expandedRowRender: (record) => {
+              return (
+                <List
+                  size="small"
+                  dataSource={record.productOptions}
+                  renderItem={(item) => (
+                    <List.Item>
+                      <Row justify="space-between" style={{ width: '100%' }}>
+                        <div>Size: {item.size}</div>
+                        <div>{(record.price + item.price).toLocaleString()}VNĐ</div>
+                      </Row>
+                    </List.Item>
+                  )}
+                />
+              )
+            },
+            rowExpandable: (record) => record.productOptions.length > 0
+          }}
           loading={productList.load}
         />
       </div>

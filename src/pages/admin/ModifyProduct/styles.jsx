@@ -13,4 +13,7 @@ export const Container = styled.div`
   margin: 10px;
   width: 100px;
 `
+export const customTag = styled(Tag)`
+  min-width: 80px;
+`
 

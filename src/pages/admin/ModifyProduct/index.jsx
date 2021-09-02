@@ -1,8 +1,19 @@
-import { render } from '@testing-library/react';
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
-import { Form, Row, Card, Space, Input, Button, InputNumber, Tag, Radio, Upload, Checkbox, Select } from 'antd';
+import { 
+  Form,
+  Row,
+  Card,
+  Space,
+  Input,
+  Button,
+  InputNumber,
+  Tag,
+  Radio,
+  Upload,
+  Checkbox,
+  Select } from 'antd';
 import * as Icon from "@ant-design/icons";
 
 import {
@@ -11,27 +22,64 @@ import {
   getProductListActionAdmin,
   createProductActionAdmin,
   editProductActionAdmin,
-  createOptionActionAdmin
+  createOptionActionAdmin,
+  getProductDetailActionAdmin
 } from '../../../redux/actions'
 
-import ProductOptionItem from '../components/ProductOptuonItem';
+import ProductOptionItem from '../components/ProductOptionItem';
 
-import * as Style from './styles'
 import history from '../../../utils/history';
+import * as Style from './styles'
 
 const COLOR_MENU = [
-  '#e7352b',
-  '#ffffff',
-  '#000000',
-  '#1790c8',
-  '#f36b26',
-  '#825d41',
-  '#7bba3c',
-  '#fed533',
-  '#808080',
-  '#f0728f',
-  '#02cbb5',
-  'multicolor'
+  {
+    'color':'đỏ',
+    'code':'#e7352b'
+  },
+  {
+    'color':'trắng',
+    'code':'#ffffff',
+  },
+  {
+    'color':'đen',
+    'code':'#000000',
+  },
+  {
+    'color':'xanh dương',
+    'code':'#1790c8',
+  },
+  {
+    'color':'cam',
+    'code':'#f36b26',
+  },
+  {
+    'color':'nâu',
+    'code':'#825d41',
+  },
+  {
+    'color':'xanh la',
+    'code':'#7bba3c',
+  },
+  {
+    'color':'vàng',
+    'code':'#fed533',
+  },
+  {
+    'color':'xám',
+    'code':'#808080',
+  },
+  {
+    'color':'hồng',
+    'code':'#f0728f',
+  },
+  {
+    'color':'xanh ngọc',
+    'code':'#02cbb5',
+  },
+  {
+    'color':'màu khác',
+    'code':'multicolor',
+  },
 ]
 
 
@@ -42,28 +90,28 @@ function ModifyProduct({ action, match }) {
 
   const dispatch = useDispatch();
   const { categoryList } = useSelector((state) => state.categoryReducer);
-  const { productList } = useSelector((state) => state.productReducerAdmin);
+  const { productDetail } = useSelector((state) => state.productReducerAdmin);
   const { productSelected } = useSelector((state) => state.commonProductReducerAdmin);
 
   const [isOptionForm, setIsOptionForm] = useState(false);
   const [isShowCreateOption, setIsShowCreateOption] = useState(false);
-
   useEffect(() => {
     dispatch(getCategoryListAction());
-    dispatch(getProductListActionAdmin());
+    if(productId){
+      dispatch(getProductDetailActionAdmin({
+        id:productId
+      }));
+    }
     productForm.resetFields();
   }, [])
   useEffect(() => {
-    if(productList.data.length>0){
+    if (productDetail.data) {
       productForm.resetFields();
+      dispatch(setProductSelectActionAdmin(
+        productDetail.data
+      ));
     }
-   
-  }, [productList.data])
-  const setInitialValues = action === "create"
-    ? {}
-    : productList.data.find((ProductItem) => {
-      return ProductItem.id == productId
-    })
+  }, [productDetail.data])
   function renderProductOptionItems() {
     return productSelected.productOptions.map((optionItem, optionIndex) => {
       return (
@@ -84,9 +132,9 @@ function ModifyProduct({ action, match }) {
             console.log('🚀 ~ file: index.jsx ~ line 187 ~ renderCreateOptionForm ~ values', values);
             dispatch(createOptionActionAdmin(
               {
-                data:{
+                data: {
                   ...values,
-                  productId:parseInt(productId)
+                  productId: parseInt(productId)
                 }
               }
             ));
@@ -148,7 +196,7 @@ function ModifyProduct({ action, match }) {
   }
 
   // console.log("🚀 ~ file: index.jsx ~ line 49 ~ handleSetInitialValues ~ handleSetInitialValues", handleSetInitialValues())
- 
+
 
   function handleSubmitForm() {
     const values = productForm.getFieldsValue();
@@ -162,10 +210,10 @@ function ModifyProduct({ action, match }) {
         }
       ));
     }
-    else{
+    else {
       dispatch(editProductActionAdmin(
         {
-          id:productId ,
+          id: productId,
           data: {
             ...values,
             'images': values.images.map((item) => item.name)
@@ -198,9 +246,9 @@ function ModifyProduct({ action, match }) {
     return COLOR_MENU.map((colorItem, colorIndex) => {
       return (
         <Style.customRadio value={colorItem}>
-          {colorItem == "#ffffff" || colorItem == "multicolor"
-            ? <Tag >{colorItem}</Tag>
-            : <Tag color={colorItem}>{colorItem}</Tag>
+          {colorItem.code == "#ffffff" || colorItem.code == "multicolor"
+            ? <Style.customTag >{colorItem.color}</Style.customTag>
+            : <Style.customTag color={colorItem.code}>{colorItem.color}</Style.customTag>
           }
 
         </Style.customRadio>
@@ -211,50 +259,57 @@ function ModifyProduct({ action, match }) {
   return (
     <>
       <Style.Container>
-        <h3>{action} Product</h3>
+        <h3>{action=="create"?"Thêm":"Sửa"} Sản Phẩm</h3>
         <div>
           <Form
             form={productForm}
             className="form"
             name="basic"
-            labelCol={{ span: 4 }}
-            initialValues={setInitialValues}
+            labelCol={{ span: 5 }}
+            initialValues={productId?productDetail.data:{}}
             onFinish={handleSubmitForm}
           >
             <Form.Item
-              label="Name"
+              label="Tên sản phẩm:"
               name="name"
-              rules={[{ required: true, message: 'Please input your username!' }]}
+              rules={[{ required: true, message: 'bạn chưa nhập tên sản phẩm!' }]}
             >
               <Input />
             </Form.Item>
             <Form.Item
-              label="Description"
+              label="Mô tả"
               name="description"
-              rules={[{ required: true, message: 'Please input your userdescription!' }]}
+              rules={[{ required: true, message: 'Bạn chưa nhập mô tả!' }]}
             >
               <Input.TextArea />
             </Form.Item>
             <Form.Item
-              label="Price"
+              label="Giá"
               name="price"
-              rules={[{ required: true, message: 'Please input your price!' }]}
+              rules={[{ required: true, message: 'bạn chưa nhập giá!' }]}
             >
               <InputNumber />
             </Form.Item>
             <Form.Item
-              label="Category"
+              label="Số lượng"
+              name="quantity"
+              rules={[{ required: true, message: 'bạn chưa nhập số lượng!' }]}
+            >
+              <InputNumber />
+            </Form.Item>
+            <Form.Item
+              label="Loại"
               name="categoryId"
-              rules={[{ required: true, message: 'Please input your Category!' }]}
+              rules={[{ required: true, message: 'Bạn chưa chọn loại' }]}
             >
               <Select>
                 {renderOptionCategory()}
               </Select>
             </Form.Item>
             <Form.Item
-              label="Color"
+              label="Màu sắc"
               name="color"
-              rules={[{ required: true, message: 'Please input your color!' }]}
+              rules={[{ required: true, message: 'bạn chưa chọn màu' }]}
             >
               <Radio.Group>
                 {renderOptionColor()}
@@ -262,20 +317,21 @@ function ModifyProduct({ action, match }) {
             </Form.Item>
             <Form.Item
               name="images"
-              label="Images"
+              label="Hình ảnh"
               valuePropName="fileList"
+              rules={[{ required: true, message: 'bạn chưa nhập hình ảnh' }]}
               getValueFromEvent={normFile}
             >
               <Upload name="logo" listType="picture">
                 <Button icon={<Icon.UploadOutlined />}>Click to upload</Button>
               </Upload>
             </Form.Item>
-            <Form.Item label="Tùy chọn">
-              <Checkbox disabled={action === "create"}
-                checked={isOptionForm} onChange={(e) => setIsOptionForm(e.target.checked)}
-              />
-            </Form.Item>
           </Form>
+          <Form.Item label="Tùy chọn">
+            <Checkbox disabled={action === "create"}
+              checked={isOptionForm} onChange={(e) => setIsOptionForm(e.target.checked)}
+            />
+          </Form.Item>
           {isOptionForm && productSelected.id && renderProductOptionForm()}
           <Row justify="end">
             <Space style={{ marginTop: "40px" }}>

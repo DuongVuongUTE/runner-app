@@ -3,6 +3,7 @@ import { Route, Redirect } from "react-router-dom";
 
 import { Layout, Menu, Breadcrumb } from 'antd';
 
+import HeaderAdmin from '../HeaderAdmin';
 import Header from '../Header';
 import Sidebar from '../Sidebar';
 
@@ -28,11 +29,7 @@ function AdminLayout({ exact, path, component: Component,action }) {
       render={(routeProps) => {
         return (
           <>
-            <Header
-              type="admin"
-              isShowSidebar={isShowSidebar}
-              setIsShowSidebar={setIsShowSidebar}
-            />
+            <HeaderAdmin/>
             <Layout style={{ minHeight: '100vh'}}>
               <Sidebar {...routeProps} isShowSidebar={isShowSidebar} />
               <Style.SiteLayout >

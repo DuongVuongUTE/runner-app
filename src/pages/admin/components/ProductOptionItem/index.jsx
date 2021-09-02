@@ -1,14 +1,11 @@
-
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import * as Icon from "@ant-design/icons";
 
 import {
-  createOptionActionAdmin,
-  setProductSelectActionAdmin,
-  getCategoryListAction,
-  getProductListActionAdmin
-} from '../../../../../redux/actions'
+  editOptionActionAdmin,
+  deleteOptionActionAdmin
+} from '../../../../redux/actions'
 import {
   Col,
   Row,
@@ -23,12 +20,10 @@ import {
 import { EditOutlined, CloseOutlined } from '@ant-design/icons';
 
 
-function ProductOptionItem({
-  optionItem,
-  productId,
-}) {
-  const [isEditForm, setIsEditForm] = useState(false);
+function ProductOptionItem({ optionItem, productId, }) {
 
+  const [isEditForm, setIsEditForm] = useState(false);
+  const dispatch = useDispatch();
   if (isEditForm) {
     return (
       <Card
@@ -40,6 +35,14 @@ function ProductOptionItem({
           name="editProductOption"
           initialValues={optionItem}
           onFinish={(values) => {
+            dispatch(editOptionActionAdmin({
+              id: optionItem.id,
+              data: {
+                ...values,
+                productId,
+              },
+            }))
+
             // editOptionAdmin({
             //   id: optionItem.id,
             //   productId,
@@ -74,8 +77,10 @@ function ProductOptionItem({
       <Row justify="space-between">
         <Space  >
           <Row>
-            <Col span={12}><div>{optionItem.size}</div></Col>
-            <Col span={8}><div>{optionItem.price}</div></Col>
+            <Space>
+              <Col span={22}><div>{optionItem.size}</div></Col>
+              <Col span={10}><div>{optionItem.price}</div></Col>
+            </Space>
           </Row>
         </Space>
         <Space>
@@ -84,7 +89,7 @@ function ProductOptionItem({
           </Button>
           <Popconfirm
             title={`Bạn có chắc muốn xóa ${optionItem.title}`}
-            // onConfirm={() => deleteOptionAdmin({ id: optionItem.id })}
+            onConfirm={() => dispatch(deleteOptionActionAdmin({ id: optionItem.id }))}
             okText="Xóa"
             cancelText="Hủy"
           >

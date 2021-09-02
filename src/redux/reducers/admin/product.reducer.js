@@ -105,6 +105,39 @@ const productReducerAdmin = createReducer(initialState, {
       },
     };
   },
+  [REQUEST(PRODUCT_ACTION_ADMIN.GET_PRODUCT_DETAIL_ADMIN)]: (state, action) => {
+    return {
+      ...state,
+      productDetail: {
+        ...state.productDetail,
+        load: true,
+      },
+    };
+  },
+  [SUCCESS(PRODUCT_ACTION_ADMIN.GET_PRODUCT_DETAIL_ADMIN)]: (state, action) => {
+    const { data } = action.payload;
+    return {
+      ...state,
+      productDetail: {
+        ...state.productDetail,
+        data,
+        load: false,
+        error: null,
+      },
+    }
+  },
+  [FAILURE(PRODUCT_ACTION_ADMIN.GET_PRODUCT_DETAIL_ADMIN)]: (state, action) => {
+    const { error } = action.payload;
+    return {
+      ...state,
+      productDetail: {
+        ...state.productDetail,
+        load: false,
+        error,
+      },
+    }
+  },
+
 });
 
 export default productReducerAdmin;

@@ -1,14 +1,14 @@
-// import styled, { css } from 'styled-components';
-
-// export const SidebarContainer = styled.div`
-//   position: absolute;
-//   top: 0;
-//   left: ${(props) => props.show ? '0' : '-300px'};
-//   width: 300px;
-//   height: calc(100vh - 56px);
-//   background-color: ${(props) => props.theme.sidebar};
-//   transition: all 0.3s;
-// `;
+import styled, { css } from 'styled-components';
+import { Layout, Menu, Breadcrumb } from 'antd';
+const { Header, Content, Sider } = Layout;
+export const CustomSider = styled(Sider)`
+  padding-top: 30px;
+  background: #330867d3;
+`;
+export const CustomMenu = styled(Menu)`
+  background-color:transparent;
+  color: white;
+`;
 
 // export const SidebarItem = styled.div`
 //   position: relative;
