@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Row, Button, Table, Space, Popconfirm } from "antd";
-
+import { Row, Button, Table, Space, Popconfirm,List } from "antd";
+import ProductOptionItem from "../components/ProductOptionItem";
 import history from "../../../utils/history";
 
 import moment from "moment";
@@ -63,7 +63,7 @@ function ProductListPage(props) {
     },
 
     {
-      
+
       dataIndex: "action",
       key: "action",
       render: (_, record) => {
@@ -116,9 +116,28 @@ function ProductListPage(props) {
         </Row>
         <Table
           pagination={{ pageSize: 7 }}
-        columns={tableColumn}
-        dataSource={tableData}
-        loading={productList.load}
+          columns={tableColumn}
+          dataSource={tableData}
+          expandable={{
+            expandedRowRender: (record) => {
+              return (
+                <List
+                  size="small"
+                  dataSource={record.productOptions}
+                  renderItem={(item) => (
+                    <List.Item>
+                      <Row justify="space-between" style={{ width: '100%' }}>
+                        <div>Size: {item.size}</div>
+                        <div>{(record.price + item.price).toLocaleString()}VNĐ</div>
+                      </Row>
+                    </List.Item>
+                  )}
+                />
+              )
+            },
+            rowExpandable: (record) => record.productOptions.length > 0
+          }}
+          loading={productList.load}
         />
       </div>
     </div>

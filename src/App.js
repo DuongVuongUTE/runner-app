@@ -24,7 +24,7 @@ import ProductListPage from "./pages/admin/ProductList";
 import CategoryListPage from "./pages/admin/CategoryList";
 import CustomerListPage from "./pages/admin/CustomerList";
 import AccountListPage from "./pages/admin/AccountList";
-import ModifyProduct from "./pages/admin/ProductList/components/ModifyProduct";
+import ModifyProduct from "./pages/admin/ModifyProduct";
 
 import "antd/dist/antd.css";
 import "swiper/swiper.min.css";

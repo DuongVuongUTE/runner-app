@@ -2,15 +2,15 @@ import styled from "styled-components";
 import { Row, Col ,Space} from 'antd';
 
 export const HeaderContainer = styled.div`
-  
   padding: 20px 40px;
+  background: #330867;
 `
 export const HeaderLogo = styled.h1`
   flex-shrink: 0;
   color: transparent;
   background-clip: text;
   -webkit-background-clip: text;
-  background-image: linear-gradient(to right, #30cfd0 0%, #330867 100%);
+  background-image: linear-gradient(to right, #e7ecec 0%, #7f6c97 100%);
   text-transform: uppercase;
   font-style: italic;
   font-size: 36px;
@@ -36,8 +36,9 @@ export const profile = styled.div`
   justify-content: space-between;
   padding: 5px 20px;
   border-radius: 30px;
-  border: 1px solid black;
+  border: 1px solid white;
   cursor: pointer;
+  color: white;
   &>span{
     margin: 0;
   }

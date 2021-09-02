@@ -25,5 +25,35 @@ const commonProductReducerAdmin = createReducer(initialState,{
         }
       }
   },
+
+  [SUCCESS(PRODUCT_ACTION_ADMIN.EDIT_OPTION)]: (state, action) => {
+    const { data } = action.payload;
+      const newProductOptions = [...state.productSelected.productOptions];
+      const optionIndex = newProductOptions.findIndex((item) => item.id === data.id);
+      newProductOptions.splice(optionIndex, 1, data);
+      return {
+        ...state,
+        productSelected: {
+          ...state.productSelected,
+          productOptions: newProductOptions,
+        }
+      }
+},
+
+  [SUCCESS(PRODUCT_ACTION_ADMIN.DELETE_OPTION)]: (state, action) => {
+      const { data } = action.payload;
+      const newProductOptions = [...state.productSelected.productOptions];
+      const optionIndex = newProductOptions.findIndex((item) => item.id === data.id);
+      newProductOptions.splice(optionIndex, 1);
+      return {
+        ...state,
+        productSelected: {
+          ...state.productSelected,
+          productOptions: newProductOptions,
+        }
+      }
+  },
+
+
 })
 export default commonProductReducerAdmin;
