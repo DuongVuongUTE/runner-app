@@ -12,12 +12,12 @@ import {
   createProductActionAdmin,
   editProductActionAdmin,
   createOptionActionAdmin
-} from '../../../../../redux/actions'
+} from '../../../redux/actions'
 
-import ProductOptionItem from '../ProductOptionItem';
+import ProductOptionItem from '../components/ProductOptuonItem';
 
 import * as Style from './styles'
-import history from '../../../../../utils/history';
+import history from '../../../utils/history';
 
 const COLOR_MENU = [
   '#e7352b',
@@ -51,7 +51,14 @@ function ModifyProduct({ action, match }) {
   useEffect(() => {
     dispatch(getCategoryListAction());
     dispatch(getProductListActionAdmin());
+    productForm.resetFields();
   }, [])
+  useEffect(() => {
+    if(productList.data.length>0){
+      productForm.resetFields();
+    }
+   
+  }, [productList.data])
   const setInitialValues = action === "create"
     ? {}
     : productList.data.find((ProductItem) => {
