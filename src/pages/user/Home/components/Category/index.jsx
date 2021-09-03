@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import categoryMen from "../../../../../assets/images/categorymen.jpeg";
 import categoryWomen from "../../../../../assets/images/categorywoman.jpeg";
@@ -24,6 +24,14 @@ function CategoryHome() {
       category: "Giày trẻ em",
     },
   ];
+
+  useEffect(() => {
+    //preload image
+    categoryList.forEach((item) => {
+      const img = new Image();
+      img.src = item.image;
+    });
+  }, []);
 
   function renderCategory() {
     return categoryList.map((category, index) => {
