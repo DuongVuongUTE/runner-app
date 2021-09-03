@@ -36,7 +36,7 @@ function Product({
           key={`product-item-${productItem.id}-${productIndex}`}
         >
           <CardProduct
-            path={`/product/${productItem.id}`}
+            path={`/product/${productItem.name}-${productItem.id}`}
             product={productItem}
           ></CardProduct>
         </Style.ProductItem>
