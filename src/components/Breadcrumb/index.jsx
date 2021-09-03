@@ -7,7 +7,9 @@ import history from "../../utils/history";
 function BreadcrumbUI() {
   const breadcrumbNameMap = {
     "/product": "Tất cả sản phẩm",
-    "/product/:id": "Chi tiết sản phẩm",
+    "/product/men": "Giày nam",
+    "/product/woman": "Giày nữ",
+    "/product/kids": "Giày trẻ em",
     "/blog": "Bài viết",
   };
   const { location } = history;
@@ -27,7 +29,7 @@ function BreadcrumbUI() {
   ].concat(extraBreadcrumbItems);
   return (
     <Style.Breadcrumb>
-      <Breadcrumb>{breadcrumbItems}</Breadcrumb>
+      <Breadcrumb separator="-">{breadcrumbItems}</Breadcrumb>
     </Style.Breadcrumb>
   );
 }

@@ -13,6 +13,7 @@ import ArticlesHome from "./components/Articles";
 import GalleryHome from "./components/Gallery";
 import { useDispatch, useSelector } from "react-redux";
 import { getProductListAction } from "../../../redux/actions";
+import Loading from "../../../components/Loading";
 
 function HomePage() {
   const { productList } = useSelector((state) => state.productReducer);
@@ -22,6 +23,22 @@ function HomePage() {
   useEffect(() => {
     dispatch(getProductListAction());
   }, []);
+
+  const shoesMenList = {
+    data: productList.data?.filter(
+      (productItem) => productItem.department.name === "Nam"
+    ),
+  };
+  const shoesWomenList = {
+    data: productList.data?.filter(
+      (productItem) => productItem.department.name === "Nữ"
+    ),
+  };
+  const shoesKidsList = {
+    data: productList.data?.filter(
+      (productItem) => productItem.department.name === "Trẻ em"
+    ),
+  };
 
   const articlesList = [
     {
@@ -70,42 +87,56 @@ function HomePage() {
     },
   ];
   return (
-    <Style.Home>
-      {/* Slider */}
-      <SliderHome />
-      {/* Giày mới */}
-      <SectionHome title="Sản phẩm mới" text="xem thêm" params="/product">
-        <ProductNew productList={productList} />
-      </SectionHome>
-      {/* category */}
-      <CategoryHome />
-      {/* Giày nam */}
-      <SectionHome title="Giày nam" text="xem thêm" params="/men">
-        <ProductSlider productList={productList} />
-      </SectionHome>
-      {/* Form đăng ký nhận thông báo */}
-      <RegisterForm
-        bg={register}
-        title="Đăng ký"
-        text=" Đăng ký nhận bản tin của Runner Inn để cập nhật những sản phẩm mới, nhận thông tin ưu đãi đặc biệt và thông tin giảm giá khác."
-      />
-      {/* Giày nữ */}
-      <SectionHome title="Giày nữ" text="xem thêm" params="/woman">
-        <ProductSlider productList={productList} />
-      </SectionHome>
-      {/* Giày trẻ em */}
-      <SectionHome title="Giày trẻ em" text="xem thêm" params="/kids">
-        <ProductSlider productList={productList} />
-      </SectionHome>
-      {/* Bài viết */}
-      <SectionHome title="Bài viết mới nhất" text="">
-        <ArticlesHome articlesList={articlesList} />
-      </SectionHome>
-      {/* list ảnh giới thiệu */}
-      <SectionHome title="Khách hàng và Runner Inn" text="" noContainer={true}>
-        <GalleryHome />
-      </SectionHome>
-    </Style.Home>
+    <>
+      {productList.load ? (
+        <Loading load={productList.load} />
+      ) : (
+        <Style.Home>
+          {/* Slider */}
+          <SliderHome />
+          {/* Giày mới */}
+          <SectionHome title="Sản phẩm mới" text="xem thêm" params="/product">
+            <ProductNew productList={productList} />
+          </SectionHome>
+          {/* category */}
+          <CategoryHome />
+          {/* Giày nam */}
+          <SectionHome title="Giày nam" text="xem thêm" params="/product/men">
+            <ProductSlider productList={shoesMenList} />
+          </SectionHome>
+          {/* Form đăng ký nhận thông báo */}
+          <RegisterForm
+            bg={register}
+            title="Đăng ký"
+            text=" Đăng ký nhận bản tin của Runner Inn để cập nhật những sản phẩm mới, nhận thông tin ưu đãi đặc biệt và thông tin giảm giá khác."
+          />
+          {/* Giày nữ */}
+          <SectionHome title="Giày nữ" text="xem thêm" params="/product/woman">
+            <ProductSlider productList={shoesWomenList} />
+          </SectionHome>
+          {/* Giày trẻ em */}
+          <SectionHome
+            title="Giày trẻ em"
+            text="xem thêm"
+            params="/product/kids"
+          >
+            <ProductSlider productList={shoesKidsList} />
+          </SectionHome>
+          {/* Bài viết */}
+          <SectionHome title="Bài viết mới nhất" text="xem thêm" params="/blog">
+            <ArticlesHome articlesList={articlesList} />
+          </SectionHome>
+          {/* list ảnh giới thiệu */}
+          <SectionHome
+            title="Khách hàng và Runner Inn"
+            text=""
+            noContainer={true}
+          >
+            <GalleryHome />
+          </SectionHome>
+        </Style.Home>
+      )}
+    </>
   );
 }
 

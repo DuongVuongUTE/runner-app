@@ -1,5 +1,13 @@
 import styled from "styled-components";
 
+export const Breadcrumb = styled.div`
+  position: absolute;
+  top: 20px;
+  left: 50%;
+  width: 100%;
+  transform: translateX(-50%);
+  color: white;
+`;
 export const Hero = styled.div`
   position: relative;
   padding-top: 150px;
@@ -29,9 +37,16 @@ export const ProductLayout = styled.div`
 export const ProductFilter = styled.div`
   width: 250px;
   flex-shrink: 0;
+  /* .sticky {
+    position: sticky;
+    top: 10px;
+    z-index: 10;
+  } */
   h3 {
     padding: 10px 0;
     border-bottom: 3px solid #003a8c;
+    color: #003a8c;
+    font-weight: 600;
   }
   .title-collapse {
     display: flex;
@@ -94,19 +109,3 @@ export const ProductContent = styled.div`
     }
   }
 `;
-
-export const ProductList = styled.div`
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  grid-gap: 15px;
-  @media screen and (max-width: 1023px) {
-    grid-template-columns: repeat(3, 1fr);
-  }
-  @media screen and (max-width: 767px) {
-    grid-template-columns: repeat(3, 1fr);
-  }
-  @media screen and (max-width: 460px) {
-    grid-template-columns: repeat(2, 1fr);
-  }
-`;
-export const ProductItem = styled.div``;

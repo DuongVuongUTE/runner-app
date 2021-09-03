@@ -88,15 +88,15 @@ function Header({ type }) {
     },
     {
       title: "Nam",
-      path: "/men",
+      path: "/product/men",
     },
     {
       title: "Nữ",
-      path: "/women",
+      path: "/product/woman",
     },
     {
       title: "Trẻ em",
-      path: "/kids",
+      path: "/product/kids",
     },
     // {
     //   title: "Giới thiệu",

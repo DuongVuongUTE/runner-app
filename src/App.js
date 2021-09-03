@@ -37,6 +37,7 @@ import { BackTop } from "antd";
 import jwtDecode from "jwt-decode";
 import { useEffect } from "react";
 import { getUserInfoAction } from "./redux/actions";
+import BlogPage from "./pages/user/Blog";
 
 const THEME = {
   light: lightTheme,
@@ -62,6 +63,11 @@ function App() {
         <Switch>
           <DefaultLayout exact path="/" component={HomePage} />
           <DefaultLayout exact path="/product" component={ProductPage} />
+          <DefaultLayout exact path="/product/men" component={ProductPage} />
+          <DefaultLayout exact path="/product/woman" component={ProductPage} />
+          <DefaultLayout exact path="/product/kids" component={ProductPage} />
+          <DefaultLayout exact path="/blog" component={BlogPage} />
+          <DefaultLayout exact path="/contact" component={AboutPage} />
           <DefaultLayout exact path="/about" component={AboutPage} />
           <DefaultLayout
             exact
@@ -87,17 +93,21 @@ function App() {
             path="/admin/customers"
             component={CustomerListPage}
           />
-          <AdminLayout exact path="/admin/accounts" component={AccountListPage}/>
-          <AdminLayout 
-            exact 
-            action="create" 
-            path="/admin/products/create" 
+          <AdminLayout
+            exact
+            path="/admin/accounts"
+            component={AccountListPage}
+          />
+          <AdminLayout
+            exact
+            action="create"
+            path="/admin/products/create"
             component={ModifyProduct}
           />
-          <AdminLayout 
-            exact 
-            action="edit" 
-            path="/admin/products/edit/:id" 
+          <AdminLayout
+            exact
+            action="edit"
+            path="/admin/products/edit/:id"
             component={ModifyProduct}
           />
 

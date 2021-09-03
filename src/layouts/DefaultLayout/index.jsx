@@ -1,9 +1,9 @@
 import { Route } from "react-router-dom";
 
-import Header from '../Header';
-import Footer from '../Footer';
+import Header from "../Header";
+import Footer from "../Footer";
 
-import * as Style from './styles';
+import * as Style from "./styles";
 
 function DefaultLayout(props) {
   const { exact, path, component: Component } = props;
@@ -21,8 +21,8 @@ function DefaultLayout(props) {
             </Style.MainContainer>
             <Footer />
           </>
-        )
-      }}  
+        );
+      }}
     />
   );
 }
