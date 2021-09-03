@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Row, Button, Table, Space, Popconfirm } from "antd";
+import { Button, Table, Space, Popconfirm } from "antd";
 import moment from "moment";
 
 // import ModifyProductModal from "./components/ModifyProductModal";
@@ -8,6 +8,8 @@ import moment from "moment";
 import {
   getUserListAction,
 } from "../../../redux/actions";
+
+import * as Style from './styles'
 
 function CustomerListPage(props) {
   // "", "create", "edit"
@@ -30,7 +32,7 @@ function CustomerListPage(props) {
 
   const tableColumn = [
     {
-      title: "Name",
+      title: "Tên",
       dataIndex: "name",
       key: "name",
     },
@@ -40,19 +42,25 @@ function CustomerListPage(props) {
       key: "email",
     },
     {
-      title: "Create At",
+      title: "Ngày tạo",
       dataIndex: "createdAt",
       key: "createdAt",
       render: (value) => value && moment(value).format("DD/MM/YYYY HH:mm"),
     },
     {
-      title: "Update At",
+      title: "Ngày sửa",
       dataIndex: "updatedAt",
       key: "updatedAt",
       render: (value) => value && moment(value).format("DD/MM/YYYY HH:mm"),
     },
     {
-      title: "Action",
+      title: "Trạng thái",
+      dataIndex: "status",
+      key: "status",
+      render: (value)=> value == 0 ? "Khóa":"Kích Hoạt"
+    },
+    {
+      title: "",
       dataIndex: "action",
       key: "action",
       render: (_, record) => {
@@ -66,7 +74,7 @@ function CustomerListPage(props) {
                 setModifyUserData(record);
               }}
             >
-              Edit
+              Sửa
             </Button>
             <Popconfirm
               title="Are you sure to delete this User?"
@@ -75,7 +83,6 @@ function CustomerListPage(props) {
               okText="Yes"
               cancelText="No"
             >
-              <Button danger>Delete</Button>
             </Popconfirm>
           </Space>
         );
@@ -97,19 +104,10 @@ function CustomerListPage(props) {
   return (
     <div>
       <div style={{ padding: 16 }}>
-        <div>Customer Manage</div>
-        <Row justify="end" style={{ marginBottom: 16 }}>
-          <Button
-            type="primary"
-            onClick={() => {
-              // setIsShowModifyModal("create");
-              setModifyUserData({ name: "", price: 0 });
-            }}
-          >
-            Add User
-          </Button>
-        </Row>
+        <Style.Title>Quản lý khách hàng</Style.Title>
+        
         <Table
+          style={{ marginTop: 40 }}
           columns={tableColumn}
           dataSource={tableData}
           loading={userList.load}

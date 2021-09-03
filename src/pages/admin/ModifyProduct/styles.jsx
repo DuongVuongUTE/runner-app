@@ -8,6 +8,11 @@ export const Container = styled.div`
     max-width: 700px;
     background-color: #80808022;
   }
+  & label{
+    font-size: 14px;
+    font-weight: 500;
+    color: black;
+  }
  `
  export const customRadio = styled(Radio)`
   margin: 10px;
@@ -15,5 +20,11 @@ export const Container = styled.div`
 `
 export const customTag = styled(Tag)`
   min-width: 80px;
+`
+export const Title = styled.h2`
+  font-size: 20px;
+  text-transform: uppercase;
+  font-weight: 900;
+  color:#330867;
 `
 

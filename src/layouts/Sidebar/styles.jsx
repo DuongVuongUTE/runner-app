@@ -10,21 +10,3 @@ export const CustomMenu = styled(Menu)`
   color: white;
 `;
 
-// export const SidebarItem = styled.div`
-//   position: relative;
-//   display: flex;
-//   align-items: center;
-//   padding: 0 16px;
-//   height: 50px;
-//   color: #110202;
-//   cursor: pointer;
-
-//   &:hover {
-//     background-color: ${(props) => props.theme.hover};
-//   }
-
-//   ${(props) => props.active && css`
-//     background-color: ${(props) => props.theme.active} !important;
-//     border-right: 5px solid #b5f5ec;
-//   `}
-// `;

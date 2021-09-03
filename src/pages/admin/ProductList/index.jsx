@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Row, Button, Table, Space, Popconfirm,List } from "antd";
-import ProductOptionItem from "../components/ProductOptionItem";
+import { Row, Button, Table, Space, Popconfirm, List, Input } from "antd";
+import * as Icon from "@ant-design/icons";
 import history from "../../../utils/history";
 
 import moment from "moment";
@@ -19,13 +19,22 @@ function ProductListPage(props) {
 
   const { categoryList } = useSelector((state) => state.categoryReducer);
   const { productList } = useSelector((state) => state.productReducerAdmin);
-
+  const [searchKey, setSearchKey] = useState('');
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getCategoryListAction());
     dispatch(getProductListActionAdmin());
   }, []);
+
+  function handleSearchProduct(value) {
+    console.log("🚀 ~ file: index.jsx ~ line 31 ~ handleSearchProduct ~ value", value)
+    setSearchKey(value);
+    dispatch(getProductListActionAdmin({
+      searchKey:value
+    }));
+  }
+
   const tableColumn = [
     {
       title: "Tên sản phẩm",
@@ -114,6 +123,13 @@ function ProductListPage(props) {
             Thêm mới
           </Style.CustomButton>
         </Row>
+        <Style.Search>
+          <Input 
+            style={{width:"50%"}} placeholder="Tìm kiếm..." 
+            suffix={<Icon.SearchOutlined />} 
+            onChange={(e)=>handleSearchProduct(e.target.value)}
+            />
+        </Style.Search>
         <Table
           pagination={{ pageSize: 7 }}
           columns={tableColumn}
@@ -126,7 +142,7 @@ function ProductListPage(props) {
                   dataSource={record.productOptions}
                   renderItem={(item) => (
                     <List.Item>
-                      <Row justify="space-between" style={{ width: '100%' }}>
+                      <Row justify="space-between" style={{ width: '100%',padding:"0 60px" }}>
                         <div>Size: {item.size}</div>
                         <div>{(record.price + item.price).toLocaleString()}VNĐ</div>
                       </Row>

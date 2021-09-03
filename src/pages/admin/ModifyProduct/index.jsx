@@ -23,7 +23,8 @@ import {
   createProductActionAdmin,
   editProductActionAdmin,
   createOptionActionAdmin,
-  getProductDetailActionAdmin
+  getProductDetailActionAdmin,
+  getDepartmentListAction
 } from '../../../redux/actions'
 
 import ProductOptionItem from '../components/ProductOptionItem';
@@ -91,12 +92,14 @@ function ModifyProduct({ action, match }) {
   const dispatch = useDispatch();
   const { categoryList } = useSelector((state) => state.categoryReducer);
   const { productDetail } = useSelector((state) => state.productReducerAdmin);
+  const { departmentList } = useSelector((state) => state.departmentReducer);
   const { productSelected } = useSelector((state) => state.commonProductReducerAdmin);
-
+  
   const [isOptionForm, setIsOptionForm] = useState(false);
   const [isShowCreateOption, setIsShowCreateOption] = useState(false);
   useEffect(() => {
     dispatch(getCategoryListAction());
+    dispatch(getDepartmentListAction());
     if(productId){
       dispatch(getProductDetailActionAdmin({
         id:productId
@@ -150,7 +153,7 @@ function ModifyProduct({ action, match }) {
           </Form.Item>
           <Form.Item
             name="price"
-            label="Price"
+            label="Giá: "
             rules={[{ required: true, message: 'Bạn chưa điền giá của tùy chọn' }]}
           >
             <InputNumber
@@ -242,6 +245,17 @@ function ModifyProduct({ action, match }) {
       )
     })
   }
+  function renderOptionDepartment() {
+    return departmentList.data.map((departmentItem) => {
+      return (
+        <>
+          <Option value={departmentItem.id}>
+            {departmentItem.name}
+          </Option>
+        </>
+      )
+    })
+  }
   function renderOptionColor() {
     return COLOR_MENU.map((colorItem, colorIndex) => {
       return (
@@ -259,13 +273,13 @@ function ModifyProduct({ action, match }) {
   return (
     <>
       <Style.Container>
-        <h3>{action=="create"?"Thêm":"Sửa"} Sản Phẩm</h3>
+        <Style.Title>{action=="create"?"Thêm":"Sửa"} Sản Phẩm</Style.Title>
         <div>
           <Form
             form={productForm}
             className="form"
             name="basic"
-            labelCol={{ span: 5 }}
+            labelCol={{ span: 6 }}
             initialValues={productId?productDetail.data:{}}
             onFinish={handleSubmitForm}
           >
@@ -304,6 +318,15 @@ function ModifyProduct({ action, match }) {
             >
               <Select>
                 {renderOptionCategory()}
+              </Select>
+            </Form.Item>
+            <Form.Item
+              label="Đối tượng sử dụng:"
+              name="departmentId"
+              rules={[{ required: true, message: 'Bạn chưa chọn đối tượng sử dụng' }]}
+            >
+              <Select>
+                {renderOptionDepartment()}
               </Select>
             </Form.Item>
             <Form.Item

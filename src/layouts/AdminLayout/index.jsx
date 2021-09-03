@@ -16,12 +16,12 @@ function AdminLayout({ exact, path, component: Component,action }) {
 
   const userInfo = JSON.parse(localStorage.getItem('userInfo'));
 
-  // if (!userInfo) {
-  //   return <Redirect to="/login" />
-  // } else {
-  //   if (userInfo.role === 'user') {
-  //     return <Redirect to="/" />
-  //   } else {
+  if (!userInfo) {
+    return <Redirect to="/login" />
+  } else {
+    if (userInfo.role === 'user') {
+      return <Redirect to="/" />
+    } else {
   return (
     <Route
       exact={exact}
@@ -47,7 +47,7 @@ function AdminLayout({ exact, path, component: Component,action }) {
     />
   );
 }
-//   }
-// }
+  }
+}
 
 export default AdminLayout;

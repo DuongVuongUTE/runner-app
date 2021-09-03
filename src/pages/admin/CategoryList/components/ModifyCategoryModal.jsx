@@ -3,6 +3,7 @@ import {
   Modal,
   Form,
   Input,
+  Button
 } from "antd";
 
 function ModifyCategoryModal({
@@ -21,10 +22,18 @@ function ModifyCategoryModal({
 
   return (
     <Modal
-      title={isShowModifyModal === "create" ? "Create Category" : "Edit Category"}
+      title={isShowModifyModal === "create" ? "Thêm Loại" : "Sửa Loại"}
       visible={!!isShowModifyModal}
-      onOk={() => modifyCategoryForm.submit()}
+      // onOk={() => modifyCategoryForm.submit()}
       onCancel={() => setIsShowModifyModal('')}
+      footer={[
+        <Button key="back" onClick={() => setIsShowModifyModal('')}>
+          Hủy
+        </Button>,
+        <Button key="back" type="primary" onClick={() => modifyCategoryForm.submit()}>
+          Lưu
+        </Button>,
+      ]}
     >
       <Form
         form={modifyCategoryForm}
@@ -33,9 +42,10 @@ function ModifyCategoryModal({
         wrapperCol={{ span: 20 }}
         initialValues={modifyCategoryData}
         onFinish={(values) => handleSubmitForm(values)}
+
       >
         <Form.Item
-          label="Name"
+          label="Tên Loại: "
           name="name"
           rules={[{ required: true, message: "Please input your name!" }]}
         >
