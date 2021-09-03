@@ -5,6 +5,7 @@ import { SERVER_API_URL } from "../apiUrl";
 
 function* getProductListSaga(action) {
   try {
+    const searchKey = action.payload?.searchKey;
     const result = yield axios({
       method: "GET",
       url:`${SERVER_API_URL}/products`,
@@ -12,6 +13,7 @@ function* getProductListSaga(action) {
         _sort: "id",
         _order: "desc",
         _embed:'productOptions',
+        ...(searchKey && { q: searchKey }),
       },
     });
     yield put({

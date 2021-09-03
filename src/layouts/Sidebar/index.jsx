@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Layout, Menu, Breadcrumb } from 'antd';
-import * as Icons from "@ant-design/icons";
 
 
 import history from '../../utils/history';

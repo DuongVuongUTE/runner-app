@@ -17,6 +17,8 @@ import {
   deleteCategoryAction,
 } from '../../../redux/actions';
 
+import * as Style from './styles'
+
 function CategoryListPage(props) {
   // "", "create", "edit"
   const [isShowModifyModal, setIsShowModifyModal] = useState('');
@@ -46,12 +48,12 @@ function CategoryListPage(props) {
 
   const tableColumn = [
     {
-      title: 'Name',
+      title: 'Tên loại',
       dataIndex: 'name',
       key: 'name',
     },
     {
-      title: 'Action',
+      title: '',
       dataIndex: 'action',
       key: 'action',
       render: (_, record) => {
@@ -65,7 +67,7 @@ function CategoryListPage(props) {
                 setModifyCategoryData(record);
               }}
             >
-              Edit
+              Sửa
             </Button>
             <Popconfirm
               title="Are you sure to delete this category?"
@@ -74,7 +76,7 @@ function CategoryListPage(props) {
               okText="Yes"
               cancelText="No"
             >
-              <Button danger>Delete</Button>
+              <Button danger>Xóa</Button>
             </Popconfirm>
           </Space>
         )
@@ -92,7 +94,7 @@ function CategoryListPage(props) {
   return (
     <div>
       <div style={{ padding: 16 }}>
-        <div>Category Manage</div>
+        <Style.Title>Quản lý loại sản phẩm</Style.Title>
         <Row justify="end" style={{ marginBottom: 16 }}>
           <Button
             type="primary"
@@ -101,7 +103,7 @@ function CategoryListPage(props) {
               setModifyCategoryData({ name: '', price: 0 });
             }}
           >
-            Add Category
+            Thêm mới
           </Button>
         </Row>
         <Table

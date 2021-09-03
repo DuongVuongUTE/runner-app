@@ -42,12 +42,6 @@ function ProductOptionItem({ optionItem, productId, }) {
                 productId,
               },
             }))
-
-            // editOptionAdmin({
-            //   id: optionItem.id,
-            //   productId,
-            //   ...values,
-            // });
             setIsEditForm(false);
           }}
         >
@@ -77,9 +71,9 @@ function ProductOptionItem({ optionItem, productId, }) {
       <Row justify="space-between">
         <Space  >
           <Row>
-            <Space>
-              <Col span={22}><div>{optionItem.size}</div></Col>
-              <Col span={10}><div>{optionItem.price}</div></Col>
+            <Space >
+              <Col ><div>Size: {optionItem.size}</div></Col>
+              <Col ><div>{(optionItem.price).toLocaleString()}VNĐ</div></Col>
             </Space>
           </Row>
         </Space>
