@@ -18,6 +18,7 @@ import {
   Descriptions,
   Tag,
   Card,
+  PageHeader,
 } from "antd";
 import moment from "moment";
 import * as Icons from "@ant-design/icons";
@@ -58,7 +59,7 @@ const DataList = [
   },
 ];
 function ProductDetailPage() {
-  const { productID } = useParams();
+  let { productID } = useParams();
   const { userInfo } = useSelector((state) => state.userReducer);
   const { productDetail } = useSelector((state) => state.productReducer);
   const { productList } = useSelector((state) => state.productReducer);
@@ -72,7 +73,18 @@ function ProductDetailPage() {
     if (swiper) swiper.slideTo(index);
   };
   const dispatch = useDispatch();
+
+  function getIdParams(params) {
+    const arr = params.split("-");
+    return arr[arr.length - 1];
+  }
+  function getNameParams(params) {
+    const arr = params.split("-");
+    return decodeURIComponent(arr[0]);
+  }
+
   useEffect(() => {
+    productID = getIdParams(productID);
     dispatch(
       getProductDetailAction({
         id: productID,
@@ -192,7 +204,12 @@ function ProductDetailPage() {
         <Loading load={productDetail.load} />
       ) : (
         <Style.Section>
-          <Button onClick={() => history.goBack()}>Quay lại</Button>
+          <PageHeader
+            className="site-page-header"
+            onBack={() => history.goBack()}
+            title="Chi tiết sản phẩm"
+            subTitle={getNameParams(productID)}
+          />
           <Style.ProductDetail>
             <Row gutter={[30, 30]}>
               <Col xl={{ span: 12 }} lg={{ span: 12 }} sm={{ span: 24 }}>
@@ -304,51 +321,25 @@ function ProductDetailPage() {
                       Thêm yêu thích
                     </Button>
                   </div>
-                  <>
-                    <List
-                      bordered
-                      header={<strong>Chính sách</strong>}
-                      dataSource={DataList}
-                      renderItem={(item) => (
-                        <List.Item>
-                          <Space>
-                            {item.icon}
-                            {item.text}
-                          </Space>
-                        </List.Item>
-                      )}
-                    />
-                    {/* <Card title="Chia sẽ">
-                      <Tag icon={<Icons.TwitterOutlined />} color="#55acee">
-                        Twitter
-                      </Tag>
-                      <Tag icon={<Icons.YoutubeOutlined />} color="#cd201f">
-                        Youtube
-                      </Tag>
-                      <Tag icon={<Icons.FacebookOutlined />} color="#3b5999">
-                        Facebook
-                      </Tag>
-                      <Tag icon={<Icons.LinkedinOutlined />} color="#55acee">
-                        LinkedIn
-                      </Tag>
-                    </Card> */}
-                  </>
+
+                  <List
+                    bordered
+                    header={<strong>Chính sách</strong>}
+                    dataSource={DataList}
+                    renderItem={(item) => (
+                      <List.Item>
+                        <Space>
+                          {item.icon}
+                          {item.text}
+                        </Space>
+                      </List.Item>
+                    )}
+                  />
                 </div>
               </Col>
             </Row>
-            <Row
-              style={{ margin: "50px 0" }}
-              gutter={{ xl: 20, lg: 15, sm: 10, xs: 10 }}
-            >
-              <Col
-                xl={{ span: 12 }}
-                lg={{ span: 12 }}
-                sm={{ span: 24 }}
-                xs={{ span: 24 }}
-                xl={{ order: 1 }}
-                sm={{ order: 2 }}
-                xs={{ order: 2 }}
-              >
+            <Row style={{ padding: "50px 0" }} gutter={[16, 24]}>
+              <Col lg={{ span: 15, order: 1 }} xs={{ order: 2 }}>
                 <Tabs defaultActiveKey="1">
                   <TabPane
                     tab={
@@ -440,12 +431,7 @@ function ProductDetailPage() {
                 </Tabs>
               </Col>
               <Col
-                xl={{ span: 12 }}
-                lg={{ span: 12 }}
-                sm={{ span: 24 }}
-                xs={{ span: 24 }}
-                xl={{ order: 2 }}
-                sm={{ order: 1 }}
+                lg={{ span: 9, order: 2 }}
                 xs={{ order: 1 }}
                 style={{ width: "100%" }}
               >
@@ -496,7 +482,7 @@ function ProductDetailPage() {
                     key={productIndex}
                   >
                     <CardProduct
-                      path={`/product/${productItem.id}`}
+                      path={`/product/${productItem.name}-${productItem.id}`}
                       product={productItem}
                     ></CardProduct>
                   </Col>

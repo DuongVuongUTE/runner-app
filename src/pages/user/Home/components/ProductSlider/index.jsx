@@ -16,7 +16,10 @@ function ProductSlider({ productList }) {
       if (index <= 9) {
         return (
           <SwiperSlide key={`${product.name}-${index}`}>
-            <CardProduct path={`/product/${product.id}`} product={product} />
+            <CardProduct
+              path={`/product/${product.name}-${product.id}`}
+              product={product}
+            />
           </SwiperSlide>
         );
       }
