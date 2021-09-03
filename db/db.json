@@ -588,7 +588,6 @@
       ],
       "departmentId": 3
     },
-
     {
       "id": 25,
       "description": "Đây là mô tả giày nữ",
@@ -632,7 +631,6 @@
       ],
       "departmentId": 2
     },
-
     {
       "id": 27,
       "description": "Đây là mô tả giày nữ",
@@ -945,7 +943,6 @@
       "size": 35,
       "price": 400000
     },
-
     {
       "id": 23,
       "productId": 4,
@@ -1186,7 +1183,6 @@
       "size": 45,
       "price": 3350000
     },
-
     {
       "id": 63,
       "productId": 21,
@@ -1313,7 +1309,6 @@
       "size": 34,
       "price": 1700000
     },
-
     {
       "id": 84,
       "productId": 24,

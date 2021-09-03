@@ -13,7 +13,11 @@ export const ProductList = styled.div`
     min-height: unset;
   }
   @media screen and (max-width: 460px) {
+    grid-gap: 15px 10px;
     grid-template-columns: repeat(2, 1fr);
+  }
+  @media screen and (max-width: 320px) {
+    grid-template-columns: repeat(1, 1fr);
   }
 `;
 export const ProductItem = styled.div``;

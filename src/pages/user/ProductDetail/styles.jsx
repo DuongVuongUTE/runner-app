@@ -156,6 +156,31 @@ export const ProductDetail = styled.div`
       color: rgba(0, 0, 0, 0.84);
     }
   }
+  @media screen and (max-width: 450px) {
+    .ant-descriptions-bordered .ant-descriptions-item-label,
+    .ant-descriptions-bordered .ant-descriptions-item-content {
+      padding: 10px 15px;
+    }
+  }
+  @media screen and (max-width: 350px) {
+    .ant-list-bordered .ant-list-item,
+    .ant-list-bordered .ant-list-header {
+      padding-right: 15px;
+      padding-left: 15px;
+    }
+    .ant-descriptions-bordered .ant-descriptions-item-label,
+    .ant-descriptions-bordered .ant-descriptions-item-content {
+      padding: 10px 10px;
+    }
+  }
+
+  @media screen and (max-width: 325px) {
+    .col-custom {
+      display: block;
+      flex: 0 0 100%;
+      max-width: 100%;
+    }
+  }
 `;
 export const Color = styled.div`
   display: inline-flex;

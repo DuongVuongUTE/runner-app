@@ -33,6 +33,10 @@ function ProductSlider({ productList }) {
         navigation={true}
         breakpoints={{
           0: {
+            slidesPerView: 1,
+            spaceBetween: 15,
+          },
+          320: {
             slidesPerView: 2,
             spaceBetween: 10,
           },

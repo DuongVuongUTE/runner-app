@@ -465,7 +465,7 @@ function ProductDetailPage() {
               </Col>
             </Row>
 
-            <Row gutter={{ xs: 10, sm: 10, md: 15, lg: 15 }}>
+            <Row gutter={[15, 20]}>
               <Col span={24}>
                 <div className="product-related">
                   <div>Giày runner</div>
@@ -480,6 +480,7 @@ function ProductDetailPage() {
                     sm={{ span: 12 }}
                     xs={{ span: 12 }}
                     key={productIndex}
+                    className="col-custom"
                   >
                     <CardProduct
                       path={`/product/${productItem.name}-${productItem.id}`}

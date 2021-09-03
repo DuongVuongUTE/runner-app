@@ -28,5 +28,34 @@ export const ProductList = styled.div`
     --spacing: 10px;
     --column: 2;
   }
+  @media screen and (max-width: 320px) {
+    --spacing: 0;
+    --column: 0;
+    all: unset;
+    & {
+      display: grid;
+      justify-content: flex-start;
+      grid-auto-columns: calc(100% - 10px);
+      grid-auto-flow: column;
+      grid-gap: 20px 10px;
+      grid-template-rows: 1fr 1fr;
+      overflow: auto;
+      overflow-y: hidden;
+      scroll-snap-type: x mandatory;
+      scroll-snap-stop: always;
+      -ms-touch-action: manipulation;
+      touch-action: manipulation;
+      -webkit-overflow-scrolling: touch;
+      scroll-padding: 10px;
+      grid-template-columns: unset;
+    }
+    &::-webkit-scrollbar {
+      display: none;
+      width: 0;
+    }
+    & > * {
+      scroll-snap-align: start;
+    }
+  }
 `;
 export const ProductItem = styled.div``;

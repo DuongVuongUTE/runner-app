@@ -9,6 +9,9 @@ export const LoginContainer = styled.div`
   @media screen and (max-width: 920px) {
     flex-direction: column-reverse;
   }
+  @media screen and (max-width: 400px) {
+    min-height: unset;
+  }
 `;
 
 export const LoginPage = styled.div`
@@ -70,6 +73,14 @@ export const LoginPage = styled.div`
           margin-bottom: 20px;
         }
       }
+    }
+  }
+  @media screen and (max-width: 400px) {
+    padding: 0rem;
+    .login-form {
+      box-shadow: unset;
+      border-radius: unset;
+      padding: 15px 10px;
     }
   }
 `;
