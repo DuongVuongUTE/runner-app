@@ -14,13 +14,13 @@ function DefaultLayout(props) {
       path={path}
       render={(routeProps) => {
         return (
-          <>
+          <div style={{ overflowX: "hidden" }}>
             <Header type="user" />
             <Style.MainContainer>
               <Component {...routeProps} />
             </Style.MainContainer>
             <Footer />
-          </>
+          </div>
         );
       }}
     />

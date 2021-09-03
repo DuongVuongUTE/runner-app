@@ -21,6 +21,9 @@ function HomePage() {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    //preload Image
+    const img = new Image();
+    img.src = register;
     dispatch(getProductListAction());
   }, []);
 

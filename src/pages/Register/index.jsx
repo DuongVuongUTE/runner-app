@@ -4,13 +4,19 @@ import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import * as Style from "./style";
 import { registerAction } from "../../redux/actions";
-import registerImage from "../../assets/images/register-wallpaper.png";
+import registerImage from "../../assets/images/register-wallpaper.jpeg";
 import history from "../../utils/history";
 function RegisterPage() {
   const { responseAction } = useSelector((state) => state.userReducer);
   const dispatch = useDispatch();
 
   const [registerForm] = Form.useForm();
+
+  useEffect(() => {
+    //preloading image
+    const img = new Image();
+    img.src = registerImage;
+  }, []);
 
   useEffect(() => {
     if (responseAction.register.error) {

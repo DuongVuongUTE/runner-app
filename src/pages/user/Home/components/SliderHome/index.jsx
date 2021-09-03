@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 // import Swiper core and required modules
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -30,6 +30,13 @@ function SliderHome() {
     },
   ];
 
+  useEffect(() => {
+    //preload image
+    sliderList.forEach((item) => {
+      const img = new Image();
+      img.src = item.image;
+    });
+  }, []);
   function renderSlider() {
     return sliderList.map((slide, index) => {
       return (

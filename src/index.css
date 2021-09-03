@@ -13,10 +13,6 @@ body {
   color: #272727 !important;
 }
 
-#root {
-  overflow-x: hidden;
-}
-
 ::-webkit-scrollbar {
   width: 13px;
   background-color: #f5f5f5;

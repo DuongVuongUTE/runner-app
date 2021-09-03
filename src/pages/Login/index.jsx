@@ -17,6 +17,12 @@ function LoginPage() {
   const [loginForm] = Form.useForm();
 
   useEffect(() => {
+    //preloading image
+    const img = new Image();
+    img.src = loginImage;
+  }, []);
+
+  useEffect(() => {
     if (responseAction.login.error) {
       loginForm.setFields([
         {

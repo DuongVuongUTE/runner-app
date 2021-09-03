@@ -19,6 +19,7 @@ function GalleryHome() {
     gallery6,
   ];
   useEffect(() => {
+    //preload image
     galleryList.forEach((image) => {
       const img = new Image();
       img.src = image;
