@@ -84,6 +84,7 @@ export const FooterItem = styled.div`
     .footer-item {
       line-height: 28px;
       padding-left: 20px;
+      font-size: 14px;
       word-break: break-all;
       .footer-line {
         position: relative;

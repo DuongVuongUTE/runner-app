@@ -1,13 +1,13 @@
-import { createReducer } from '@reduxjs/toolkit';
-import { REQUEST, SUCCESS, CART_ACTION, USER_ACTION } from '../constants';
+import { createReducer } from "@reduxjs/toolkit";
+import { REQUEST, SUCCESS, CART_ACTION, USER_ACTION } from "../constants";
 
 const initialState = {
   cartList: {
     data: [],
     load: false,
     error: null,
-  }
-}
+  },
+};
 
 const cartReducer = createReducer(initialState, {
   [SUCCESS(USER_ACTION.LOGIN)]: (state, action) => {
@@ -16,7 +16,7 @@ const cartReducer = createReducer(initialState, {
       ...state,
       cartList: {
         ...state.cartList,
-        data: data.cart,
+        data: data.carts,
       },
     };
   },
@@ -27,7 +27,7 @@ const cartReducer = createReducer(initialState, {
       ...state,
       cartList: {
         ...state.cartList,
-        data: data.cart,
+        data: data.carts,
       },
     };
   },
@@ -38,9 +38,9 @@ const cartReducer = createReducer(initialState, {
       ...state,
       cartList: {
         ...state.cartList,
-        data: data.cart,
+        data: data,
       },
-    }
+    };
   },
 
   [SUCCESS(CART_ACTION.MINUS_ITEM_COUNT)]: (state, action) => {
@@ -49,9 +49,9 @@ const cartReducer = createReducer(initialState, {
       ...state,
       cartList: {
         ...state.cartList,
-        data: data.cart,
+        data: data.carts,
       },
-    }
+    };
   },
 
   [SUCCESS(CART_ACTION.PLUS_ITEM_COUNT)]: (state, action) => {
@@ -60,9 +60,9 @@ const cartReducer = createReducer(initialState, {
       ...state,
       cartList: {
         ...state.cartList,
-        data: data.cart,
+        data: data.carts,
       },
-    }
+    };
   },
 
   [SUCCESS(CART_ACTION.DELETE_CART_ITEM)]: (state, action) => {
@@ -71,9 +71,9 @@ const cartReducer = createReducer(initialState, {
       ...state,
       cartList: {
         ...state.cartList,
-        data: data.cart,
+        data: data.carts,
       },
-    }
+    };
   },
 
   [CART_ACTION.CLEAR_CART_LIST]: (state, action) => {
@@ -83,7 +83,7 @@ const cartReducer = createReducer(initialState, {
         ...state.cartList,
         data: [],
       },
-    }
+    };
   },
 
   [REQUEST(USER_ACTION.LOGOUT)]: (state, action) => {

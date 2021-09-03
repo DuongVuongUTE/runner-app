@@ -207,10 +207,11 @@ function Header({ type }) {
           <div className="menu-container">
             <Style.HeaderAction>
               {!(type === "admin") && (
-                <Badge count={3}>
+                <Badge count={cartList.data?.length}>
                   <Button
                     type="primary"
                     shape="circle"
+                    onClick={() => history.push("/cart")}
                     icon={<Icons.ShoppingCartOutlined />}
                   ></Button>
                 </Badge>

@@ -19,6 +19,7 @@ import {
   Tag,
   Card,
   PageHeader,
+  notification,
 } from "antd";
 import moment from "moment";
 import * as Icons from "@ant-design/icons";
@@ -60,6 +61,7 @@ const DataList = [
 ];
 function ProductDetailPage() {
   let { productID } = useParams();
+
   const { userInfo } = useSelector((state) => state.userReducer);
   const { productDetail } = useSelector((state) => state.productReducer);
   const { productList } = useSelector((state) => state.productReducer);
@@ -103,39 +105,127 @@ function ProductDetailPage() {
     });
   }
 
+  /// Dùng với kiểu cần đăng nhập để bỏ vào giỏ hàng
   function handleAddToCart() {
-    const cartData = [...cartList.data];
-    const cartIndex = cartData.findIndex(
-      (item) => item.productId === productID
-    );
-    if (cartIndex !== -1) {
-      cartData.splice(cartIndex, 1, {
-        ...cartData[cartIndex],
-        count: cartData[cartIndex].count + productCount,
+    if (!userInfo.data.name) {
+      const key = `open${Date.now()}`;
+      return notification.warning({
+        message: "Chưa đăng nhập",
+        description: "Bạn cần đăng nhập để thêm vào giỏ hàng",
+        key,
+        btn: (
+          <Button
+            type="primary"
+            onClick={() => {
+              notification.close(key);
+              history.push("/login");
+            }}
+          >
+            Đăng nhập
+          </Button>
+        ),
       });
-      dispatch(
-        addToCartAction({
-          id: userInfo.data.id,
-          data: { cart: cartData },
-        })
+    }
+    if (optionSelected.id) {
+      const existOptionIndex = cartList.data?.findIndex(
+        (item) => item.option.id === optionSelected.id
       );
-    } else {
-      const newCartData = [
-        ...cartData,
-        {
-          id: uuidv4(),
-          productId: productID,
+      if (existOptionIndex !== -1) {
+        const newCartList = [...cartList.data];
+        newCartList?.splice(existOptionIndex, 1, {
+          productId: getIdParams(productID),
+          count: cartList.data[existOptionIndex].count + 1,
           name: productDetail.data.name,
           price: productDetail.data.price,
-          count: productCount,
-        },
-      ];
-      dispatch(
-        addToCartAction({
-          id: userInfo.data.id,
-          data: { cart: newCartData },
-        })
+          color: productDetail.data.color,
+          image: productDetail.data.images[0],
+          category: productDetail.data.category.name,
+          type: productDetail.data.type.name,
+          department: productDetail.data.department.description,
+          option: {
+            id: optionSelected.id,
+            size: optionSelected.size,
+            price: optionSelected.price,
+          },
+        });
+        dispatch(
+          addToCartAction({
+            userId: userInfo.data.id,
+            carts: newCartList,
+          })
+        );
+      } else {
+        dispatch(
+          addToCartAction({
+            userId: userInfo.data.id,
+            carts: [
+              ...cartList.data,
+              {
+                productId: getIdParams(productID),
+                count: 1,
+                name: productDetail.data.name,
+                price: productDetail.data.price,
+                color: productDetail.data.color,
+                image: productDetail.data.images[0],
+                category: productDetail.data.category.name,
+                type: productDetail.data.type.name,
+                department: productDetail.data.department.description,
+                option: {
+                  id: optionSelected.id,
+                  size: optionSelected.size,
+                  price: optionSelected.price,
+                },
+              },
+            ],
+          })
+        );
+      }
+    } else {
+      const existProductIndex = cartList.data?.findIndex(
+        (item) => item.productId === getIdParams(productID)
       );
+      if (existProductIndex !== -1) {
+        const newCart = [...cartList.data];
+        newCart?.splice(existProductIndex, 1, {
+          productId: getIdParams(productID),
+          count: cartList.data[existProductIndex].count + 1,
+          name: productDetail.data.name,
+          price: productDetail.data.price,
+          color: productDetail.data.color,
+          image: productDetail.data.images[0],
+          category: productDetail.data.category.name,
+          type: productDetail.data.type.name,
+          department: productDetail.data.department.description,
+          option: {},
+        });
+        dispatch(
+          addToCartAction({
+            userId: userInfo.data.id,
+            carts: newCart,
+          })
+        );
+      } else {
+        dispatch(
+          addToCartAction({
+            userId: userInfo.data.id,
+            carts: [
+              ...cartList.data,
+              {
+                productId: getIdParams(productID),
+                count: 1,
+                name: productDetail.data.name,
+                price: productDetail.data.price,
+                color: productDetail.data.color,
+                image: productDetail.data.images[0],
+                category: productDetail.data.category.name,
+                type: productDetail.data.type.name,
+                department: productDetail.data.department.description,
+                option: {},
+              },
+            ],
+          })
+        );
+      }
     }
   }
 
