@@ -1,21 +1,27 @@
 import { notification } from "antd";
 import { put, takeEvery } from "redux-saga/effects";
-import axios from 'axios';
-import { REQUEST, SUCCESS, FAILURE, CART_ACTION } from '../constants';
-import { SERVER_API_URL } from './apiUrl';
+import axios from "axios";
+import { REQUEST, SUCCESS, FAILURE, CART_ACTION } from "../constants";
+import { SERVER_API_URL } from "./apiUrl";
 
 function* addToCartSaga(action) {
   try {
-    const { id, data } = action.payload;
-    yield axios.patch(`${SERVER_API_URL}/users/${id}`, data);
+    const { userId, carts } = action.payload;
+    const result = yield axios({
+      method: "PATCH",
+      url: `${SERVER_API_URL}/users/${userId}`,
+      data: {
+        carts: carts,
+      },
+    });
     yield put({
       type: SUCCESS(CART_ACTION.ADD_TO_CART),
       payload: {
-        data,
-      }
+        data: result.data.carts,
+      },
     });
     yield notification.success({
-      message: 'Thêm vào giỏ thành công!',
+      message: "Thêm vào giỏ thành công!",
     });
   } catch (e) {
     yield put({ type: FAILURE(CART_ACTION.ADD_TO_CART), payload: e.message });
@@ -24,46 +30,55 @@ function* addToCartSaga(action) {
 
 function* plusItemCountSaga(action) {
   try {
-    const { id, data } = action.payload;
-    yield axios.patch(`${SERVER_API_URL}/users/${id}`, data);
+    const { userId, data } = action.payload;
+    yield axios.patch(`${SERVER_API_URL}/users/${userId}`, data);
     yield put({
       type: SUCCESS(CART_ACTION.PLUS_ITEM_COUNT),
       payload: {
         data,
-      }
+      },
     });
   } catch (e) {
-    yield put({ type: FAILURE(CART_ACTION.PLUS_ITEM_COUNT), payload: e.message });
+    yield put({
+      type: FAILURE(CART_ACTION.PLUS_ITEM_COUNT),
+      payload: e.message,
+    });
   }
 }
 
 function* minusItemCountSaga(action) {
   try {
-    const { id, data } = action.payload;
-    yield axios.patch(`${SERVER_API_URL}/users/${id}`, data);
+    const { userId, data } = action.payload;
+    yield axios.patch(`${SERVER_API_URL}/users/${userId}`, data);
     yield put({
       type: SUCCESS(CART_ACTION.MINUS_ITEM_COUNT),
       payload: {
         data,
-      }
+      },
     });
   } catch (e) {
-    yield put({ type: FAILURE(CART_ACTION.MINUS_ITEM_COUNT), payload: e.message });
+    yield put({
+      type: FAILURE(CART_ACTION.MINUS_ITEM_COUNT),
+      payload: e.message,
+    });
   }
 }
 
 function* deleteCartItemSaga(action) {
   try {
-    const { id, data } = action.payload;
-    yield axios.patch(`${SERVER_API_URL}/users/${id}`, data);
+    const { userId, data } = action.payload;
+    yield axios.patch(`${SERVER_API_URL}/users/${userId}`, data);
     yield put({
       type: SUCCESS(CART_ACTION.DELETE_CART_ITEM),
       payload: {
         data,
-      }
+      },
     });
   } catch (e) {
-    yield put({ type: FAILURE(CART_ACTION.DELETE_CART_ITEM), payload: e.message });
+    yield put({
+      type: FAILURE(CART_ACTION.DELETE_CART_ITEM),
+      payload: e.message,
+    });
   }
 }
 

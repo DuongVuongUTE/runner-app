@@ -60,6 +60,7 @@ export const ArticleItem = styled.div`
     span {
       display: block;
       padding: 15px;
+      font-size: 14px;
       text-transform: uppercase;
       word-break: break-all;
     }
@@ -96,6 +97,7 @@ export const ArticleItem = styled.div`
       overflow: hidden;
       text-overflow: ellipsis;
       word-break: break-word;
+      font-size: 14px;
       line-height: 1.4;
     }
   }

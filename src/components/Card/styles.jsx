@@ -58,6 +58,7 @@ export const ProductContent = styled.div`
   }
   strong {
     display: block;
+    font-size: 14px;
     padding-top: 10px;
     word-break: break-word;
   }
@@ -72,6 +73,7 @@ export const ProductContent = styled.div`
     justify-content: space-between;
     margin-top: 20px;
     .brand {
+      font-size: 14px;
       font-weight: 500;
       color: #002878;
     }

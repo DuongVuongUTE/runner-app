@@ -71,7 +71,7 @@ function Footer() {
           <Style.FooterTitle>THÔNG TIN LIÊN HỆ</Style.FooterTitle>
           <ul className="footer-list">
             <li className="footer-item">
-              <span className="footer-line">Địa chỉ:</span>
+              <span className="footer-line">Địa chỉ: </span>
               88 Nguyễn Văn Linh, Nam Dương, Hải Châu, Đà Nẵng
             </li>
             <li className="footer-item">
