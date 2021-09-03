@@ -5,7 +5,7 @@ export const Section = styled.div`
   padding: 30px 0;
   .list-info {
     position: relative;
-    height: 300px;
+    height: 380px;
     overflow: hidden;
     &::after {
       content: "";
@@ -34,12 +34,6 @@ export const Section = styled.div`
 `;
 export const ProductDetail = styled.div`
   padding: 15px 0;
-  .text-border {
-    margin: 15px 0 30px;
-    padding: 0 8px;
-    font-weight: 600;
-    border-left: 4px solid #ff514e;
-  }
   .slide-item {
     .ant-image {
       position: relative;
@@ -139,9 +133,24 @@ export const ProductDetail = styled.div`
       justify-content: space-between;
       flex-wrap: wrap;
       padding: 15px 0;
+      margin-bottom: 30px;
       border-top: 1px solid rgba(0, 0, 0, 0.08);
       border-bottom: 1px solid rgba(0, 0, 0, 0.08);
       gap: 30px 15px;
+    }
+  }
+  .product-related {
+    text-align: center;
+    margin-bottom: 25px;
+    div {
+      font-weight: 600;
+      font-size: 14px;
+      color: #ff514e;
+    }
+    h2 {
+      margin-top: 10px;
+      font-weight: 700;
+      color: rgba(0, 0, 0, 0.84);
     }
   }
 `;

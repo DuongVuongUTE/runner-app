@@ -48,7 +48,6 @@ export const HeaderLogo = styled.h1`
   -webkit-background-clip: text;
   background-image: linear-gradient(to right, #30cfd0 0%, #330867 100%);
   text-transform: uppercase;
-  font-style: italic;
   font-size: 36px;
   font-weight: 700;
   font-family: "Poppins", sans-serif;

@@ -25,7 +25,7 @@ export const ProductList = styled.div`
   }
 
   @media screen and (max-width: 767px) {
-    --spacing: 15px;
+    --spacing: 10px;
     --column: 2;
   }
 `;

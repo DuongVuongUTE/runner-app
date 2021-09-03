@@ -10,6 +10,7 @@ function* getProductListSaga(action) {
     const page = action.payload?.page;
     const categoriesSelected = action.payload?.categoriesSelected;
     const typesSelected = action.payload?.typesSelected;
+    const departmentsSelected = action.payload?.departmentsSelected;
     const priceRange = action.payload?.priceRange;
     const searchKey = action.payload?.searchKey;
     const more = action.payload?.more;
@@ -22,6 +23,16 @@ function* getProductListSaga(action) {
           categoryParams + `categoryId=${categoryId}${andParams}`;
       });
     }
+    let departmentParams = "";
+    if (departmentsSelected) {
+      departmentsSelected.forEach((departmentId, departmentIndex) => {
+        const andParams =
+          departmentIndex < departmentsSelected.length - 1 ? "&" : "";
+        departmentParams =
+          departmentParams + `departmentId=${departmentId}${andParams}`;
+      });
+    }
+
     let typeParams = "";
     if (typesSelected) {
       typesSelected.forEach((typeId, typeIndex) => {
@@ -39,13 +50,20 @@ function* getProductListSaga(action) {
         url = url + `?${typeParams}`;
       }
     }
+    if (departmentsSelected?.length > 0) {
+      if (categoriesSelected?.length > 0 || typesSelected?.length > 0) {
+        url = url + `&${departmentParams}`;
+      } else {
+        url = url + `?${departmentParams}`;
+      }
+    }
     const result = yield axios({
       method: "GET",
       url,
       params: {
         _sort: "id",
         _order: "desc",
-        _expand: "category",
+        _expand: ["department", "category", "type"],
         ...(page && {
           _page: page,
           _limit: PRODUCT_LIMIT,

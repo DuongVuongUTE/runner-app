@@ -13,11 +13,13 @@ SwiperCore.use([EffectFade, Navigation]);
 function ProductSlider({ productList }) {
   function renderProduct() {
     return productList.data.map((product, index) => {
-      return (
-        <SwiperSlide key={`${product.name}-${index}`}>
-          <CardProduct path={`/product/${product.id}`} product={product} />
-        </SwiperSlide>
-      );
+      if (index <= 9) {
+        return (
+          <SwiperSlide key={`${product.name}-${index}`}>
+            <CardProduct path={`/product/${product.id}`} product={product} />
+          </SwiperSlide>
+        );
+      }
     });
   }
   return (
@@ -29,11 +31,11 @@ function ProductSlider({ productList }) {
         breakpoints={{
           0: {
             slidesPerView: 2,
-            spaceBetween: 15,
+            spaceBetween: 10,
           },
           767: {
             slidesPerView: 3,
-            spaceBetween: 15,
+            spaceBetween: 10,
           },
           1024: {
             slidesPerView: 4,

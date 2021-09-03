@@ -15,6 +15,9 @@ import {
   Rate,
   Space,
   InputNumber,
+  Descriptions,
+  Tag,
+  Card,
 } from "antd";
 import moment from "moment";
 import * as Icons from "@ant-design/icons";
@@ -40,6 +43,20 @@ import CardProduct from "../../../components/Card";
 
 const { TabPane } = Tabs;
 const { TextArea } = Input;
+const DataList = [
+  {
+    icon: <Icons.FireTwoTone twoToneColor="#eb2f96" />,
+    text: "Miễn phí vận chuyển trong 5km",
+  },
+  {
+    icon: <Icons.RocketTwoTone twoToneColor="#eb2f96" />,
+    text: "Trả hàng dễ dàng trong vòng 2 giờ",
+  },
+  {
+    icon: <Icons.TagTwoTone twoToneColor="#eb2f96" />,
+    text: "Đặt hàng vào trước buổi trưa để giao trong ngày",
+  },
+];
 function ProductDetailPage() {
   const { productID } = useParams();
   const { userInfo } = useSelector((state) => state.userReducer);
@@ -226,7 +243,6 @@ function ProductDetailPage() {
                     />
                     <span className="number-rate"> 0 Khách hàng đánh giá</span>
                   </div>
-
                   <div className="product-price">
                     <strong>
                       {optionSelected.price?.toLocaleString() ||
@@ -264,7 +280,6 @@ function ProductDetailPage() {
                       </Radio.Group>
                     </div>
                   )}
-
                   <div className="product-action">
                     <Space>
                       <InputNumber
@@ -289,144 +304,188 @@ function ProductDetailPage() {
                       Thêm yêu thích
                     </Button>
                   </div>
+                  <>
+                    <List
+                      bordered
+                      header={<strong>Chính sách</strong>}
+                      dataSource={DataList}
+                      renderItem={(item) => (
+                        <List.Item>
+                          <Space>
+                            {item.icon}
+                            {item.text}
+                          </Space>
+                        </List.Item>
+                      )}
+                    />
+                    {/* <Card title="Chia sẽ">
+                      <Tag icon={<Icons.TwitterOutlined />} color="#55acee">
+                        Twitter
+                      </Tag>
+                      <Tag icon={<Icons.YoutubeOutlined />} color="#cd201f">
+                        Youtube
+                      </Tag>
+                      <Tag icon={<Icons.FacebookOutlined />} color="#3b5999">
+                        Facebook
+                      </Tag>
+                      <Tag icon={<Icons.LinkedinOutlined />} color="#55acee">
+                        LinkedIn
+                      </Tag>
+                    </Card> */}
+                  </>
                 </div>
               </Col>
             </Row>
-            <Row style={{ margin: "30px 0 50px" }}>
-              <Tabs defaultActiveKey="1">
-                <TabPane
-                  tab={
-                    <span>
-                      <Icons.FileSearchOutlined />
-                      Thông tin sản phẩm
-                    </span>
-                  }
-                  key="1"
-                >
-                  <div className={viewMore ? "list-info active" : "list-info"}>
-                    <div className="content">
-                      <span>Tên sản phẩm: </span>
-                      <h3>{` ${productDetail.data.name}`}</h3>
-                      <div>
-                        <span>Mô tả: </span>
-                        <p>{productDetail.data.description}</p>
-                      </div>
-                      <div>
-                        <Space align="center">
-                          <span>Giá: </span>
-                          <span>
-                            {optionSelected.price?.toLocaleString() ||
-                              productDetail.data.price?.toLocaleString() ||
-                              0}
-                            ₫
-                          </span>
-                        </Space>
-                      </div>
-                      <div>
-                        <Space align="center">
-                          <span>Thương hiệu:</span>
-                          <span>{` ${productDetail.data.category?.name}`}</span>
-                        </Space>
-                      </div>
-                      <div>
-                        <Space align="center">
-                          <span>Loại giày:</span>
-                          <span>{` ${productDetail.data.type?.name}`}</span>
-                        </Space>
-                      </div>
-                      <div>
-                        <Space align="center">
-                          <span>Sản phẩm dành cho:</span>
-                          <span>{` ${productDetail.data.department?.name}`}</span>
-                        </Space>
-                      </div>
-                      <div>
-                        <Space align="center">
-                          <span className="product-info-tag">Màu sắc:</span>
-                          <Style.Color color={productDetail.data.color} />
-                        </Space>
-                      </div>
-                      <p>Ảnh sản phẩm</p>
-                    </div>
+            <Row
+              style={{ margin: "50px 0" }}
+              gutter={{ xl: 20, lg: 15, sm: 10, xs: 10 }}
+            >
+              <Col
+                xl={{ span: 12 }}
+                lg={{ span: 12 }}
+                sm={{ span: 24 }}
+                xs={{ span: 24 }}
+                xl={{ order: 1 }}
+                sm={{ order: 2 }}
+                xs={{ order: 2 }}
+              >
+                <Tabs defaultActiveKey="1">
+                  <TabPane
+                    tab={
+                      <span>
+                        <Icons.FileSearchOutlined />
+                        Giới thiệu
+                      </span>
+                    }
+                    key="1"
+                  >
                     <div
-                      style={{
-                        display: "grid",
-                        gridTemplateColumns: "1fr 1fr",
-                        gap: 15,
-                      }}
+                      className={viewMore ? "list-info active" : "list-info"}
                     >
-                      {productDetail.data?.images?.map((image, index) => {
-                        return (
-                          <Image
-                            onClick={() => slideTo(index)}
-                            preview={false}
-                            src={image}
-                            placeholder={<div className="bg-animate" />}
-                          />
-                        );
-                      })}
+                      <div
+                        style={{
+                          display: "grid",
+                          gridTemplateColumns: "1fr 1fr",
+                          gap: 15,
+                        }}
+                      >
+                        {productDetail.data?.images?.map((image, index) => {
+                          return (
+                            <Image
+                              onClick={() => slideTo(index)}
+                              preview={false}
+                              src={image}
+                              placeholder={<div className="bg-animate" />}
+                            />
+                          );
+                        })}
+                      </div>
+                      <Button
+                        style={{
+                          position: "absolute",
+                          bottom: 0,
+                          left: "50%",
+                          zIndex: 2,
+                          transform: "translateX(-50%)",
+                        }}
+                        onClick={() => setViewMore(!viewMore)}
+                      >
+                        {viewMore ? "View Less" : "View More"}
+                      </Button>
                     </div>
-                    <Button
-                      style={{
-                        position: "absolute",
-                        bottom: 0,
-                        left: "50%",
-                        zIndex: 2,
-                        transform: "translateX(-50%)",
-                      }}
-                      onClick={() => setViewMore(!viewMore)}
-                    >
-                      {viewMore ? "View Less" : "View More"}
-                    </Button>
-                  </div>
-                </TabPane>
-                <TabPane
-                  tab={
-                    <span>
-                      <Icons.LikeOutlined />
-                      Đánh giá sản phẩm
-                    </span>
-                  }
-                  key="2"
-                >
-                  <List
-                    className="comment-list"
-                    header={`${data.length} replies`}
-                    itemLayout="horizontal"
-                    dataSource={data}
-                    renderItem={(item) => (
-                      <li>
-                        <Comment
-                          actions={item.actions}
-                          author={item.author}
-                          avatar={item.avatar}
-                          content={item.content}
-                          datetime={item.datetime}
+                  </TabPane>
+                  <TabPane
+                    tab={
+                      <span>
+                        <Icons.LikeOutlined />
+                        Đánh giá sản phẩm
+                      </span>
+                    }
+                    key="2"
+                  >
+                    <Comment
+                      avatar={
+                        <Avatar
+                          src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
+                          alt="Han Solo"
                         />
-                      </li>
-                    )}
-                  />
-                  <Comment
-                    avatar={
-                      <Avatar
-                        src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
-                        alt="Han Solo"
-                      />
-                    }
-                    content={
-                      <Editor
-                      // onChange={this.handleChange}
-                      // onSubmit={this.handleSubmit}
-                      // submitting={submitting}
-                      // value={value}
-                      />
-                    }
-                  />
-                </TabPane>
-              </Tabs>
+                      }
+                      content={
+                        <Editor
+                        // onChange={this.handleChange}
+                        // onSubmit={this.handleSubmit}
+                        // submitting={submitting}
+                        // value={value}
+                        />
+                      }
+                    />
+                    <List
+                      className="comment-list"
+                      header={`${data.length} replies`}
+                      itemLayout="horizontal"
+                      dataSource={data}
+                      renderItem={(item) => (
+                        <li>
+                          <Comment
+                            actions={item.actions}
+                            author={item.author}
+                            avatar={item.avatar}
+                            content={item.content}
+                            datetime={item.datetime}
+                          />
+                        </li>
+                      )}
+                    />
+                  </TabPane>
+                </Tabs>
+              </Col>
+              <Col
+                xl={{ span: 12 }}
+                lg={{ span: 12 }}
+                sm={{ span: 24 }}
+                xs={{ span: 24 }}
+                xl={{ order: 2 }}
+                sm={{ order: 1 }}
+                xs={{ order: 1 }}
+                style={{ width: "100%" }}
+              >
+                <Descriptions
+                  title="Thông tin sản phẩm"
+                  layout="horizontal"
+                  bordered
+                >
+                  <Descriptions.Item label="Sản phẩm" span={3}>
+                    {productDetail.data?.name}
+                  </Descriptions.Item>
+                  <Descriptions.Item label="Thương hiệu" span={3}>
+                    {productDetail.data.category?.name}
+                  </Descriptions.Item>
+                  <Descriptions.Item label="Loại giày" span={3}>
+                    {productDetail.data.type?.name}
+                  </Descriptions.Item>
+                  <Descriptions.Item label="Giày" span={3}>
+                    {productDetail.data.department?.name}
+                  </Descriptions.Item>
+                  <Descriptions.Item label="Màu sắc" span={3}>
+                    <Style.Color color={productDetail.data.color} />
+                  </Descriptions.Item>
+                  <Descriptions.Item label="Giá" span={3}>
+                    {productDetail.data.price?.toLocaleString()} VNĐ
+                  </Descriptions.Item>
+                  <Descriptions.Item label="Mô tả" span={3}>
+                    {productDetail.data.description}
+                  </Descriptions.Item>
+                </Descriptions>
+              </Col>
             </Row>
-            <h2 className="text-border">Sản phẩm tương tự</h2>
-            <Row gutter={[15, 15]}>
+
+            <Row gutter={{ xs: 10, sm: 10, md: 15, lg: 15 }}>
+              <Col span={24}>
+                <div className="product-related">
+                  <div>Giày runner</div>
+                  <h2>Sản phẩm tương tự</h2>
+                </div>
+              </Col>
               {productList.data.map((productItem, productIndex) => {
                 return (
                   <Col
