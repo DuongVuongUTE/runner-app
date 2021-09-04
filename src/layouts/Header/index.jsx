@@ -65,7 +65,11 @@ function Header({ type }) {
         </Space>
       </Menu.Item>
       <Menu.Item>
-        <Space size={5} align="center">
+        <Space
+          size={5}
+          align="center"
+          onClick={() => history.push("/wishlist")}
+        >
           <Icons.HeartOutlined /> <span>Sản phẩm yêu thích</span>
         </Space>
       </Menu.Item>

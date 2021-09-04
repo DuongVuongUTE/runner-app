@@ -59,11 +59,19 @@ function CheckoutPage() {
       totalPrice = totalPrice + cartItem.price * cartItem.count;
       return (
         <Row key={`cart-${cartItem.id}`} style={{ marginBottom: 8 }}>
-          <Col span={8}>{cartItem.name}</Col>
-          <Col span={6}>{cartItem.price.toLocaleString()}</Col>
-          <Col span={4}>{cartItem.count}</Col>
-          <Col span={6}>
-            {(cartItem.price * cartItem.count).toLocaleString()}
+          <Col xs={24} sm={24} md={24} lg={12} xl={8}>
+            <div>Tên sản phẩm: {cartItem.name}</div>
+          </Col>
+          <Col xs={24} sm={24} md={24} lg={12} xl={6}>
+            <div>Giá: {cartItem.price.toLocaleString()}₫</div>
+          </Col>
+          <Col xs={24} sm={24} md={24} lg={12} xl={4}>
+            <div>Số lượng: {cartItem.count}</div>
+          </Col>
+          <Col xs={24} sm={24} md={24} lg={12} xl={6}>
+            <div>
+              Tổng giá: {(cartItem.price * cartItem.count).toLocaleString()}
+            </div>
           </Col>
         </Row>
       );
@@ -95,7 +103,7 @@ function CheckoutPage() {
             style={{ margin: "16px 0" }}
           >
             <Row gutter={16}>
-              <Col span={12}>
+              <Col xs={24} md={12}>
                 <Form.Item
                   label="Name"
                   name="name"
@@ -106,7 +114,7 @@ function CheckoutPage() {
                   <Input />
                 </Form.Item>
               </Col>
-              <Col span={12}>
+              <Col xs={24} md={12}>
                 <Form.Item
                   label="Email"
                   name="email"
@@ -117,7 +125,7 @@ function CheckoutPage() {
                   <Input />
                 </Form.Item>
               </Col>
-              <Col span={12}>
+              <Col xs={24} md={12}>
                 <Form.Item
                   label="Phone Number"
                   name="phoneNumber"
@@ -131,7 +139,7 @@ function CheckoutPage() {
                   <Input />
                 </Form.Item>
               </Col>
-              <Col span={12}>
+              <Col xs={24} md={12}>
                 <Form.Item
                   label="Address"
                   name="address"

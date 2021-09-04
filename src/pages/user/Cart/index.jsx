@@ -21,6 +21,7 @@ import {
   minusItemCountAction,
   plusItemCountAction,
   deleteCartItemAction,
+  addToWishlistAction,
 } from "../../../redux/actions";
 
 import * as Style from "./styles";
@@ -29,8 +30,52 @@ import { Container } from "../../../styles/styles";
 function CartPage() {
   const { cartList } = useSelector((state) => state.cartReducer);
   const { userInfo } = useSelector((state) => state.userReducer);
+  const { wishList } = useSelector((state) => state.wishlistReducer);
   let totalPrice = 0;
   const dispatch = useDispatch();
+
+  function handleAddToWishlist(productID) {
+    const existProductIndex = wishList.data?.findIndex(
+      (item) => item.productId === productID
+    );
+    if (existProductIndex !== -1) {
+      // Xoá yêu thích
+      // const newWishlistData = [...wishList.data];
+      // newWishlistData.splice(existProductIndex, 1);
+      // dispatch(
+      //   deleteWishlistItemAction({
+      //     userId: userInfo.data.id,
+      //     data: { wishlist: newWishlistData },
+      //   })
+      // );
+      notification.success({
+        message: "Sản phẩm đã được thêm!",
+      });
+    } else {
+      const newCart = [...cartList.data];
+      const wishItem = newCart.find(
+        (cartItem) => cartItem.productId === productID
+      );
+      dispatch(
+        addToWishlistAction({
+          userId: userInfo.data.id,
+          data: [
+            ...wishList.data,
+            {
+              productId: productID,
+              name: wishItem.name,
+              price: wishItem.price,
+              color: wishItem.color,
+              image: wishItem.image,
+              category: wishItem.category,
+              type: wishItem.type,
+              department: wishItem.department,
+            },
+          ],
+        })
+      );
+    }
+  }
 
   function handlePlusCount(index) {
     const newCartData = [...cartList.data];
@@ -103,35 +148,22 @@ function CartPage() {
               </span>
             </div>
             <div className="cart-info-list">
-              <Space size={30} wrap>
-                {cartItem.option.id && (
-                  <div className="cart-info-item">
-                    <span className="cart-info-tag">Size: </span>
-                    <span className="cart-info-text">
-                      {cartItem.option.size}
-                    </span>
-                  </div>
-                )}
+              <div className="cart-info-item">
+                <span className="cart-info-tag">Thương hiệu: </span>
+                <span className="cart-info-text">{cartItem.category}</span>
+              </div>
+              <div className="cart-info-item">
+                <span className="cart-info-tag">Loại giày: </span>
+                <span className="cart-info-text">{cartItem.type}</span>
+              </div>
+              {cartItem.option.id && (
                 <div className="cart-info-item">
-                  <span className="cart-info-tag">Thương hiệu: </span>
-                  <span className="cart-info-text">{cartItem.category}</span>
+                  <span className="cart-info-tag">Size: </span>
+                  <span className="cart-info-text">{cartItem.option.size}</span>
                 </div>
-              </Space>
-              <Space size={30} wrap>
-                <div className="cart-info-item">
-                  <span className="cart-info-tag">Loại giày: </span>
-                  <span className="cart-info-text">{cartItem.type}</span>
-                </div>
-                <div className="cart-info-item">
-                  <span className="cart-info-text">{cartItem.department}</span>
-                </div>
-              </Space>
-              <Space className="cart-info-item">
-                <span>Color: </span>
-                <Style.Color color={cartItem.color} />
-              </Space>
+              )}
             </div>
-            <Input.Group compact>
+            <Input.Group compact className="quantity">
               <Button
                 icon={<MinusOutlined />}
                 onClick={() => handleMinusCount(cartIndex)}
@@ -155,7 +187,12 @@ function CartPage() {
                 type="primary"
                 danger
               />
-              <Button icon={<Icons.HeartOutlined />} type="primary" danger />
+              <Button
+                onClick={() => handleAddToWishlist(cartItem.productId)}
+                icon={<Icons.HeartOutlined />}
+                type="primary"
+                danger
+              />
             </div>
           </div>
         </Style.CartItem>
@@ -179,11 +216,14 @@ function CartPage() {
       ) : (
         <Style.CartPage>
           <Container>
+            <h2 style={{ textAlign: "center", marginBottom: 30 }}>
+              Danh sách giỏ hàng
+            </h2>
             <Row gutter={[16, 16]}>
-              <Col span={16}>
+              <Col xs={24} sm={24} md={24} lg={16} xl={16}>
                 <Style.CartList>{renderCartList()}</Style.CartList>
               </Col>
-              <Col span={8}>
+              <Col xs={24} sm={24} md={24} lg={8} xl={8}>
                 <div className="cart-right">
                   <List
                     bordered

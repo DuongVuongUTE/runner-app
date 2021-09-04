@@ -8,4 +8,5 @@ export * from "./common.constant";
 export * from "./type.constant";
 export * from "./department.constant";
 export * from "./admin/product.constant";
-export * from "./admin/common.constant"
+export * from "./admin/common.constant";
+export * from "./wishlist.constant";
