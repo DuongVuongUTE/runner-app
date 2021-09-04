@@ -34,12 +34,12 @@ function RegisterPage() {
       registerAction({
         data: {
           name: values.name,
-          avatar:
-            "https://thuthuatnhanh.com/wp-content/uploads/2020/09/avatar-cho-con-gai-mau-hong-cute.jpg",
+          avatar: "https://img-9gag-fun.9cache.com/photo/aLpNbjg_700bwp.webp",
           email: values.email,
           password: values.password,
           gender: values.gender,
           carts: [],
+          wishlist: [],
           role: "user",
         },
       })

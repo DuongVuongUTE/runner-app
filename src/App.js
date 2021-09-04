@@ -38,6 +38,7 @@ import jwtDecode from "jwt-decode";
 import { useEffect } from "react";
 import { getUserInfoAction } from "./redux/actions";
 import BlogPage from "./pages/user/Blog";
+import WishlistPage from "./pages/user/WishList";
 
 const THEME = {
   light: lightTheme,
@@ -68,6 +69,7 @@ function App() {
           <DefaultLayout exact path="/product/kids" component={ProductPage} />
           <DefaultLayout exact path="/blog" component={BlogPage} />
           <DefaultLayout exact path="/contact" component={AboutPage} />
+          <DefaultLayout exact path="/wishlist" component={WishlistPage} />
           <DefaultLayout exact path="/about" component={AboutPage} />
           <DefaultLayout
             exact

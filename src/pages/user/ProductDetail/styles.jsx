@@ -1,4 +1,3 @@
-import { Space } from "antd";
 import styled from "styled-components";
 
 export const Section = styled.div`
@@ -83,6 +82,7 @@ export const ProductDetail = styled.div`
         position: relative;
         display: inline-flex;
         top: 1px;
+        font-size: 14px;
       }
     }
     .product-price {
@@ -196,15 +196,4 @@ export const Color = styled.div`
         ? "radial-gradient(circle, #59ae12, #a5a100, #d88f1f, #f77e54, #ff7887, #fb81b6, #e493df, #bfa8fd, #8bc3ff, #4cdaff, #29edff, #5ffbf1);"
         : props.color
       : "white"};
-`;
-export const ListProductDetail = styled(Space)`
-  width: 100%;
-  img {
-    display: block;
-    width: 100px;
-    height: 100px;
-    object-fit: cover;
-    border: 1px solid #1dbfaf;
-    cursor: pointer;
-  }
 `;

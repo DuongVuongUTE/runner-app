@@ -30,6 +30,8 @@ import Loading from "../../../components/Loading";
 
 import { useDispatch, useSelector } from "react-redux";
 import {
+  deleteWishlistItemAction,
+  addToWishlistAction,
   addToCartAction,
   getProductDetailAction,
   getProductListAction,
@@ -65,6 +67,7 @@ function ProductDetailPage() {
   const { userInfo } = useSelector((state) => state.userReducer);
   const { productDetail } = useSelector((state) => state.productReducer);
   const { productList } = useSelector((state) => state.productReducer);
+  const { wishList } = useSelector((state) => state.wishlistReducer);
   const { cartList } = useSelector((state) => state.cartReducer);
   const [productCount, setProductCount] = useState(1);
   const [optionSelected, setOptionSelected] = useState({});
@@ -105,6 +108,64 @@ function ProductDetailPage() {
     });
   }
 
+  function handleAddToWishlist() {
+    if (!userInfo.data.name) {
+      const key = `open${Date.now()}`;
+      return notification.warning({
+        message: "Chưa đăng nhập",
+        description: "Bạn cần đăng nhập để thêm yêu thích",
+        key,
+        btn: (
+          <Button
+            type="primary"
+            onClick={() => {
+              notification.close(key);
+              history.push("/login");
+            }}
+          >
+            Đăng nhập
+          </Button>
+        ),
+      });
+    }
+    const existProductIndex = wishList.data?.findIndex(
+      (item) => item.productId === getIdParams(productID)
+    );
+    if (existProductIndex !== -1) {
+      // Xoá yêu thích
+      // const newWishlistData = [...wishList.data];
+      // newWishlistData.splice(existProductIndex, 1);
+      // dispatch(
+      //   deleteWishlistItemAction({
+      //     userId: userInfo.data.id,
+      //     data: { wishlist: newWishlistData },
+      //   })
+      // );
+      notification.success({
+        message: "Sản phẩm đã được thêm!",
+      });
+    } else {
+      dispatch(
+        addToWishlistAction({
+          userId: userInfo.data.id,
+          data: [
+            ...wishList.data,
+            {
+              productId: getIdParams(productID),
+              name: productDetail.data.name,
+              price: productDetail.data.price,
+              color: productDetail.data.color,
+              image: productDetail.data.images[0],
+              category: productDetail.data.category.name,
+              type: productDetail.data.type.name,
+              department: productDetail.data.department.description,
+            },
+          ],
+        })
+      );
+    }
+  }
+
   /// Dùng với kiểu cần đăng nhập để bỏ vào giỏ hàng
   function handleAddToCart() {
     if (!userInfo.data.name) {
@@ -134,7 +195,7 @@ function ProductDetailPage() {
         const newCartList = [...cartList.data];
         newCartList?.splice(existOptionIndex, 1, {
           productId: getIdParams(productID),
-          count: cartList.data[existOptionIndex].count + 1,
+          count: cartList.data[existOptionIndex].count + productCount,
           name: productDetail.data.name,
           price: productDetail.data.price,
           color: productDetail.data.color,
@@ -162,7 +223,7 @@ function ProductDetailPage() {
               ...cartList.data,
               {
                 productId: getIdParams(productID),
-                count: 1,
+                count: productCount,
                 name: productDetail.data.name,
                 price: productDetail.data.price,
                 color: productDetail.data.color,
@@ -188,7 +249,7 @@ function ProductDetailPage() {
         const newCart = [...cartList.data];
         newCart?.splice(existProductIndex, 1, {
           productId: getIdParams(productID),
-          count: cartList.data[existProductIndex].count + 1,
+          count: cartList.data[existProductIndex].count + productCount,
           name: productDetail.data.name,
           price: productDetail.data.price,
           color: productDetail.data.color,
@@ -212,7 +273,7 @@ function ProductDetailPage() {
               ...cartList.data,
               {
                 productId: getIdParams(productID),
-                count: 1,
+                count: productCount,
                 name: productDetail.data.name,
                 price: productDetail.data.price,
                 color: productDetail.data.color,
@@ -406,6 +467,7 @@ function ProductDetailPage() {
                     <Button
                       type="primary"
                       danger
+                      onClick={() => handleAddToWishlist()}
                       icon={<Icons.HeartOutlined />}
                     >
                       Thêm yêu thích
