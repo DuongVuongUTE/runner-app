@@ -130,7 +130,7 @@ function ProductListPage(props) {
             onChange={(e)=>handleSearchProduct(e.target.value)}
             />
         </Style.Search>
-        <Table
+        <Style.CustomTable
           pagination={{ pageSize: 7 }}
           columns={tableColumn}
           dataSource={tableData}
@@ -141,12 +141,12 @@ function ProductListPage(props) {
                   size="small"
                   dataSource={record.productOptions}
                   renderItem={(item) => (
-                    <List.Item>
+                    <Style.ListItem>
                       <Row justify="space-between" style={{ width: '100%',padding:"0 60px" }}>
                         <div>Size: {item.size}</div>
                         <div>{(record.price + item.price).toLocaleString()}VNĐ</div>
                       </Row>
-                    </List.Item>
+                    </Style.ListItem>
                   )}
                 />
               )

@@ -3,10 +3,11 @@ import { useSelector, useDispatch } from 'react-redux';
 import {
   Row,
   Button,
-  Table,
+  Input,
   Space,
   Popconfirm,
 } from "antd";
+import * as Icon from "@ant-design/icons";
 
 import ModifyCategoryModal from './components/ModifyCategoryModal';
 
@@ -20,7 +21,8 @@ import {
 import * as Style from './styles'
 
 function CategoryListPage(props) {
-  // "", "create", "edit"
+
+  const [searchKey, setSearchKey] = useState('');
   const [isShowModifyModal, setIsShowModifyModal] = useState('');
   const [modifyCategoryData, setModifyCategoryData] = useState({});
 
@@ -45,10 +47,17 @@ function CategoryListPage(props) {
     }
     setIsShowModifyModal('');
   }
+  function handleSearchProduct(value) {
+    console.log("🚀 ~ file: index.jsx ~ line 31 ~ handleSearchProduct ~ value", value)
+    setSearchKey(value);
+    dispatch(getCategoryListAction({
+      searchKey:value
+    }));
+  }
 
   const tableColumn = [
     {
-      title: 'Tên loại',
+      title: 'loại',
       dataIndex: 'name',
       key: 'name',
     },
@@ -106,7 +115,14 @@ function CategoryListPage(props) {
             Thêm mới
           </Button>
         </Row>
-        <Table
+        <Style.Search>
+          <Input 
+            style={{width:"50%"}} placeholder="Tìm kiếm..." 
+            suffix={<Icon.SearchOutlined />} 
+            onChange={(e)=>handleSearchProduct(e.target.value)}
+            />
+        </Style.Search>
+        <Style.CustomTable
           columns={tableColumn}
           dataSource={tableData}
           loading={categoryList.load}
