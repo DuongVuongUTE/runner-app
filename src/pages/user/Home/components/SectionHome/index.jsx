@@ -13,9 +13,11 @@ function SectionHome({ title, text, params, children, noContainer }) {
         <Style.SectionTitle>{title}</Style.SectionTitle>
       </Style.SectionHeading>
       {noContainer ? <>{children}</> : <Container>{children}</Container>}
-      <Style.Button>
-        <Button onClick={() => history.push(params)}>{text}</Button>
-      </Style.Button>
+      {text && (
+        <Style.Button>
+          <Button onClick={() => history.push(params)}>{text}</Button>
+        </Style.Button>
+      )}
     </Style.Section>
   );
 }

@@ -129,6 +129,7 @@ function HomePage() {
           <SectionHome title="Bài viết mới nhất" text="xem thêm" params="/blog">
             <ArticlesHome articlesList={articlesList} />
           </SectionHome>
+
           {/* list ảnh giới thiệu */}
           <SectionHome
             title="Khách hàng và Runner Inn"
