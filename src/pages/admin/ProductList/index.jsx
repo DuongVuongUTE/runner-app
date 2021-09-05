@@ -34,7 +34,6 @@ function ProductListPage(props) {
       searchKey:value
     }));
   }
-
   const tableColumn = [
     {
       title: "Tên sản phẩm",
@@ -151,7 +150,7 @@ function ProductListPage(props) {
                 />
               )
             },
-            rowExpandable: (record) => record.productOptions.length > 0
+            rowExpandable: (record) => record.productOptions?.length > 0
           }}
           loading={productList.load}
         />

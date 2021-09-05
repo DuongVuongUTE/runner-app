@@ -5,7 +5,16 @@ import { SERVER_API_URL } from "./apiUrl";
 
 function* getCategoryListSaga(action) {
   try {
-    const result = yield axios.get(`${SERVER_API_URL}/categories`);
+    const searchKey = action.payload?.searchKey;
+    const result = yield axios({
+      method: "GET",
+      url:`${SERVER_API_URL}/categories`,
+      params: {
+        _sort: "id",
+        _order: "desc",
+        ...(searchKey && { q: searchKey }),
+      },
+    });
     yield put({
       type: SUCCESS(CATEGORY_ACTION.GET_CATEGORY_LIST),
       payload: {

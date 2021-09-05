@@ -5,8 +5,10 @@ import {
   Button,
   Table,
   Space,
+  Input,
   Popconfirm,
 } from "antd";
+import * as Icon from "@ant-design/icons";
 
 import ModifyCategoryModal from './components/ModifyCategoryModal';
 
@@ -20,7 +22,8 @@ import {
 import * as Style from './styles'
 
 function CategoryListPage(props) {
-  // "", "create", "edit"
+  
+  const [searchKey, setSearchKey] = useState('');
   const [isShowModifyModal, setIsShowModifyModal] = useState('');
   const [modifyCategoryData, setModifyCategoryData] = useState({});
 
@@ -32,6 +35,13 @@ function CategoryListPage(props) {
     dispatch(getCategoryListAction());
   }, []);
 
+  function handleSearchCategory(value) {
+    console.log("🚀 ~ file: index.jsx ~ line 31 ~ handleSearchCategory ~ value", value)
+    setSearchKey(value);
+    dispatch(getCategoryListAction({
+      searchKey:value
+    }));
+  }
   function handleSubmitForm(values) {
     if (isShowModifyModal === 'create') {
       dispatch(createCategoryAction({
@@ -106,6 +116,13 @@ function CategoryListPage(props) {
             Thêm mới
           </Button>
         </Row>
+        <Style.Search>
+          <Input 
+            style={{width:"50%"}} placeholder="Tìm kiếm..." 
+            suffix={<Icon.SearchOutlined />} 
+            onChange={(e)=>handleSearchCategory(e.target.value)}
+            />
+        </Style.Search>
         <Table
           columns={tableColumn}
           dataSource={tableData}
