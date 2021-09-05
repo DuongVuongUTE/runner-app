@@ -105,11 +105,9 @@ function CheckoutPage() {
             <Row gutter={16}>
               <Col xs={24} md={12}>
                 <Form.Item
-                  label="Name"
+                  label="Tên khách hàng"
                   name="name"
-                  rules={[
-                    { required: true, message: "Please input your name!" },
-                  ]}
+                  rules={[{ required: true, message: "Vui lòng nhập tên!" }]}
                 >
                   <Input />
                 </Form.Item>
@@ -118,21 +116,19 @@ function CheckoutPage() {
                 <Form.Item
                   label="Email"
                   name="email"
-                  rules={[
-                    { required: true, message: "Please input your username!" },
-                  ]}
+                  rules={[{ required: true, message: "Vui lòng nhập email!" }]}
                 >
                   <Input />
                 </Form.Item>
               </Col>
               <Col xs={24} md={12}>
                 <Form.Item
-                  label="Phone Number"
+                  label="Số điện thoại"
                   name="phoneNumber"
                   rules={[
                     {
                       required: true,
-                      message: "Please input your phone number!",
+                      message: "Vui lòng nhập số điện thoại!",
                     },
                   ]}
                 >
@@ -141,10 +137,10 @@ function CheckoutPage() {
               </Col>
               <Col xs={24} md={12}>
                 <Form.Item
-                  label="Address"
+                  label="Địa chỉ"
                   name="address"
                   rules={[
-                    { required: true, message: "Please input your address!" },
+                    { required: true, message: "Vui lòng nhập địa chỉ!" },
                   ]}
                 >
                   <Input />
@@ -153,9 +149,18 @@ function CheckoutPage() {
             </Row>
           </Card>
           <Card title="Thông tin thanh toán" size="small">
-            <Form.Item name="checkoutInfo">
+            <Form.Item
+              name="checkoutInfo"
+              rules={[
+                {
+                  required: true,
+                  message: "Vui lòng chọn phương thức thanh toán!",
+                },
+              ]}
+            >
               <Radio.Group>
                 <Space direction="vertical">
+                  <Radio value="cod">Thanh toán khi nhận hàng</Radio>
                   <Radio value="momo">Momo</Radio>
                   <Radio value="zalo">Zalo Pay</Radio>
                   <Radio value="atm">Thẻ ATM</Radio>

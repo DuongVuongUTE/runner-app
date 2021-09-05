@@ -1,17 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Container } from "../../../styles/styles";
 import BreadcrumbUI from "../../../components/Breadcrumb";
-import {
-  Collapse,
-  Checkbox,
-  Input,
-  Select,
-  Space,
-  Row,
-  Button,
-  Tag,
-  Slider,
-} from "antd";
+import { Collapse, Checkbox, Input, Select, Slider } from "antd";
 import * as Icons from "@ant-design/icons";
 
 import { useSelector, useDispatch } from "react-redux";

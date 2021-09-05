@@ -1,23 +1,13 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
-import { getProductListAction, logoutAction } from "../../redux/actions";
+import { logoutAction } from "../../redux/actions";
 import { useSelector, useDispatch } from "react-redux";
 
 import * as Icons from "@ant-design/icons";
-import {
-  Menu,
-  Dropdown,
-  Button,
-  Empty,
-  Input,
-  Tag,
-  Space,
-  Drawer,
-  Badge,
-} from "antd";
+import { Menu, Dropdown, Button, Space, Drawer, Badge } from "antd";
 import history from "../../utils/history";
 
-import TopBar from "../../components/Topbar";
+// import TopBar from "../../components/Topbar";
 
 import hotline from "../../assets/images/hotline.jpg";
 
@@ -60,7 +50,11 @@ function Header({ type }) {
   const menu = (
     <Menu>
       <Menu.Item>
-        <Space size={5} align="center">
+        <Space
+          size={5}
+          align="center"
+          onClick={() => history.push("/userinfo")}
+        >
           <Icons.FireOutlined /> <span>Xem thông tin</span>
         </Space>
       </Menu.Item>
