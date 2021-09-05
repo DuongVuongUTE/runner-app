@@ -5,9 +5,9 @@ import {
   Button,
   Input,
   Space,
-  Input,
   Popconfirm,
 } from "antd";
+
 import * as Icon from "@ant-design/icons";
 
 import ModifyCategoryModal from './components/ModifyCategoryModal';
@@ -130,7 +130,7 @@ function CategoryListPage(props) {
             onChange={(e)=>handleSearchCategory(e.target.value)}
             />
         </Style.Search>
-        <Table
+        <Style.CustomTable
           columns={tableColumn}
           dataSource={tableData}
           loading={categoryList.load}

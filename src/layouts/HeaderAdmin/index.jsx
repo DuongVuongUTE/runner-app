@@ -2,9 +2,6 @@ import { Row, Col, Dropdown, Menu ,Space} from 'antd';
 import { useState, useEffect } from "react";
 import history from '../../utils/history';
 
-import { getProductListAction, logoutAction } from "../../redux/actions";
-import { useSelector, useDispatch } from "react-redux";
-
 import * as Icon from "@ant-design/icons";
 import * as Style from './styles'
 
