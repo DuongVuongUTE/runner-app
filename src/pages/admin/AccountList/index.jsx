@@ -69,7 +69,7 @@ function AccountListPage(props) {
             >
               Sửa
             </Button>
-            
+
           </Space>
         );
       },
@@ -91,7 +91,7 @@ function AccountListPage(props) {
     <div>
       <div style={{ padding: 16 }}>
         <Style.Title style={{ marginBottom: 26 }} >Quản Lý tài khoản</Style.Title>
-        
+
         <Table
           columns={tableColumn}
           dataSource={tableData}

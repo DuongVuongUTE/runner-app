@@ -1,17 +1,6 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  Card,
-  Row,
-  Col,
-  Input,
-  Button,
-  List,
-  notification,
-  Space,
-  InputNumber,
-  Result,
-} from "antd";
+import { Row, Col, Button, Result } from "antd";
 import * as Icons from "@ant-design/icons";
 import { deleteWishlistItemAction } from "../../../redux/actions";
 import { Container } from "../../../styles/styles";
