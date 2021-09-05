@@ -9,7 +9,8 @@ import {
   Input,
   Button,
   InputNumber,
-  Tag,
+  Col,
+  Image,
   Radio,
   Upload,
   Checkbox,
@@ -26,7 +27,7 @@ import {
   getProductDetailActionAdmin,
   getDepartmentListAction
 } from '../../../redux/actions'
-
+import { convertFileToBase64 } from '../../../utils/common'
 import ProductOptionItem from '../components/ProductOptionItem';
 
 import history from '../../../utils/history';
@@ -34,57 +35,61 @@ import * as Style from './styles'
 
 const COLOR_MENU = [
   {
-    'color':'đỏ',
+    'name':'đỏ',
     'code':'#e7352b'
   },
   {
-    'color':'trắng',
+    'name':'trắng',
     'code':'#ffffff',
   },
   {
-    'color':'đen',
+    'name':'đen',
     'code':'#000000',
   },
   {
-    'color':'xanh dương',
+    'name':'xanh dương',
     'code':'#1790c8',
   },
   {
-    'color':'cam',
+    'name':'cam',
     'code':'#f36b26',
   },
   {
-    'color':'nâu',
+    'name':'nâu',
     'code':'#825d41',
   },
   {
-    'color':'xanh la',
+    'name':'xanh la',
     'code':'#7bba3c',
   },
   {
-    'color':'vàng',
+    'name':'vàng',
     'code':'#fed533',
   },
   {
-    'color':'xám',
+    'name':'xám',
     'code':'#808080',
   },
   {
-    'color':'hồng',
+    'name':'hồng',
     'code':'#f0728f',
   },
   {
-    'color':'xanh ngọc',
+    'name':'xanh ngọc',
     'code':'#02cbb5',
   },
   {
-    'color':'màu khác',
+    'name':'màu khác',
     'code':'multicolor',
   },
 ]
 
 
 function ModifyProduct({ action, match }) {
+
+  const [uploadImages, setUploadImage] = useState([]);
+  const [uploadError, setUploadError] = useState('');
+
   const productId = match.params?.id
   const { Option } = Select;
   const [productForm] = Form.useForm();
@@ -100,21 +105,42 @@ function ModifyProduct({ action, match }) {
   useEffect(() => {
     dispatch(getCategoryListAction());
     dispatch(getDepartmentListAction());
-    if(productId){
-      dispatch(getProductDetailActionAdmin({
-        id:productId
-      }));
-    }
-    productForm.resetFields();
   }, [])
   useEffect(() => {
-    if (productDetail.data) {
+    if (productId) {
+      dispatch(getProductDetailActionAdmin({ id: productId }));
+    }
+  }, [productId]);
+  useEffect(() => {
+    if (productDetail.data.id) {
       productForm.resetFields();
+      setUploadImage([...productDetail.data.images]);
       dispatch(setProductSelectActionAdmin(
         productDetail.data
       ));
     }
   }, [productDetail.data])
+
+  async function handleUploadImage(value) {
+    if (!["image/png", "image/jpeg"].includes(value.file.type)) {
+      return setUploadError('File không đúng!');
+    }
+    if (value.file.size > 1024000) {
+      return setUploadError('File quá nặng!');
+    }
+    setUploadError('');
+    const imageBase64 = await convertFileToBase64(value.file);
+    await setUploadImage([...uploadImages, imageBase64]);
+  }
+
+  function renderProductImages() {
+    return uploadImages.map((imageItem, imageIndex) => (
+      <Col span={6}>
+        <Image width="100%" src={imageItem} />
+      </Col>
+    ));
+  }
+
   function renderProductOptionItems() {
     return productSelected.productOptions.map((optionItem, optionIndex) => {
       return (
@@ -203,12 +229,13 @@ function ModifyProduct({ action, match }) {
 
   function handleSubmitForm() {
     const values = productForm.getFieldsValue();
+    console.log("🚀 ~ file: index.jsx ~ line 233 ~ handleSubmitForm ~ values", {...values,images: uploadImages,})
     if (action === "create") {
       dispatch(createProductActionAdmin(
         {
           data: {
             ...values,
-            // 'images': values.images.map((item) => item.name)
+            images: uploadImages,
           }
         }
       ));
@@ -219,7 +246,7 @@ function ModifyProduct({ action, match }) {
           id: productId,
           data: {
             ...values,
-            'images': values.images.map((item) => item.name)
+            images: uploadImages,
           }
         }
       ));
@@ -257,12 +284,13 @@ function ModifyProduct({ action, match }) {
     })
   }
   function renderOptionColor() {
+    // console.log("🚀 ~ file: index.jsx ~ line 287 ~ renderOptionColor ~ value", value);
     return COLOR_MENU.map((colorItem, colorIndex) => {
       return (
-        <Style.customRadio value={colorItem}>
+        <Style.customRadio value={colorItem} >
           {colorItem.code == "#ffffff" || colorItem.code == "multicolor"
-            ? <Style.customTag >{colorItem.color}</Style.customTag>
-            : <Style.customTag color={colorItem.code}>{colorItem.color}</Style.customTag>
+            ? <Style.customTag >{colorItem.name}</Style.customTag>
+            : <Style.customTag color={colorItem.code}>{colorItem.name}</Style.customTag>
           }
 
         </Style.customRadio>
@@ -334,21 +362,48 @@ function ModifyProduct({ action, match }) {
               name="color"
               rules={[{ required: true, message: 'bạn chưa chọn màu' }]}
             >
-              <Radio.Group>
+              <Radio.Group >
                 {renderOptionColor()}
               </Radio.Group>
             </Form.Item>
-            <Form.Item
-              name="images"
-              label="Hình ảnh"
-              valuePropName="fileList"
-              rules={[{ required: true, message: 'bạn chưa nhập hình ảnh' }]}
-              getValueFromEvent={normFile}
-            >
-              <Upload name="logo" listType="picture">
+            <Row>
+            <Col span={4} style={{ textAlign: "right" }}>
+              <Space style={{ marginTop: 4 }} size={0}>
+                <div
+                  style={{
+                    display: 'inline-block',
+                    marginRight: '4px',
+                    color: '#ff4d4f',
+                    fontSize: '14px',
+                    fontFamily: 'SimSun, sans-serif',
+                    lineHeight: 1,
+                  }}
+                >
+                  *
+                </div>
+                <div style={{ marginRight: 8 }}>Hình ảnh :</div>
+              </Space>
+            </Col>
+            <Col span={20}>
+              <Upload
+                accept="image/*"
+                listType="picture"
+                beforeUpload={() => false}
+                onChange={(value) => handleUploadImage(value)}
+                showUploadList={false}
+              >
                 <Button icon={<Icon.UploadOutlined />}>Click to upload</Button>
               </Upload>
-            </Form.Item>
+              {uploadImages.length > 0 && (
+                <Row gutter={[8, 8]} style={{ marginTop: 8 }}>
+                  {renderProductImages()}
+                </Row>
+              )}
+              <div style={{ height: 24, color: '#ff4d4f' }}>
+                {uploadError}
+              </div>
+            </Col>
+          </Row>
           </Form>
           <Form.Item label="Tùy chọn">
             <Checkbox disabled={action === "create"}

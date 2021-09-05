@@ -1,15 +1,19 @@
-import { Row, Col, Dropdown, Menu, Space } from 'antd';
+import { Row, Col, Dropdown, Menu ,Space} from 'antd';
+import { useState, useEffect } from "react";
 import history from '../../utils/history';
+
+import * as Icon from "@ant-design/icons";
+import * as Style from './styles'
 
 import { getProductListAction, logoutAction } from "../../redux/actions";
 import { useSelector, useDispatch } from "react-redux";
 
-import * as Icon from "@ant-design/icons";
-import * as Style from './styles'
 function HeaderAdmin() {
 
-  const dispatch = useDispatch();
   
+  const { userInfo } = useSelector((state) => state.userReducer);
+  const dispatch = useDispatch();
+
   function handleLogout() {
     localStorage.removeItem("userInfo");
     dispatch(logoutAction());
