@@ -1,18 +1,24 @@
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Row, Button, Table, Space, Popconfirm } from "antd";
+import { Row, Button, Input, Space } from "antd";
 import moment from "moment";
+import * as Icon from "@ant-design/icons";
+import ModifyAccountModal from "./components/ModifyAccountModal";
 
 import {
   getUserListAction,
+  editUserListAction
 } from "../../../redux/actions";
 
 import * as Style from './styles'
 
 function AccountListPage(props) {
 
+  const [uploadImages, setUploadImage] = useState();
+  const [isShowModifyModal, setIsShowModifyModal] = useState(false);
   const [modifyUserData, setModifyUserData] = useState({});
   const { userList } = useSelector((state) => state.userReducer);
+  const [searchKey, setSearchKey] = useState('');
 
   const dispatch = useDispatch();
 
@@ -21,6 +27,16 @@ function AccountListPage(props) {
   }, []);
 
   function handleSubmitForm(values) {
+
+    dispatch(editUserListAction({
+      id: modifyUserData.id,
+      data: {
+        ...values,
+        avatar: uploadImages
+      },
+    }));
+
+    setIsShowModifyModal('');
   }
 
   const tableColumn = [
@@ -50,7 +66,9 @@ function AccountListPage(props) {
       title: "Trạng thái",
       dataIndex: "status",
       key: "status",
-      render: (value)=> value == 0 ? "Khóa":"Kích Hoạt"
+      render: (value) => value == "block"
+        ? (<span style={{ color: 'red', whiteSpace: "500" }}>Khóa</span>)
+        : (<span style={{ color: '#52c41a', whiteSpace: "500" }}>Kích hoạt</span>)
     },
     {
       title: "",
@@ -63,7 +81,7 @@ function AccountListPage(props) {
               type="primary"
               ghost
               onClick={() => {
-                // setIsShowModifyModal("edit");
+                setIsShowModifyModal("edit");
                 setModifyUserData(record);
               }}
             >
@@ -82,29 +100,39 @@ function AccountListPage(props) {
       ...userItem,
     };
   });
-  console.log(
-    "🚀 ~ file: index.jsx ~ line 114 ~ tableData ~ tableData",
-    tableData
-  );
+  function handleSearchAccount(value) {
+    setSearchKey(value);
+    dispatch(getUserListAction({
+      searchKey: value
+    }));
+  }
 
   return (
     <div>
       <div style={{ padding: 16 }}>
         <Style.Title style={{ marginBottom: 26 }} >Quản Lý tài khoản</Style.Title>
-
-        <Table
+        <Style.Search>
+          <Input 
+            style={{width:"50%"}} placeholder="Tìm kiếm..." 
+            suffix={<Icon.SearchOutlined />} 
+            onChange={(e)=>handleSearchAccount(e.target.value)}
+            />
+        </Style.Search>
+        <Style.CustomTable
           columns={tableColumn}
           dataSource={tableData}
           loading={userList.load}
         />
       </div>
-      {/* <ModifyUserModal
+      <ModifyAccountModal
         isShowModifyModal={isShowModifyModal}
         setIsShowModifyModal={setIsShowModifyModal}
         handleSubmitForm={handleSubmitForm}
         modifyUserData={modifyUserData}
-        categoryList={categoryList}
-      /> */}
+        userList={userList}
+        uploadImages={uploadImages}
+        setUploadImage={setUploadImage}
+      />
     </div>
   );
 }

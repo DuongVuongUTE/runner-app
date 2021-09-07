@@ -3,9 +3,13 @@ import { Form, Input, Button,InputNumber, Tag, Radio, Upload } from 'antd';
 
 export const Container = styled.div`
   &>div{
+    max-width: 80%;
+    margin: 0 auto;
+  }
+  &>.form{
     margin: 30px auto;
     padding: 60px 40px;
-    max-width: 700px;
+    max-width: 80%;
     background-color: #80808022;
   }
   & label{
@@ -27,5 +31,18 @@ export const Title = styled.h3`
   text-transform: uppercase;
   color:#330867;
   font-weight: 900;
+`
+export const ImagesBox = styled.div`
+  position: relative;
+  & .icon_delete{
+    position: absolute;
+    top: 0;
+    right: 0;
+    cursor: pointer;
+    color: red;
+    font-size: 20px;
+    background-color: #80808024;
+    z-index: 9999;
+  }
 `
 

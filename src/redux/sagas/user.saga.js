@@ -82,8 +82,19 @@ function* getUserInfoSaga(action) {
 }
 function* getUserListSage(action){
   try {
+    const searchKey = action.payload?.searchKey;
     const role = action.payload?.role;
-    const result = yield axios.get(`${SERVER_API_URL}/users?${role && `role=${role}`}`);
+    const result = yield axios({
+      method: "GET",
+      url:`${SERVER_API_URL}/users`,
+      params: {
+        _sort: "id",
+        _order: "desc",
+        ...(searchKey && { q: searchKey }),
+        ...(role && { role: role }),
+      },
+    })
+    // .get(`${SERVER_API_URL}/users?${role && `role=${role}`}`);
     yield put({
       type: SUCCESS(USER_ACTION.GET_USER_LIST),
       payload: {
@@ -97,9 +108,30 @@ function* getUserListSage(action){
     });
   }
 }
+function* editUserSaga(action) {
+  try {
+    const { id, data } = action.payload;
+    const result = yield axios.patch(
+      `${SERVER_API_URL}/users/${id}`,
+      data
+    );
+    yield put({
+      type: SUCCESS(USER_ACTION.EDIT_USER),
+      payload: {
+        data: result.data,
+      },
+    });
+  } catch (e) {
+    yield put({
+      type: FAILURE(USER_ACTION.EDIT_USER),
+      payload: e.message,
+    });
+  }
+}
 export default function* userSaga() {
   yield takeEvery(REQUEST(USER_ACTION.LOGIN), loginSaga);
   yield takeEvery(REQUEST(USER_ACTION.REGISTER), registerSaga);
   yield takeEvery(REQUEST(USER_ACTION.GET_USER_INFO), getUserInfoSaga);
   yield takeEvery(REQUEST(USER_ACTION.GET_USER_LIST), getUserListSage);
+  yield takeEvery(REQUEST(USER_ACTION.EDIT_USER), editUserSaga);
 }

@@ -31,6 +31,7 @@ import "swiper/swiper.min.css";
 import "swiper/components/effect-fade/effect-fade.min.css";
 import "swiper/components/navigation/navigation.min.css";
 import "swiper/components/pagination/pagination.min.css";
+import 'suneditor/dist/css/suneditor.min.css';
 
 import { lightTheme, darkTheme } from "./styles/themes";
 import { BackTop } from "antd";

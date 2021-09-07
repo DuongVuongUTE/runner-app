@@ -55,13 +55,6 @@ function CategoryListPage(props) {
     }
     setIsShowModifyModal('');
   }
-  function handleSearchProduct(value) {
-    console.log("🚀 ~ file: index.jsx ~ line 31 ~ handleSearchProduct ~ value", value)
-    setSearchKey(value);
-    dispatch(getCategoryListAction({
-      searchKey:value
-    }));
-  }
 
   const tableColumn = [
     {
