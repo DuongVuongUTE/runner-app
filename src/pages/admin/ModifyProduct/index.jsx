@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-
-import { 
+import SunEditor from 'suneditor-react';
+import {
   Form,
   Row,
   Card,
@@ -14,7 +14,8 @@ import {
   Radio,
   Upload,
   Checkbox,
-  Select } from 'antd';
+  Select
+} from 'antd';
 import * as Icon from "@ant-design/icons";
 
 import {
@@ -35,52 +36,52 @@ import * as Style from './styles'
 
 const COLOR_MENU = [
   {
-    'name':'đỏ',
-    'code':'#e7352b'
+    'name': 'đỏ',
+    'code': '#e7352b'
   },
   {
-    'name':'trắng',
-    'code':'#ffffff',
+    'name': 'trắng',
+    'code': '#ffffff',
   },
   {
-    'name':'đen',
-    'code':'#000000',
+    'name': 'đen',
+    'code': '#000000',
   },
   {
-    'name':'xanh dương',
-    'code':'#1790c8',
+    'name': 'xanh dương',
+    'code': '#1790c8',
   },
   {
-    'name':'cam',
-    'code':'#f36b26',
+    'name': 'cam',
+    'code': '#f36b26',
   },
   {
-    'name':'nâu',
-    'code':'#825d41',
+    'name': 'nâu',
+    'code': '#825d41',
   },
   {
-    'name':'xanh la',
-    'code':'#7bba3c',
+    'name': 'xanh la',
+    'code': '#7bba3c',
   },
   {
-    'name':'vàng',
-    'code':'#fed533',
+    'name': 'vàng',
+    'code': '#fed533',
   },
   {
-    'name':'xám',
-    'code':'#808080',
+    'name': 'xám',
+    'code': '#808080',
   },
   {
-    'name':'hồng',
-    'code':'#f0728f',
+    'name': 'hồng',
+    'code': '#f0728f',
   },
   {
-    'name':'xanh ngọc',
-    'code':'#02cbb5',
+    'name': 'xanh ngọc',
+    'code': '#02cbb5',
   },
   {
-    'name':'màu khác',
-    'code':'multicolor',
+    'name': 'màu khác',
+    'code': 'multicolor',
   },
 ]
 
@@ -99,7 +100,7 @@ function ModifyProduct({ action, match }) {
   const { productDetail } = useSelector((state) => state.productReducerAdmin);
   const { departmentList } = useSelector((state) => state.departmentReducer);
   const { productSelected } = useSelector((state) => state.commonProductReducerAdmin);
-  
+
   const [isOptionForm, setIsOptionForm] = useState(false);
   const [isShowCreateOption, setIsShowCreateOption] = useState(false);
   useEffect(() => {
@@ -112,14 +113,15 @@ function ModifyProduct({ action, match }) {
     }
   }, [productId]);
   useEffect(() => {
-    if (productDetail.data.id) {
+    if (productDetail.data.id && productId) {
       productForm.resetFields();
       setUploadImage([...productDetail.data.images]);
       dispatch(setProductSelectActionAdmin(
         productDetail.data
       ));
     }
-  }, [productDetail.data])
+    else setUploadImage([])
+  }, [productDetail.data], [productId])
 
   async function handleUploadImage(value) {
     if (!["image/png", "image/jpeg"].includes(value.file.type)) {
@@ -136,7 +138,20 @@ function ModifyProduct({ action, match }) {
   function renderProductImages() {
     return uploadImages.map((imageItem, imageIndex) => (
       <Col span={6}>
-        <Image width="100%" src={imageItem} />
+        <Style.ImagesBox >
+          <Image width="100%" src={imageItem} />
+          <div className="icon_delete"
+            onClick={() => {
+              const newUploadImages = [...uploadImages]
+              newUploadImages.splice(imageIndex, 1)
+              console.log(newUploadImages)
+              setUploadImage(newUploadImages)
+
+            }}
+          >
+            <Icon.CloseOutlined />
+          </div>
+        </Style.ImagesBox>
       </Col>
     ));
   }
@@ -228,8 +243,11 @@ function ModifyProduct({ action, match }) {
 
 
   function handleSubmitForm() {
+    if (uploadImages.length === 0) {
+      return setUploadError('Ảnh là bắt buộc!');
+    }
     const values = productForm.getFieldsValue();
-    console.log("🚀 ~ file: index.jsx ~ line 233 ~ handleSubmitForm ~ values", {...values,images: uploadImages,})
+    console.log("🚀 ~ file: index.jsx ~ line 233 ~ handleSubmitForm ~ values", { ...values, images: uploadImages, })
     if (action === "create") {
       dispatch(createProductActionAdmin(
         {
@@ -287,7 +305,7 @@ function ModifyProduct({ action, match }) {
     // console.log("🚀 ~ file: index.jsx ~ line 287 ~ renderOptionColor ~ value", value);
     return COLOR_MENU.map((colorItem, colorIndex) => {
       return (
-        <Style.customRadio value={colorItem} >
+        <Style.customRadio value={colorItem.code} >
           {colorItem.code == "#ffffff" || colorItem.code == "multicolor"
             ? <Style.customTag >{colorItem.name}</Style.customTag>
             : <Style.customTag color={colorItem.code}>{colorItem.name}</Style.customTag>
@@ -298,17 +316,24 @@ function ModifyProduct({ action, match }) {
 
     })
   }
+
   return (
     <>
       <Style.Container>
-        <Style.Title>{action=="create"?"Thêm":"Sửa"} Sản Phẩm</Style.Title>
-        <div>
+        <Style.Title>{action == "create" ? "Thêm" : "Sửa"} Sản Phẩm</Style.Title>
+        <Row justify="end">
+          <Space style={{ marginTop: "40px" }}>
+            <Button onClick={()=>history.goBack()}>Hủy</Button>
+            <Button type="primary" onClick={() => handleSubmitForm()}>Lưu</Button>
+          </Space>
+        </Row>
+        <div className="form">
           <Form
             form={productForm}
             className="form"
             name="basic"
             labelCol={{ span: 6 }}
-            initialValues={productId?productDetail.data:{}}
+            initialValues={productId ? productDetail.data : {}}
             onFinish={handleSubmitForm}
           >
             <Form.Item
@@ -323,7 +348,26 @@ function ModifyProduct({ action, match }) {
               name="description"
               rules={[{ required: true, message: 'Bạn chưa nhập mô tả!' }]}
             >
-              <Input.TextArea />
+              <SunEditor
+                setOptions={{
+                  height: 300,
+                  font: [
+                    'Segoe UI',
+                    'Arial',
+                    'tohoma',
+                    'Courier New,Courier'
+                  ],
+                  buttonList: [
+                    ['font', 'formatBlock', 'fontSize'],
+                    ['bold', 'underline', 'italic', 'strike', 'subscript', 'superscript'],
+                    ['fontColor', 'hiliteColor', 'outdent', 'indent', 'align', 'list', 'table'],
+                    ['link', 'image']
+                  ],
+                  defaultStyle: `font-family: 'Segoe UI', 'Aria', sans-serif; font-size: 14px;`,
+                }}
+                defaultValue={productForm.getFieldValue('description')}
+                onChange={(value) => productForm.setFieldsValue({ description: value })}
+              />
             </Form.Item>
             <Form.Item
               label="Giá"
@@ -367,56 +411,53 @@ function ModifyProduct({ action, match }) {
               </Radio.Group>
             </Form.Item>
             <Row>
-            <Col span={4} style={{ textAlign: "right" }}>
-              <Space style={{ marginTop: 4 }} size={0}>
-                <div
-                  style={{
-                    display: 'inline-block',
-                    marginRight: '4px',
-                    color: '#ff4d4f',
-                    fontSize: '14px',
-                    fontFamily: 'SimSun, sans-serif',
-                    lineHeight: 1,
-                  }}
+              <Col span={6} style={{ textAlign: "right" }}>
+                <Space style={{ marginTop: 4 }} size={0}>
+                  <div
+                    style={{
+                      display: 'inline-block',
+                      marginRight: '4px',
+                      color: '#ff4d4f',
+                      fontSize: '14px',
+                      fontFamily: 'SimSun, sans-serif',
+                      lineHeight: 1,
+                    }}
+                  >
+                    *
+                  </div>
+                  <div style={{ marginRight: 8 }}>Hình ảnh :</div>
+                </Space>
+              </Col>
+              <Col span={18}>
+                <Upload
+                  accept="image/*"
+                  listType="picture"
+                  beforeUpload={() => false}
+                  onChange={(value) => handleUploadImage(value)}
+                  showUploadList={false}
                 >
-                  *
+                  <Button icon={<Icon.UploadOutlined />}>Click to upload</Button>
+                </Upload>
+                {uploadImages.length > 0 && (
+                  <Row gutter={[8, 8]} style={{ marginTop: 8 }}>
+                    {renderProductImages()}
+                  </Row>
+                )}
+                <div style={{ height: 24, color: '#ff4d4f' }}>
+                  {uploadError}
                 </div>
-                <div style={{ marginRight: 8 }}>Hình ảnh :</div>
-              </Space>
-            </Col>
-            <Col span={20}>
-              <Upload
-                accept="image/*"
-                listType="picture"
-                beforeUpload={() => false}
-                onChange={(value) => handleUploadImage(value)}
-                showUploadList={false}
-              >
-                <Button icon={<Icon.UploadOutlined />}>Click to upload</Button>
-              </Upload>
-              {uploadImages.length > 0 && (
-                <Row gutter={[8, 8]} style={{ marginTop: 8 }}>
-                  {renderProductImages()}
-                </Row>
-              )}
-              <div style={{ height: 24, color: '#ff4d4f' }}>
-                {uploadError}
-              </div>
-            </Col>
-          </Row>
-          </Form>
-          <Form.Item label="Tùy chọn">
+              </Col>
+            </Row>
+          </Form >
+          <Form.Item
+            labelCol={{span:6}}
+            label="Tùy chọn">
             <Checkbox disabled={action === "create"}
               checked={isOptionForm} onChange={(e) => setIsOptionForm(e.target.checked)}
             />
           </Form.Item>
           {isOptionForm && productSelected.id && renderProductOptionForm()}
-          <Row justify="end">
-            <Space style={{ marginTop: "40px" }}>
-              <Button>Hủy</Button>
-              <Button type="primary" onClick={() => handleSubmitForm()}>Lưu</Button>
-            </Space>
-          </Row>
+
         </div>
       </Style.Container >
     </>

@@ -177,6 +177,19 @@ function userReducer(state = initialState, action) {
         },
       };
     }
+    case SUCCESS(USER_ACTION.EDIT_USER):{
+      const { data } = action.payload;
+      const newUserList = [...state.userList.data];
+      const userIndex = newUserList.findIndex((user) => user.id === data.id);
+      newUserList.splice(userIndex, 1, data);
+      return {
+        ...state,
+        userList: {
+          ...state.userList,
+          data: newUserList,
+        },
+      };
+    }
     default:
       return state;
   }

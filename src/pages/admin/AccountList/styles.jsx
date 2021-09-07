@@ -12,3 +12,17 @@ export const CustomButton = styled(Button)`
   height: auto;
   font-size: 16px;
 `
+export const Search = styled.div`
+  margin: 20px;
+  display: flex;
+  font-weight: 900;
+  justify-content: flex-end;
+`
+export const CustomTable = styled(Table)`
+  & th{
+    text-transform: uppercase;
+    background-color: #391085 !important;
+    color: white !important;
+    white-space: nowrap;
+  }
+`
