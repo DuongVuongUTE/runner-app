@@ -1,37 +1,41 @@
-import { Button, Divider, Image, List, Space } from "antd";
+import { Button, Typography, Image, List, Space } from "antd";
 import React from "react";
 import { useSelector } from "react-redux";
 import { Container } from "../../../styles/styles";
-import history from "../../../utils/history";
+
 // import * as Style from "./styles";
+const { Title } = Typography;
 
 function UserInfo() {
   const { userInfo } = useSelector((state) => state.userReducer);
 
   const data = [
+    <>
+      <Space>
+        <Image
+          width={100}
+          height={100}
+          style={{ objectFit: "cover" }}
+          src={userInfo.data.avatar}
+        />
+        <Button>Thay đổi avatar</Button>
+      </Space>
+    </>,
     `Tên: ${userInfo.data?.name}`,
     `Email: ${userInfo.data?.email}`,
     `Giới tính: ${userInfo.data?.gender === "female" ? "Nữ" : "Nam"}`,
-    `Lịch sử mua: Đang làm!`,
     <>
-      <span>Sản phẩm yêu thích:</span>
-      <Button onClick={() => history.push("/wishlist")}>Xem</Button>
+      <span>Thay đổi mật khẩu:</span>
+      <Button>Thay đổi</Button>
     </>,
   ];
 
   return (
     <>
-      <Divider orientation="left">Thông tin cá nhân</Divider>
       <Container>
-        <Space>
-          <Image
-            width={100}
-            height={100}
-            style={{ objectFit: "cover" }}
-            src={userInfo.data.avatar}
-          />
-          <Button>Thay đổi avatar</Button>
-        </Space>
+        <Title level={3} style={{ textAlign: "center", padding: "30px 0" }}>
+          Thông tin cá nhân
+        </Title>
         <List
           size="small"
           bordered

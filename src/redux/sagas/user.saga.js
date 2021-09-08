@@ -1,19 +1,22 @@
 import { notification } from "antd";
 import { put, takeEvery } from "redux-saga/effects";
-import axios from 'axios';
-import { REQUEST, SUCCESS, FAILURE, USER_ACTION } from '../constants';
-import { SERVER_API_URL } from './apiUrl';
+import axios from "axios";
+import { REQUEST, SUCCESS, FAILURE, USER_ACTION } from "../constants";
+import { SERVER_API_URL } from "./apiUrl";
 
-import history from '../../utils/history';
+import history from "../../utils/history";
 
 function* loginSaga(action) {
   try {
     const { data } = action.payload;
     const result = yield axios.post(`${SERVER_API_URL}/login`, data);
-    yield localStorage.setItem('userInfo', JSON.stringify({
-      role: result.data.user.role,
-      accessToken: result.data.accessToken
-    }));
+    yield localStorage.setItem(
+      "userInfo",
+      JSON.stringify({
+        role: result.data.user.role,
+        accessToken: result.data.accessToken,
+      })
+    );
     yield put({
       type: SUCCESS(USER_ACTION.LOGIN),
       payload: {
@@ -21,19 +24,19 @@ function* loginSaga(action) {
       },
     });
     yield notification.success({
-      message: 'Đăng nhập thành công!',
+      message: "Đăng nhập thành công!",
     });
-    if (result.data.user.role === 'admin') {
-      yield history.push('/admin')
+    if (result.data.user.role === "admin") {
+      yield history.push("/admin");
     } else {
-      yield history.push('/');
+      yield history.push("/");
     }
   } catch (e) {
     yield put({
       type: FAILURE(USER_ACTION.LOGIN),
       payload: {
-        error: 'Email hoặc mật khẩu không đúng!'
-      }
+        error: "Email hoặc mật khẩu không đúng!",
+      },
     });
   }
 }
@@ -44,22 +47,22 @@ function* registerSaga(action) {
     yield axios.post(`${SERVER_API_URL}/register`, data);
     yield put({ type: SUCCESS(USER_ACTION.REGISTER) });
     yield notification.success({
-      message: 'Đăng ký thành công!',
+      message: "Đăng ký thành công!",
     });
-    yield history.push('/login');
+    yield history.push("/login");
   } catch (e) {
-    if (e.response.data === 'Email already exists') {
+    if (e.response.data === "Email already exists") {
       yield put({
         type: FAILURE(USER_ACTION.REGISTER),
         payload: {
-          error: 'Email đã tồn tại!'
-        }
+          error: "Email đã tồn tại!",
+        },
       });
     } else {
       yield put({
         type: FAILURE(USER_ACTION.REGISTER),
         payload: {
-          error: null
+          error: null,
         },
       });
     }
@@ -69,31 +72,37 @@ function* registerSaga(action) {
 function* getUserInfoSaga(action) {
   try {
     const { id } = action.payload;
-    const result = yield axios.get(`${SERVER_API_URL}/users/${id}`);
+    const result = yield axios({
+      method: "GET",
+      url: `${SERVER_API_URL}/users/${id}`,
+      params: {
+        _embed: "orders",
+      },
+    });
     yield put({
       type: SUCCESS(USER_ACTION.GET_USER_INFO),
       payload: {
-        data: result.data
+        data: result.data,
       },
     });
   } catch (e) {
     yield put({ type: FAILURE(USER_ACTION.GET_USER_INFO), payload: e.message });
   }
 }
-function* getUserListSage(action){
+function* getUserListSage(action) {
   try {
     const searchKey = action.payload?.searchKey;
     const role = action.payload?.role;
     const result = yield axios({
       method: "GET",
-      url:`${SERVER_API_URL}/users`,
+      url: `${SERVER_API_URL}/users`,
       params: {
         _sort: "id",
         _order: "desc",
         ...(searchKey && { q: searchKey }),
         ...(role && { role: role }),
       },
-    })
+    });
     // .get(`${SERVER_API_URL}/users?${role && `role=${role}`}`);
     yield put({
       type: SUCCESS(USER_ACTION.GET_USER_LIST),
@@ -111,10 +120,7 @@ function* getUserListSage(action){
 function* editUserSaga(action) {
   try {
     const { id, data } = action.payload;
-    const result = yield axios.patch(
-      `${SERVER_API_URL}/users/${id}`,
-      data
-    );
+    const result = yield axios.patch(`${SERVER_API_URL}/users/${id}`, data);
     yield put({
       type: SUCCESS(USER_ACTION.EDIT_USER),
       payload: {

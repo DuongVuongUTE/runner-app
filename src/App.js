@@ -31,7 +31,7 @@ import "swiper/swiper.min.css";
 import "swiper/components/effect-fade/effect-fade.min.css";
 import "swiper/components/navigation/navigation.min.css";
 import "swiper/components/pagination/pagination.min.css";
-import 'suneditor/dist/css/suneditor.min.css';
+import "suneditor/dist/css/suneditor.min.css";
 
 import { lightTheme, darkTheme } from "./styles/themes";
 import { BackTop } from "antd";
@@ -41,6 +41,7 @@ import { getUserInfoAction } from "./redux/actions";
 import BlogPage from "./pages/user/Blog";
 import WishlistPage from "./pages/user/WishList";
 import UserInfo from "./pages/user/UserInfo";
+import HistoryPage from "./pages/user/History";
 
 const THEME = {
   light: lightTheme,
@@ -73,6 +74,7 @@ function App() {
           <DefaultLayout exact path="/contact" component={AboutPage} />
           <DefaultLayout exact path="/wishlist" component={WishlistPage} />
           <DefaultLayout exact path="/userinfo" component={UserInfo} />
+          <DefaultLayout exact path="/history" component={HistoryPage} />
           <DefaultLayout exact path="/about" component={AboutPage} />
           <DefaultLayout
             exact

@@ -6,6 +6,7 @@ import { deleteWishlistItemAction } from "../../../redux/actions";
 import { Container } from "../../../styles/styles";
 import * as Style from "./styles";
 import history from "../../../utils/history";
+import { Redirect } from "react-router";
 
 function WishlistPage() {
   const { userInfo } = useSelector((state) => state.userReducer);
@@ -79,6 +80,9 @@ function WishlistPage() {
         </Col>
       );
     });
+  }
+  if (!userInfo.data.name) {
+    return <Redirect to="/login" />;
   }
   return (
     <>

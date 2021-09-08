@@ -13,6 +13,7 @@ import commonProductReducerAdmin from "./admin/common.reducer";
 import rootSaga from "../sagas";
 import typeReducer from "./type.reducer";
 import departmentReducer from "./department.reducer";
+import orderReducer from "./order.reducer";
 
 let sagaMiddleware = createSagaMiddleware();
 
@@ -27,6 +28,7 @@ const store = configureStore({
     wishlistReducer: wishlistReducer,
     departmentReducer: departmentReducer,
     productReducerAdmin: productReducerAdmin,
+    orderReducer: orderReducer,
     commonProductReducerAdmin: commonProductReducerAdmin,
   },
   middleware: [...getDefaultMiddleware({ thunk: false }), sagaMiddleware],
