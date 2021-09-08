@@ -75,10 +75,12 @@ function* getProductListSaga(action) {
         ...(searchKey && { q: searchKey }),
       },
     });
+    console.log(result);
     yield put({
       type: SUCCESS(PRODUCT_ACTION.GET_PRODUCT_LIST),
       payload: {
         data: result.data,
+        total: result.headers["x-total-count"],
         page,
         more,
       },

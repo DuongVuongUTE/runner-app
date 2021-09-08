@@ -100,12 +100,24 @@
       "carts": [
         {
           "productId": "32",
-          "count": 1,
+          "count": 2,
           "name": "Deviate Nitro Elite Racer SP Men's Running Sneakers",
           "price": 4600000,
           "color": "multiColor",
           "image": "https://images.puma.com/image/upload/f_auto,q_auto,b_rgb:fafafa,w_2000,h_2000/global/195419/01/sv03/fnd/PNA/fmt/png/Deviate-Nitro-Elite-Racer-SP-Men's-Running-Sneakers",
           "category": "Puma",
+          "type": "Giày chạy bộ",
+          "department": "Giày nam",
+          "option": {}
+        },
+        {
+          "productId": "15",
+          "count": 4,
+          "name": "Nike Air Zoom Alphafly NEXT",
+          "price": 5850000,
+          "color": "#02cbb5",
+          "image": "https://static.nike.com/a/images/t_PDP_864_v1/f_auto,b_rgb:f5f5f5,q_80/676c7f91-924e-43b0-8d30-44fa9f127491/air-zoom-alphafly-next-mens-racing-shoes-fNntgL.png",
+          "category": "Nike",
           "type": "Giày chạy bộ",
           "department": "Giày nam",
           "option": {}
@@ -125,7 +137,7 @@
       ],
       "role": "user",
       "createdAt": 1630740022540,
-      "updatedAt": 1630987088288,
+      "updatedAt": 1630995033258,
       "id": 6,
       "cart": []
     }

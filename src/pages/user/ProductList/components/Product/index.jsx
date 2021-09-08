@@ -1,9 +1,10 @@
-import { Button, Empty, Row } from "antd";
+import { Button, Empty, Row, Typography } from "antd";
 import React from "react";
 import { useDispatch } from "react-redux";
 import CardProduct from "../../../../../components/Card";
 import { getProductListAction } from "../../../../../redux/actions";
 import * as Style from "./style";
+const { Title } = Typography;
 function Product({
   productList,
   categoriesSelected,
@@ -49,6 +50,7 @@ function Product({
         <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
       ) : (
         <>
+          <Title level={5}>{productList.total} Sản phẩm</Title>
           <Style.ProductList>{renderProductList()}</Style.ProductList>
 
           {productList.data.length % PRODUCT_LIMIT === 0 && (
