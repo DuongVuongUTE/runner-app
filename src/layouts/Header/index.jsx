@@ -59,6 +59,11 @@ function Header({ type }) {
         </Space>
       </Menu.Item>
       <Menu.Item>
+        <Space size={5} align="center" onClick={() => history.push("/history")}>
+          <Icons.HistoryOutlined /> <span>Lịch sử đơn hàng</span>
+        </Space>
+      </Menu.Item>
+      <Menu.Item>
         <Space
           size={5}
           align="center"
