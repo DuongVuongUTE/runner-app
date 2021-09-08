@@ -26,8 +26,9 @@ function TagList({
       categoriesSelected.length === 0 &&
       !searchKey &&
       typesSelected.length === 0 &&
-      departmentsSelected.length === 0 &&
-      history.location.pathname !== "/product" &&
+      (departmentsSelected.length === 0 ||
+        (departmentsSelected.length > 0 &&
+          history.location.pathname !== "/product")) &&
       priceRange[0] === 0 &&
       priceRange[1] === 15000000
     )
@@ -131,7 +132,7 @@ function TagList({
               );
             }
           )}
-        {searchKey && (
+        {/* {searchKey && (
           <Tag
             color="geekblue"
             closable
@@ -151,9 +152,10 @@ function TagList({
           >
             {`Tìm theo từ khóa: ${searchKey}`}
           </Tag>
-        )}
+        )} */}
         {(priceRange[0] !== 0 || priceRange[1] !== 15000000) && (
           <Tag
+            color="geekblue"
             closable
             onClose={() => {
               setPriceRange([0, 15000000]);
@@ -170,6 +172,40 @@ function TagList({
             }}
           >
             {`Giá từ: ${priceRange[0].toLocaleString()} - ${priceRange[1].toLocaleString()}`}
+          </Tag>
+        )}
+        {(priceRange[0] !== 0 ||
+          priceRange[1] !== 15000000 ||
+          (departmentsSelected.length > 0 &&
+            history.location.pathname === "/product") ||
+          typesSelected.length > 0 ||
+          categoriesSelected.length > 0) && (
+          <Tag
+            closable
+            color="red"
+            onClose={() => {
+              setPriceRange([0, 15000000]);
+              setCategoriesSelect([]);
+              setTypesSelect([]);
+              if (history.location.pathname === "/product") {
+                setDepartmentsSelect([]);
+              }
+              dispatch(
+                getProductListAction({
+                  page: 1,
+                  categoriesSelected: [],
+                  typesSelected: [],
+                  departmentsSelected:
+                    history.location.pathname === "/product"
+                      ? []
+                      : departmentsSelected,
+                  priceRange: [0, 15000000],
+                  searchKey,
+                })
+              );
+            }}
+          >
+            Xoá tất cả
           </Tag>
         )}
       </Space>

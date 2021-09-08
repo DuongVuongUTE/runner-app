@@ -32,6 +32,7 @@ function CartPage() {
   const { userInfo } = useSelector((state) => state.userReducer);
   const { wishList } = useSelector((state) => state.wishlistReducer);
   let totalPrice = 0;
+  let totalCount = 0;
   const dispatch = useDispatch();
 
   function handleAddToWishlist(productID) {
@@ -126,9 +127,11 @@ function CartPage() {
       history.push("/checkout");
     }
   }
-
   function renderCartList(params) {
     return cartList?.data?.map((cartItem, cartIndex) => {
+      totalCount = cartItem.option.id
+        ? totalCount + cartItem.count
+        : totalCount + cartItem.count;
       totalPrice = cartItem.option.id
         ? totalPrice + (cartItem.price + cartItem.option.price) * cartItem.count
         : totalPrice + cartItem.price * cartItem.count;
@@ -237,7 +240,7 @@ function CartPage() {
                       <div className="list-item">
                         <span>
                           {cartList.data.length > 0
-                            ? cartList.data.length + " sản phẩm"
+                            ? totalCount + " sản phẩm"
                             : 0 + " sản phẩm"}
                         </span>
                         <span>{totalPrice.toLocaleString() + "₫"}</span>

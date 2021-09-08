@@ -1,9 +1,10 @@
-import { createReducer } from '@reduxjs/toolkit';
-import { REQUEST, SUCCESS, FAILURE, PRODUCT_ACTION } from '../constants';
+import { createReducer } from "@reduxjs/toolkit";
+import { REQUEST, SUCCESS, FAILURE, PRODUCT_ACTION } from "../constants";
 
 const initialState = {
   productList: {
     data: [],
+    total: 0,
     page: 1,
     load: false,
     error: null,
@@ -13,7 +14,7 @@ const initialState = {
     load: false,
     error: null,
   },
-}
+};
 
 const productReducer = createReducer(initialState, {
   [REQUEST(PRODUCT_ACTION.GET_PRODUCT_LIST)]: (state, action) => {
@@ -26,32 +27,31 @@ const productReducer = createReducer(initialState, {
     };
   },
   [SUCCESS(PRODUCT_ACTION.GET_PRODUCT_LIST)]: (state, action) => {
-    const { data, page, more } = action.payload;
+    const { data, page, more, total } = action.payload;
     if (more) {
       return {
         ...state,
         productList: {
           ...state.productList,
-          data: [
-            ...state.productList.data,
-            ...data,
-          ],
+          data: [...state.productList.data, ...data],
+          total,
           page,
           load: false,
           error: null,
         },
-      }
+      };
     } else {
       return {
         ...state,
         productList: {
           ...state.productList,
           data,
+          total,
           page: 1,
           load: false,
           error: null,
         },
-      }
+      };
     }
   },
   [FAILURE(PRODUCT_ACTION.GET_PRODUCT_LIST)]: (state, action) => {
@@ -63,7 +63,7 @@ const productReducer = createReducer(initialState, {
         load: false,
         error,
       },
-    }
+    };
   },
 
   [REQUEST(PRODUCT_ACTION.GET_PRODUCT_DETAIL)]: (state, action) => {
@@ -85,7 +85,7 @@ const productReducer = createReducer(initialState, {
         load: false,
         error: null,
       },
-    }
+    };
   },
   [FAILURE(PRODUCT_ACTION.GET_PRODUCT_DETAIL)]: (state, action) => {
     const { error } = action.payload;
@@ -96,7 +96,7 @@ const productReducer = createReducer(initialState, {
         load: false,
         error,
       },
-    }
+    };
   },
 
   [SUCCESS(PRODUCT_ACTION.CREATE_PRODUCT)]: (state, action) => {
@@ -105,18 +105,17 @@ const productReducer = createReducer(initialState, {
       ...state,
       productList: {
         ...state.productList,
-        data: [
-          data,
-          ...state.productList.data,
-        ],
+        data: [data, ...state.productList.data],
       },
-    }
+    };
   },
 
   [SUCCESS(PRODUCT_ACTION.EDIT_PRODUCT)]: (state, action) => {
     const { data } = action.payload;
     const newProductList = [...state.productList.data];
-    const productIndex = newProductList.findIndex((product) => product.id === data.id);
+    const productIndex = newProductList.findIndex(
+      (product) => product.id === data.id
+    );
     newProductList.splice(productIndex, 1, data);
     return {
       ...state,
@@ -130,7 +129,9 @@ const productReducer = createReducer(initialState, {
   [SUCCESS(PRODUCT_ACTION.DELETE_PRODUCT)]: (state, action) => {
     const { id } = action.payload;
     const newProductList = [...state.productList.data];
-    const productIndex = newProductList.findIndex((product) => product.id === id);
+    const productIndex = newProductList.findIndex(
+      (product) => product.id === id
+    );
     newProductList.splice(productIndex, 1);
     return {
       ...state,
