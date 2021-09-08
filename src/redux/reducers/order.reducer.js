@@ -38,7 +38,7 @@ const orderReducer = createReducer(initialState, {
       ...state,
       orderList: {
         ...state.orderList,
-        data: data,
+        data: [...state.orderList.data, data],
       },
     };
   },
