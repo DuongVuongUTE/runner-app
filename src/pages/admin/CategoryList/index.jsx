@@ -61,6 +61,8 @@ function CategoryListPage(props) {
       title: 'loại',
       dataIndex: 'name',
       key: 'name',
+      sorter: (a, b) => a.name.length - b.name.length,
+      sortDirections: ['descend'],
     },
     {
       title: '',

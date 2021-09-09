@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Button, Table, Space, Popconfirm } from "antd";
+import { List, Row, Input, Col } from "antd";
 import moment from "moment";
-
+import * as Icon from "@ant-design/icons";
 // import ModifyProductModal from "./components/ModifyProductModal";
 
 import {
@@ -12,29 +12,40 @@ import {
 import * as Style from './styles'
 
 function CustomerListPage(props) {
-  // "", "create", "edit"
-  // const [isShowModifyModal, setIsShowModifyModal] = useState("");
+
   const [modifyUserData, setModifyUserData] = useState({});
   const { userList } = useSelector((state) => state.userReducer);
-
+  const [searchKey, setSearchKey] = useState('');
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getUserListAction(
       {
-        role:"user"
+        role: "user"
       }
     ));
   }, []);
 
-  function handleSubmitForm(values) {
+  function handleSearchCustomer(value) {
+    setSearchKey(value);
+    dispatch(getUserListAction({
+      searchKey: value,
+      role: "user"
+    }));
   }
 
   const tableColumn = [
     {
+      dataIndex: "avatar",
+      key: "avatar",
+      render: (value) => (<Style.ImageItem image={value}></Style.ImageItem>)
+    },
+    {
       title: "Tên",
       dataIndex: "name",
       key: "name",
+      sorter: (a, b) => a.name.length - b.name.length,
+      sortDirections: ['descend'],
     },
     {
       title: "Email",
@@ -42,52 +53,12 @@ function CustomerListPage(props) {
       key: "email",
     },
     {
-      title: "Ngày tạo",
-      dataIndex: "createdAt",
-      key: "createdAt",
-      render: (value) => value && moment(value).format("DD/MM/YYYY HH:mm"),
+      title: "Tổng tiền",
+      dataIndex: "orders",
+      key: "orders",
+      render: (value) => value[0] &&` ${(value[0].totalPrice).toLocaleString()}VNĐ`
     },
-    {
-      title: "Ngày sửa",
-      dataIndex: "updatedAt",
-      key: "updatedAt",
-      render: (value) => value && moment(value).format("DD/MM/YYYY HH:mm"),
-    },
-    {
-      title: "Trạng thái",
-      dataIndex: "status",
-      key: "status",
-      render: (value)=> value == 0 ? "Khóa":"Kích Hoạt"
-    },
-    {
-      title: "",
-      dataIndex: "action",
-      key: "action",
-      render: (_, record) => {
-        return (
-          <Space>
-            <Button
-              type="primary"
-              ghost
-              onClick={() => {
-                // setIsShowModifyModal("edit");
-                setModifyUserData(record);
-              }}
-            >
-              Sửa
-            </Button>
-            <Popconfirm
-              title="Are you sure to delete this User?"
-              // onConfirm={() => dispatch(deleteUserAction({ id: record.id }))}
-              onCancel={() => null}
-              okText="Yes"
-              cancelText="No"
-            >
-            </Popconfirm>
-          </Space>
-        );
-      },
-    },
+
   ];
 
   const tableData = userList.data.map((userItem, userIndex) => {
@@ -96,30 +67,57 @@ function CustomerListPage(props) {
       ...userItem,
     };
   });
-  console.log(
-    "🚀 ~ file: index.jsx ~ line 114 ~ tableData ~ tableData",
-    tableData
-  );
+
+  // function renderOrderProductList(productList){
+  //   return productList.map((item,index)=>{
+  //     return (
+  //       <div></div>
+  //     )
+  //   })
+  // }
 
   return (
     <div>
       <div style={{ padding: 16 }}>
         <Style.Title>Quản lý khách hàng</Style.Title>
-        
-        <Table
+        <Style.Search>
+          <Input
+            style={{ width: "50%" }} placeholder="Tìm kiếm..."
+            suffix={<Icon.SearchOutlined />}
+            onChange={(e) => handleSearchCustomer(e.target.value)}
+          />
+        </Style.Search>
+        <Style.CustomTable
           style={{ marginTop: 40 }}
           columns={tableColumn}
           dataSource={tableData}
           loading={userList.load}
+          expandable={{
+            expandedRowRender: (record) => {
+              return (
+                <List
+                  size="small"
+                  dataSource={record.orders[0].products}
+                  renderItem={(item) => (
+                    <Style.ListItem>
+                      <Row justify="space-between" style={{ width: '100%', padding: "0 60px",textAlign:"end" }}>
+                        <Col span={6}>
+                          {/* <img src={item.image}></img> */}
+                          <Style.ShowImage src={item.image}></Style.ShowImage>
+                        </Col>
+                        <Col span={6}>{item.name}</Col>
+                        <Col span={6}>SL: {item.count}</Col>
+                        <Col span={6}>Tổng tiền: {(item.price).toLocaleString()}VNĐ</Col>
+                      </Row>
+                    </Style.ListItem>
+                  )}
+                />
+              )
+            },
+            rowExpandable: (record) => record.orders?.length > 0
+          }}
         />
       </div>
-      {/* <ModifyUserModal
-        isShowModifyModal={isShowModifyModal}
-        setIsShowModifyModal={setIsShowModifyModal}
-        handleSubmitForm={handleSubmitForm}
-        modifyUserData={modifyUserData}
-        categoryList={categoryList}
-      /> */}
     </div>
   );
 }

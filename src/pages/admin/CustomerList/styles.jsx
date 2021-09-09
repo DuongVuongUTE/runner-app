@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Row, Button, Table, Space, Popconfirm } from "antd";
+import { Row, Button, Table, List, Popconfirm } from "antd";
 
 export const Title = styled.h3`
   font-family: 'Times New Roman', Times, serif;
@@ -11,4 +11,35 @@ export const Title = styled.h3`
 export const CustomButton = styled(Button)`
   height: auto;
   font-size: 16px;
+`
+export const Search = styled.div`
+  margin: 20px;
+  display: flex;
+  font-weight: 900;
+  justify-content: flex-end;
+`
+export const CustomTable = styled(Table)`
+  & th{
+    text-transform: uppercase;
+    background-color: #391085 !important;
+    color: white !important;
+    white-space: nowrap;
+  }
+
+`
+export const ImageItem = styled.div`
+  width: 80px;
+  padding-top: 50%;
+  background-image: url(${(props)=>props.image ? props.image :null});
+  background-size: contain;
+`
+export const ListItem = styled(List.Item)`
+  background-color: #feffe6;
+`
+export const ShowImage = styled.img`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50px;
+  width: 50px;
 `

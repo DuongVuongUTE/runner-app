@@ -64,8 +64,9 @@
       "wishlist": [],
       "role": "user",
       "createdAt": 1630734004121,
-      "updatedAt": 1630739141148,
-      "id": 5
+      "updatedAt": 1631113282421,
+      "id": 5,
+      "status": "block"
     },
     {
       "email": "phuonghang@gmail.com",
