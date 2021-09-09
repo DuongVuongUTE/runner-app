@@ -2,8 +2,8 @@ import styled from "styled-components";
 import { Row, Col ,Space} from 'antd';
 
 export const HeaderContainer = styled.div`
-  padding: 20px 40px;
-  background: #330867;
+  padding: 10px 40px;
+  background: #1d3a98;
 `
 export const HeaderLogo = styled.h1`
   flex-shrink: 0;

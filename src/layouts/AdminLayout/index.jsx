@@ -30,14 +30,13 @@ function AdminLayout({ exact, path, component: Component,action }) {
         return (
           <>
             <HeaderAdmin/>
-            <Layout style={{ minHeight: '100vh'}}>
+            <Layout >
               <Sidebar {...routeProps} isShowSidebar={isShowSidebar} />
-              <Style.SiteLayout >
-                <Content style={{ margin: '16px' }}>
+              <Style.SiteLayout style={{ margin: '16px' }}>
+                <Content >
                   <div className="site-layout-background" style={{ padding: 24, minHeight: 360,height:'100%' }}>
                     <Component {...routeProps} action={action} />
                   </div>
-
                 </Content>
               </Style.SiteLayout>
             </Layout>

@@ -70,7 +70,6 @@ function ProductListPage(props) {
       title: "Giá",
       dataIndex: "price",
       key: "price",
-      defaultSortOrder: 'descend',
       sorter: (a, b) => a.price - b.price,
       render: (value) => value.toLocaleString(),
     },
@@ -131,21 +130,22 @@ function ProductListPage(props) {
     <div>
       <div style={{ padding: 16 }}>
         <Style.Title>Quản lý sản phẩm</Style.Title>
-        <Row justify="end" style={{ marginBottom: 16 }}>
+        <Style.CustomSpace>
+          <Style.Search>
+            <Input
+              style={{ }} placeholder="Tìm kiếm..."
+              suffix={<Icon.SearchOutlined />}
+              onChange={(e) => handleSearchProduct(e.target.value)}
+            />
+          </Style.Search>
           <Style.CustomButton
             type="primary"
             onClick={() => history.push('/admin/products/create')}
           >
             Thêm mới
           </Style.CustomButton>
-        </Row>
-        <Style.Search>
-          <Input
-            style={{ width: "50%" }} placeholder="Tìm kiếm..."
-            suffix={<Icon.SearchOutlined />}
-            onChange={(e) => handleSearchProduct(e.target.value)}
-          />
-        </Style.Search>
+        </Style.CustomSpace>
+
         <Style.CustomTable
           pagination={{ pageSize: 7 }}
           columns={tableColumn}

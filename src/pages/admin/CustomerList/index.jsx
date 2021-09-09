@@ -68,14 +68,6 @@ function CustomerListPage(props) {
     };
   });
 
-  // function renderOrderProductList(productList){
-  //   return productList.map((item,index)=>{
-  //     return (
-  //       <div></div>
-  //     )
-  //   })
-  // }
-
   return (
     <div>
       <div style={{ padding: 16 }}>
@@ -88,7 +80,7 @@ function CustomerListPage(props) {
           />
         </Style.Search>
         <Style.CustomTable
-          style={{ marginTop: 40 }}
+          style={{ marginTop: 10 }}
           columns={tableColumn}
           dataSource={tableData}
           loading={userList.load}

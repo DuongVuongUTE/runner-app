@@ -1,40 +1,40 @@
 import React, { useState } from "react";
 import { Layout, Menu, Breadcrumb } from 'antd';
 
-
 import history from '../../utils/history';
 
+import * as Icon from "@ant-design/icons";
 import * as Style from './styles';
 
 const SIDEBAR_MENU = [
   {
     title: 'Dashboard',
     path: '/admin',
-    icon: 'https://img.icons8.com/fluency/25/000000/home.png',
+    icon: <Icon.HomeOutlined/>,
     subMenu: []
   },
   {
     title: 'Quản Lý Sản Phẩm',
     path: '/admin/products',
-    icon: 'https://img.icons8.com/color/25/000000/product--v3.png',
+    icon: <Icon.MedicineBoxOutlined />,
     subMenu: []
   },
   {
-    title: 'Quán Lý Loại',
+    title: 'Quán Lý Loại Giày',
     path: '/admin/categories',
-    icon: 'https://img.icons8.com/fluency/25/000000/categorize.png',
+    icon: <Icon.QrcodeOutlined />,
     subMenu: []
   },
   {
     title: 'Quản Lý Khách Hàng',
     path: '/admin/customers',
-    icon: 'https://img.icons8.com/fluency/25/000000/group.png',
+    icon: <Icon.SolutionOutlined />,
     subMenu: []
   },
   {
     title: 'Quản Lý tài khoản',
     path: '/admin/accounts',
-    icon: 'https://img.icons8.com/fluency/25/000000/guest-male.png',
+    icon: <Icon.UserOutlined />,
     subMenu: []
   },
   
@@ -53,7 +53,8 @@ function Sidebar({ location, isShowSidebar }) {
         <>
           {sidebarItem.subMenu.length === 0
             ? (
-              <Menu.Item icon={<img src={sidebarItem.icon} />}
+              <Menu.Item 
+                icon={sidebarItem.icon}
                 key={`sidebar-${sidebarIndex}`}
                 active={location.pathname === sidebarItem.path}
                 onClick={() => history.push(sidebarItem.path)}
@@ -95,9 +96,8 @@ function Sidebar({ location, isShowSidebar }) {
   return (
     <>
       <Style.CustomSider
-        style={{ margin: '16px 0' }}
         width={270}
-        theme="dark"
+        theme="light"
         collapsible
         collapsed={collapsed}
         onCollapse={onCollapse}

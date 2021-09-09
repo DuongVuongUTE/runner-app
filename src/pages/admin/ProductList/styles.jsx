@@ -1,11 +1,10 @@
 import styled from "styled-components";
-import { Table, Button, List } from "antd";
+import { Table, Button, List ,Space} from "antd";
 
 export const Title = styled.h3`
-  font-family: 'Times New Roman', Times, serif;
   font-size: 20px;
   text-transform: uppercase;
-  color:#330867;
+  color:#1d3a98;
   font-weight: 900;
 `
 export const CustomButton = styled(Button)`
@@ -13,19 +12,25 @@ export const CustomButton = styled(Button)`
   font-size: 16px;
 `
 export const Search = styled.div`
-  margin: 20px;
+  /* margin: 20px; */
   display: flex;
-  font-weight: 900;
+  min-width: 400px;
   justify-content: flex-end;
+  font-weight: 900;
 `
 export const CustomTable = styled(Table)`
   & th{
     text-transform: uppercase;
-    background-color: #391085 !important;
+    background-color: #096dd9 !important;
     color: white !important;
     white-space: nowrap;
   }
 `
 export const ListItem = styled(List.Item)`
   background-color: #feffe6;
+`
+export const CustomSpace = styled(Space)`
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 10px;
 `
