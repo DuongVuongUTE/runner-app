@@ -11,6 +11,7 @@ function BreadcrumbUI() {
     "/product/woman": "Giày nữ",
     "/product/kids": "Giày trẻ em",
     "/blog": "Bài viết",
+    "/cart": "Giỏ hàng",
   };
   const { location } = history;
   const pathSnippets = location.pathname.split("/").filter((i) => i);

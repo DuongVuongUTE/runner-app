@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
 export const Home = styled.div`
+  background-color: #fff;
   .swiper-button-next,
   .swiper-button-prev {
     position: absolute;

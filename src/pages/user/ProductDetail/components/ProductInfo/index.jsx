@@ -324,251 +324,257 @@ function ProductInfo({
     });
   }
   return (
-    <>
-      <Row gutter={[30, 30]}>
-        <Col xl={{ span: 12 }} lg={{ span: 12 }} sm={{ span: 24 }}>
-          <Image.PreviewGroup>
-            <Swiper onSwiper={setSwiper}>
-              {productDetail.data?.images?.map((image) => {
-                return (
-                  <SwiperSlide className="slide-item">
-                    <Image
-                      className="slide-image"
-                      src={image}
-                      placeholder={<div className="bg-animate" />}
-                    />
-                  </SwiperSlide>
-                );
-              })}
-            </Swiper>
-          </Image.PreviewGroup>
-          <Swiper
-            style={{ marginTop: 10 }}
-            spaceBetween={10}
-            slidesPerView={4}
-            className="mySwiper"
-          >
-            {productDetail.data?.images?.map((image, index) => {
-              return (
-                <SwiperSlide key={index - image}>
-                  <Image
-                    onClick={() => slideTo(index)}
-                    preview={false}
-                    src={image}
-                    placeholder={<div className="bg-animate" />}
-                  />
-                </SwiperSlide>
-              );
-            })}
-          </Swiper>
-        </Col>
-        <Col xl={{ span: 12 }} lg={{ span: 12 }} sm={{ span: 24 }}>
-          <div className="product-info">
-            <h3>{` ${productDetail.data.name}`}</h3>
-            <div className="product-rate">
-              <Rate className="rate" disabled allowHalf defaultValue={4.5} />
-              <span className="number-rate"> 0 Khách hàng đánh giá</span>
-            </div>
-            <div className="product-price">
-              <strong>
-                {optionSelected.price?.toLocaleString() ||
-                  productDetail.data.price?.toLocaleString() ||
-                  0}
-                ₫
-              </strong>
-            </div>
-            <div className="product-info-list">
-              <div className="product-brand-item">
-                <span className="product-info-tag">Thương hiệu:</span>
-                <span className="product-info-text">{` ${productDetail.data.category?.name}`}</span>
-              </div>
-              <div className="product-type-item">
-                <span className="product-info-tag">Loại giày:</span>
-                <span className="product-info-text">{` ${productDetail.data.type?.name}`}</span>
-              </div>
-            </div>
-            <div className="product-department">
-              <span className="product-info-tag">Sản phẩm dành cho:</span>
-              <span className="product-info-text">{` ${productDetail.data.department?.name}`}</span>
-            </div>
-            <div className="product-color">
-              <span className="product-info-tag">Màu sắc:</span>
-              <Style.Color color={productDetail.data.color} />
-            </div>
-            {productDetail.data.productOptions?.length > 0 && (
-              <div className="product-option">
-                <strong className="tag">Size</strong>
-                <Radio.Group
-                  onChange={(e) => setOptionSelected(e.target.value)}
-                  value={optionSelected}
-                >
-                  {renderProductOptions()}
-                </Radio.Group>
-              </div>
-            )}
-            <div className="product-action">
-              <Space>
-                <InputNumber
-                  min={1}
-                  onChange={(value) => setProductCount(value)}
-                  value={productCount}
-                />
-
-                <Button
-                  type="primary"
-                  icon={<Icons.ShoppingCartOutlined />}
-                  onClick={() => handleAddToCart()}
-                >
-                  Thêm vào giỏ
-                </Button>
-              </Space>
-              <Button
-                type="primary"
-                danger
-                onClick={() => handleAddToWishlist()}
-                icon={<Icons.HeartOutlined />}
-              >
-                Thêm yêu thích
-              </Button>
-            </div>
-
-            <List
-              bordered
-              header={<strong>Chính sách</strong>}
-              dataSource={DataList}
-              renderItem={(item) => (
-                <List.Item>
-                  <Space>
-                    {item.icon}
-                    {item.text}
-                  </Space>
-                </List.Item>
-              )}
-            />
-          </div>
-        </Col>
-      </Row>
-      <Row style={{ padding: "50px 0" }} gutter={[16, 24]}>
-        <Col lg={{ span: 15, order: 1 }} xs={{ order: 2 }}>
-          <Tabs defaultActiveKey="1">
-            <TabPane
-              tab={
-                <span>
-                  <Icons.FileSearchOutlined />
-                  Giới thiệu
-                </span>
-              }
-              key="1"
-            >
-              <div className={viewMore ? "list-info active" : "list-info"}>
-                <div
-                  style={{
-                    display: "grid",
-                    gridTemplateColumns: "1fr 1fr",
-                    gap: 15,
-                  }}
-                >
-                  {productDetail.data?.images?.map((image, index) => {
+    <Style.ProductInfo>
+      <Style.MainInfo>
+        <Row gutter={[15, 30]}>
+          <Col xl={{ span: 12 }} lg={{ span: 12 }} sm={{ span: 24 }}>
+            <div className="image-group">
+              <Image.PreviewGroup>
+                <Swiper onSwiper={setSwiper}>
+                  {productDetail.data?.images?.map((image) => {
                     return (
+                      <SwiperSlide className="slide-item">
+                        <Image
+                          className="slide-image"
+                          src={image}
+                          placeholder={<div className="bg-animate" />}
+                        />
+                      </SwiperSlide>
+                    );
+                  })}
+                </Swiper>
+              </Image.PreviewGroup>
+              <Swiper
+                style={{ marginTop: 10 }}
+                spaceBetween={10}
+                slidesPerView={4}
+                className="mySwiper"
+              >
+                {productDetail.data?.images?.map((image, index) => {
+                  return (
+                    <SwiperSlide key={index - image}>
                       <Image
                         onClick={() => slideTo(index)}
                         preview={false}
                         src={image}
                         placeholder={<div className="bg-animate" />}
                       />
-                    );
-                  })}
+                    </SwiperSlide>
+                  );
+                })}
+              </Swiper>
+            </div>
+          </Col>
+          <Col xl={{ span: 12 }} lg={{ span: 12 }} sm={{ span: 24 }}>
+            <div className="product-content">
+              <h3>{` ${productDetail.data.name}`}</h3>
+              <div className="product-rate">
+                <Rate className="rate" disabled allowHalf defaultValue={4.5} />
+                <span className="number-rate"> 0 Khách hàng đánh giá</span>
+              </div>
+              <div className="product-price">
+                <strong>
+                  {optionSelected.price?.toLocaleString() ||
+                    productDetail.data.price?.toLocaleString() ||
+                    0}
+                  ₫
+                </strong>
+              </div>
+              <div className="product-info-list">
+                <div className="product-brand-item">
+                  <span className="product-info-tag">Thương hiệu:</span>
+                  <span className="product-info-text">{` ${productDetail.data.category?.name}`}</span>
                 </div>
+                <div className="product-type-item">
+                  <span className="product-info-tag">Loại giày:</span>
+                  <span className="product-info-text">{` ${productDetail.data.type?.name}`}</span>
+                </div>
+              </div>
+              <div className="product-department">
+                <span className="product-info-tag">Sản phẩm dành cho:</span>
+                <span className="product-info-text">{` ${productDetail.data.department?.name}`}</span>
+              </div>
+              <div className="product-color">
+                <span className="product-info-tag">Màu sắc:</span>
+                <Style.Color color={productDetail.data.color} />
+              </div>
+              {productDetail.data.productOptions?.length > 0 && (
+                <div className="product-option">
+                  <strong className="tag">Size</strong>
+                  <Radio.Group
+                    onChange={(e) => setOptionSelected(e.target.value)}
+                    value={optionSelected}
+                  >
+                    {renderProductOptions()}
+                  </Radio.Group>
+                </div>
+              )}
+              <div className="product-action">
+                <Space wrap>
+                  <InputNumber
+                    min={1}
+                    onChange={(value) => setProductCount(value)}
+                    value={productCount}
+                  />
+
+                  <Button
+                    type="primary"
+                    icon={<Icons.ShoppingCartOutlined />}
+                    onClick={() => handleAddToCart()}
+                  >
+                    Thêm vào giỏ
+                  </Button>
+                </Space>
                 <Button
-                  style={{
-                    position: "absolute",
-                    bottom: 0,
-                    left: "50%",
-                    zIndex: 2,
-                    transform: "translateX(-50%)",
-                  }}
-                  onClick={() => setViewMore(!viewMore)}
+                  type="primary"
+                  danger
+                  onClick={() => handleAddToWishlist()}
+                  icon={<Icons.HeartOutlined />}
                 >
-                  {viewMore ? "View Less" : "View More"}
+                  Thêm yêu thích
                 </Button>
               </div>
-            </TabPane>
-            <TabPane
-              tab={
-                <span>
-                  <Icons.LikeOutlined />
-                  Đánh giá sản phẩm
-                </span>
-              }
-              key="2"
-            >
-              <Comment
-                avatar={
-                  <Avatar
-                    src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
-                    alt="Han Solo"
-                  />
-                }
-                content={
-                  <Editor
-                  // onChange={this.handleChange}
-                  // onSubmit={this.handleSubmit}
-                  // submitting={submitting}
-                  // value={value}
-                  />
-                }
-              />
+
               <List
-                className="comment-list"
-                header={`${data.length} replies`}
-                itemLayout="horizontal"
-                dataSource={data}
+                bordered
+                header={<strong>Chính sách</strong>}
+                dataSource={DataList}
                 renderItem={(item) => (
-                  <li>
-                    <Comment
-                      actions={item.actions}
-                      author={item.author}
-                      avatar={item.avatar}
-                      content={item.content}
-                      datetime={item.datetime}
-                    />
-                  </li>
+                  <List.Item>
+                    <Space>
+                      {item.icon}
+                      {item.text}
+                    </Space>
+                  </List.Item>
                 )}
               />
-            </TabPane>
-          </Tabs>
+            </div>
+          </Col>
+        </Row>
+      </Style.MainInfo>
+      <Row gutter={[15, 30]}>
+        <Col lg={{ span: 15, order: 1 }} xs={{ order: 2 }}>
+          <Style.TabCard>
+            <Tabs defaultActiveKey="1" type="card">
+              <TabPane
+                tab={
+                  <span>
+                    <Icons.FileSearchOutlined />
+                    Giới thiệu
+                  </span>
+                }
+                key="1"
+              >
+                <div className={viewMore ? "list-info active" : "list-info"}>
+                  <div className="tab-list-image">
+                    {productDetail.data?.images?.map((image, index) => {
+                      return (
+                        <Image
+                          onClick={() => slideTo(index)}
+                          preview={false}
+                          src={image}
+                          placeholder={<div className="bg-animate" />}
+                        />
+                      );
+                    })}
+                  </div>
+                  <Button
+                    style={{
+                      position: "absolute",
+                      bottom: 0,
+                      left: "50%",
+                      zIndex: 2,
+                      transform: "translateX(-50%)",
+                    }}
+                    onClick={() => setViewMore(!viewMore)}
+                  >
+                    {viewMore ? "View Less" : "View More"}
+                  </Button>
+                </div>
+              </TabPane>
+              <TabPane
+                tab={
+                  <span>
+                    <Icons.LikeOutlined />
+                    Đánh giá sản phẩm
+                  </span>
+                }
+                key="2"
+              >
+                <Comment
+                  avatar={
+                    <Avatar
+                      src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
+                      alt="Han Solo"
+                    />
+                  }
+                  content={
+                    <Editor
+                    // onChange={this.handleChange}
+                    // onSubmit={this.handleSubmit}
+                    // submitting={submitting}
+                    // value={value}
+                    />
+                  }
+                />
+                <List
+                  className="comment-list"
+                  header={`${data.length} replies`}
+                  itemLayout="horizontal"
+                  dataSource={data}
+                  renderItem={(item) => (
+                    <li>
+                      <Comment
+                        actions={item.actions}
+                        author={item.author}
+                        avatar={item.avatar}
+                        content={item.content}
+                        datetime={item.datetime}
+                      />
+                    </li>
+                  )}
+                />
+              </TabPane>
+            </Tabs>
+          </Style.TabCard>
         </Col>
         <Col
           lg={{ span: 9, order: 2 }}
           xs={{ order: 1 }}
           style={{ width: "100%" }}
         >
-          <Descriptions title="Thông tin sản phẩm" layout="horizontal" bordered>
-            <Descriptions.Item label="Sản phẩm" span={3}>
-              {productDetail.data?.name}
-            </Descriptions.Item>
-            <Descriptions.Item label="Thương hiệu" span={3}>
-              {productDetail.data.category?.name}
-            </Descriptions.Item>
-            <Descriptions.Item label="Loại giày" span={3}>
-              {productDetail.data.type?.name}
-            </Descriptions.Item>
-            <Descriptions.Item label="Giày" span={3}>
-              {productDetail.data.department?.name}
-            </Descriptions.Item>
-            <Descriptions.Item label="Màu sắc" span={3}>
-              <Style.Color color={productDetail.data.color} />
-            </Descriptions.Item>
-            <Descriptions.Item label="Giá" span={3}>
-              {productDetail.data.price?.toLocaleString()} VNĐ
-            </Descriptions.Item>
-            <Descriptions.Item label="Mô tả" span={3}>
-              {productDetail.data.description}
-            </Descriptions.Item>
-          </Descriptions>
+          <Style.DescriptionsCard>
+            <Descriptions
+              title={<span>Thông tin sản phẩm</span>}
+              layout="horizontal"
+              bordered
+            >
+              <Descriptions.Item label="Sản phẩm" span={3}>
+                {productDetail.data?.name}
+              </Descriptions.Item>
+              <Descriptions.Item label="Thương hiệu" span={3}>
+                {productDetail.data.category?.name}
+              </Descriptions.Item>
+              <Descriptions.Item label="Loại giày" span={3}>
+                {productDetail.data.type?.name}
+              </Descriptions.Item>
+              <Descriptions.Item label="Giày" span={3}>
+                {productDetail.data.department?.name}
+              </Descriptions.Item>
+              <Descriptions.Item label="Màu sắc" span={3}>
+                <Style.Color color={productDetail.data.color} />
+              </Descriptions.Item>
+              <Descriptions.Item label="Giá" span={3}>
+                {productDetail.data.price?.toLocaleString()} VNĐ
+              </Descriptions.Item>
+              <Descriptions.Item label="Mô tả" span={3}>
+                {productDetail.data.description}
+              </Descriptions.Item>
+            </Descriptions>
+          </Style.DescriptionsCard>
         </Col>
       </Row>
-    </>
+    </Style.ProductInfo>
   );
 }
 

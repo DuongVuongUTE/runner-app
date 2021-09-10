@@ -23,6 +23,7 @@ import {
   deleteCartItemAction,
   addToWishlistAction,
 } from "../../../redux/actions";
+import BreadcrumbUI from "../../../components/Breadcrumb";
 
 import * as Style from "./styles";
 import { Container } from "../../../styles/styles";
@@ -30,53 +31,9 @@ import { Container } from "../../../styles/styles";
 function CartPage() {
   const { cartList } = useSelector((state) => state.cartReducer);
   const { userInfo } = useSelector((state) => state.userReducer);
-  const { wishList } = useSelector((state) => state.wishlistReducer);
   let totalPrice = 0;
   let totalCount = 0;
   const dispatch = useDispatch();
-
-  function handleAddToWishlist(productID) {
-    const existProductIndex = wishList.data?.findIndex(
-      (item) => item.productId === productID
-    );
-    if (existProductIndex !== -1) {
-      // Xoá yêu thích
-      // const newWishlistData = [...wishList.data];
-      // newWishlistData.splice(existProductIndex, 1);
-      // dispatch(
-      //   deleteWishlistItemAction({
-      //     userId: userInfo.data.id,
-      //     data: { wishlist: newWishlistData },
-      //   })
-      // );
-      notification.success({
-        message: "Sản phẩm đã được thêm!",
-      });
-    } else {
-      const newCart = [...cartList.data];
-      const wishItem = newCart.find(
-        (cartItem) => cartItem.productId === productID
-      );
-      dispatch(
-        addToWishlistAction({
-          userId: userInfo.data.id,
-          data: [
-            ...wishList.data,
-            {
-              productId: productID,
-              name: wishItem.name,
-              price: wishItem.price,
-              color: wishItem.color,
-              image: wishItem.image,
-              category: wishItem.category,
-              type: wishItem.type,
-              department: wishItem.department,
-            },
-          ],
-        })
-      );
-    }
-  }
 
   function handlePlusCount(index) {
     const newCartData = [...cartList.data];
@@ -182,21 +139,14 @@ function CartPage() {
               />
             </Input.Group>
           </div>
-          <div className="cart-action">
-            <div className="cart-btn">
-              <Button
-                onClick={() => handleDeleteItem(cartIndex)}
-                icon={<Icons.DeleteOutlined />}
-                type="primary"
-                danger
-              />
-              <Button
-                onClick={() => handleAddToWishlist(cartItem.productId)}
-                icon={<Icons.HeartOutlined />}
-                type="primary"
-                danger
-              />
-            </div>
+
+          <div className="cart-btn">
+            <Button
+              onClick={() => handleDeleteItem(cartIndex)}
+              icon={<Icons.DeleteOutlined />}
+              type="text"
+              danger
+            />
           </div>
         </Style.CartItem>
       );
@@ -204,7 +154,14 @@ function CartPage() {
   }
 
   return (
-    <>
+    <Style.CartPage>
+      <Style.Hero src="">
+        <Style.Breadcrumb>
+          <BreadcrumbUI />
+        </Style.Breadcrumb>
+
+        <Style.HeroTitle>Giỏ hàng</Style.HeroTitle>
+      </Style.Hero>
       {cartList.data.length === 0 ? (
         <Result
           status="404"
@@ -217,11 +174,8 @@ function CartPage() {
           }
         />
       ) : (
-        <Style.CartPage>
-          <Container>
-            <h2 style={{ textAlign: "center", marginBottom: 30 }}>
-              Danh sách giỏ hàng
-            </h2>
+        <Container>
+          <div className="cart">
             <Row gutter={[16, 16]}>
               <Col xs={24} sm={24} md={24} lg={16} xl={16}>
                 <Style.CartList>{renderCartList()}</Style.CartList>
@@ -270,10 +224,10 @@ function CartPage() {
                 </div>
               </Col>
             </Row>
-          </Container>
-        </Style.CartPage>
+          </div>
+        </Container>
       )}
-    </>
+    </Style.CartPage>
   );
 }
 

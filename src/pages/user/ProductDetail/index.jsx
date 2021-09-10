@@ -59,31 +59,33 @@ function ProductDetailPage() {
   }, [productDetail.data]);
 
   return (
-    <Container>
+    <>
       {productDetail.load ? (
         <Loading load={productDetail.load} />
       ) : (
         <Style.Section>
-          <PageHeader
-            className="site-page-header"
-            onBack={() => history.goBack()}
-            title="Chi tiết sản phẩm"
-            subTitle={getNameParams(productID)}
-          />
-          <Style.ProductDetail>
-            <ProductInfo
-              userInfo={userInfo}
-              productDetail={productDetail}
-              setOptionSelected={setOptionSelected}
-              optionSelected={optionSelected}
-              productID={getIdParams(productID)}
+          <Container>
+            <PageHeader
+              className="site-page-header"
+              onBack={() => history.goBack()}
+              title="Chi tiết sản phẩm"
+              subTitle={getNameParams(productID)}
             />
+            <Style.ProductDetail>
+              <ProductInfo
+                userInfo={userInfo}
+                productDetail={productDetail}
+                setOptionSelected={setOptionSelected}
+                optionSelected={optionSelected}
+                productID={getIdParams(productID)}
+              />
 
-            <ProductRelated productList={productList} />
-          </Style.ProductDetail>
+              <ProductRelated productList={productList} />
+            </Style.ProductDetail>
+          </Container>
         </Style.Section>
       )}
-    </Container>
+    </>
   );
 }
 
