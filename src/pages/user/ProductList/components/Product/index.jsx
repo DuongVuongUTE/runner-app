@@ -45,12 +45,12 @@ function Product({
     });
   }
   return (
-    <>
+    <Style.ProductContainer>
       {productList.data.length === 0 ? (
         <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
       ) : (
         <>
-          <Title level={5}>{productList.total} Sản phẩm</Title>
+          <span className="num-product">Có {productList.total} sản phẩm</span>
           <Style.ProductList>{renderProductList()}</Style.ProductList>
 
           {productList.data.length % PRODUCT_LIMIT === 0 && (
@@ -60,7 +60,7 @@ function Product({
           )}
         </>
       )}
-    </>
+    </Style.ProductContainer>
   );
 }
 

@@ -1,9 +1,13 @@
 import styled from "styled-components";
 
 export const Section = styled.div`
-  padding: 30px 0;
+  padding: 0 0 30px;
+  background-color: #f3f3f3;
   .site-page-header {
-    padding: 0;
+    padding: 15px 0;
+  }
+  .ant-page-header-heading-title {
+    font-size: 18px;
   }
   .list-info {
     position: relative;
@@ -34,154 +38,7 @@ export const Section = styled.div`
     }
   }
 `;
-export const ProductDetail = styled.div`
-  padding: 15px 0;
-  .slide-item {
-    .ant-image {
-      position: relative;
-      padding-top: 70%;
-      width: 100%;
-      .slide-image {
-        position: absolute;
-        top: 0;
-        right: 0;
-        bottom: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        display: block;
-        object-position: center;
-        object-fit: cover;
-      }
-    }
-  }
-  .product-info {
-    h3 {
-      font-size: 28px;
-      font-weight: 700;
-      margin-bottom: 20px;
-      display: -webkit-box;
-      -webkit-line-clamp: 2;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      word-break: break-word;
-    }
-    .product-rate {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin-bottom: 20px;
-      .rate {
-        font-size: 14px;
-        .ant-rate-star:not(:last-child) {
-          margin-right: 5px;
-        }
-      }
-      .number-rate {
-        position: relative;
-        display: inline-flex;
-        top: 1px;
-        font-size: 14px;
-      }
-    }
-    .product-price {
-      font-size: 24px;
-      color: #ff514e;
-      margin-bottom: 20px;
-      display: -webkit-box;
-      -webkit-line-clamp: 1;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      word-break: break-word;
-    }
-    .product-info-list {
-      display: flex;
-      gap: 30px;
-      align-items: center;
-      margin-bottom: 20px;
-      @media screen and (max-width: 400px) {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 15px;
-      }
-    }
-    .product-info-tag {
-      font-size: 14px;
-    }
-    .product-info-text {
-      font-weight: 600;
-    }
-    .product-department {
-      margin-bottom: 20px;
-    }
-    .product-color {
-      display: flex;
-      gap: 5px;
-      align-items: center;
-      margin-bottom: 20px;
-    }
-    .product-option {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      margin-bottom: 20px;
-      strong {
-        color: #ff514e;
-      }
-    }
-    .product-action {
-      display: flex;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      padding: 15px 0;
-      margin-bottom: 30px;
-      border-top: 1px solid rgba(0, 0, 0, 0.08);
-      border-bottom: 1px solid rgba(0, 0, 0, 0.08);
-      gap: 30px 15px;
-    }
-  }
-  .product-related {
-    text-align: center;
-    margin-bottom: 25px;
-    div {
-      font-weight: 600;
-      font-size: 14px;
-      color: #ff514e;
-    }
-    h2 {
-      margin-top: 10px;
-      font-weight: 700;
-      color: rgba(0, 0, 0, 0.84);
-    }
-  }
-  @media screen and (max-width: 450px) {
-    .ant-descriptions-bordered .ant-descriptions-item-label,
-    .ant-descriptions-bordered .ant-descriptions-item-content {
-      padding: 10px 15px;
-    }
-  }
-  @media screen and (max-width: 350px) {
-    .ant-list-bordered .ant-list-item,
-    .ant-list-bordered .ant-list-header {
-      padding-right: 15px;
-      padding-left: 15px;
-    }
-    .ant-descriptions-bordered .ant-descriptions-item-label,
-    .ant-descriptions-bordered .ant-descriptions-item-content {
-      padding: 10px 10px;
-    }
-  }
-
-  @media screen and (max-width: 325px) {
-    .col-custom {
-      display: block;
-      flex: 0 0 100%;
-      max-width: 100%;
-    }
-  }
-`;
+export const ProductDetail = styled.div``;
 export const Color = styled.div`
   display: inline-flex;
   align-items: center;

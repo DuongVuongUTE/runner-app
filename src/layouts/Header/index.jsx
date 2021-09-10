@@ -53,13 +53,17 @@ function Header({ type }) {
         <Space
           size={5}
           align="center"
-          onClick={() => history.push("/userinfo")}
+          onClick={() => history.push("/profile/user-info")}
         >
           <Icons.FireOutlined /> <span>Xem thông tin</span>
         </Space>
       </Menu.Item>
       <Menu.Item>
-        <Space size={5} align="center" onClick={() => history.push("/history")}>
+        <Space
+          size={5}
+          align="center"
+          onClick={() => history.push("/profile/history-order")}
+        >
           <Icons.HistoryOutlined /> <span>Lịch sử đơn hàng</span>
         </Space>
       </Menu.Item>
@@ -67,7 +71,7 @@ function Header({ type }) {
         <Space
           size={5}
           align="center"
-          onClick={() => history.push("/wishlist")}
+          onClick={() => history.push("/profile/wish-list")}
         >
           <Icons.HeartOutlined /> <span>Sản phẩm yêu thích</span>
         </Space>
@@ -210,11 +214,15 @@ function Header({ type }) {
           <div className="menu-container">
             <Style.HeaderAction>
               {!(type === "admin") && (
-                <Badge count={cartList.data?.length}>
+                <Badge
+                  count={cartList.data?.length}
+                  size="default"
+                  onClick={() => history.push("/cart")}
+                >
                   <Button
-                    type="primary"
+                    size="large"
+                    type="default"
                     shape="circle"
-                    onClick={() => history.push("/cart")}
                     icon={<Icons.ShoppingCartOutlined />}
                   ></Button>
                 </Badge>
@@ -229,8 +237,7 @@ function Header({ type }) {
                       trigger={["click"]}
                     >
                       <Space align="center" style={{ cursor: "pointer" }}>
-                        <Avatar src={userInfo.data?.avatar} />
-                        <strong>{userInfo.data?.name}</strong>
+                        <Avatar size="large" src={userInfo.data?.avatar} />
                       </Space>
                     </Dropdown>
                   </>

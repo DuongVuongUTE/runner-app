@@ -1,8 +1,41 @@
 import styled from "styled-components";
 
+export const Breadcrumb = styled.div`
+  position: absolute;
+  top: 20px;
+  left: 50%;
+  width: 100%;
+  transform: translateX(-50%);
+  color: white;
+`;
+export const Hero = styled.div`
+  position: relative;
+  padding-top: 150px;
+  background-image: linear-gradient(to right, #cb5eee, #4be1ec);
+`;
+
+export const HeroTitle = styled.h2`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  text-align: center;
+  transform: translate(-50%, -50%);
+  font-size: 24px;
+  color: #fff;
+  margin-bottom: 30px;
+`;
+
 export const CartPage = styled.div`
-  padding: 30px 0;
+  /* padding: 30px 0; */
+  min-height: 100vh;
+  background-color: #f3f3f3;
+  .cart {
+    padding: 15px 0;
+  }
   .cart-right {
+    position: sticky;
+    top: 15px;
     display: flex;
     flex-direction: column;
     gap: 15px;
@@ -11,19 +44,36 @@ export const CartPage = styled.div`
       display: flex;
       justify-content: space-between;
     }
+    .ant-list {
+      background-color: #fff;
+    }
+    @media screen and (max-width: 450px) {
+      .ant-list-bordered .ant-list-header {
+        padding-right: 15px;
+        padding-left: 15px;
+      }
+      .ant-list-bordered .ant-list-item {
+        padding-right: 15px;
+        padding-left: 15px;
+      }
+    }
   }
 `;
 
 export const CartList = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 30px;
+  gap: 15px;
 `;
 
 export const CartItem = styled.div`
+  position: relative;
   display: flex;
   width: 100%;
   transition: all 0.2s linear;
+  background-color: #fff;
+  border: 1px solid #dee2e6;
+  padding: 10px;
   &:hover {
     box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
   }
@@ -33,53 +83,48 @@ export const CartItem = styled.div`
     }
   }
   .cart-image {
-    width: 240px;
+    position: relative;
+    width: 200px;
+    height: 200px;
     flex-shrink: 0;
     img {
-      max-width: 100%;
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      height: 100%;
+      width: 100%;
+      object-fit: cover;
     }
     @media screen and (max-width: 767px) {
       & {
         width: 125px;
-        flex-shrink: 0;
-        img {
-          max-width: 100%;
-        }
+        height: 125px;
       }
     }
     @media screen and (max-width: 450px) {
       & {
         width: 100px;
-        flex-shrink: 0;
-        img {
-          max-width: 100%;
-        }
+        height: 100px;
       }
     }
-    @media screen and (max-width: 450px) {
+    @media screen and (max-width: 350px) {
       & {
         width: 75px;
-        flex-shrink: 0;
-        img {
-          max-width: 100%;
-        }
+        height: 75px;
       }
     }
   }
   .cart-content {
     flex-grow: 1;
-    padding: 20px 15px;
+    padding-left: 15px;
     display: flex;
     flex-direction: column;
     gap: 10px;
-    @media screen and (max-width: 767px) {
-      padding: 0 15px;
-    }
+
     @media screen and (max-width: 550px) {
-      padding: 0 10px;
-    }
-    @media screen and (max-width: 450px) {
-      padding: 0 5px 0 10px;
+      padding-left: 10px;
     }
     .cart-content-box {
       display: flex;
@@ -133,33 +178,12 @@ export const CartItem = styled.div`
     }
   }
 
-  .cart-action {
-    flex-shrink: 0;
-    padding: 20px 15px;
-    @media screen and (max-width: 767px) {
-      padding: 0 15px;
-    }
-    @media screen and (max-width: 550px) {
-      padding: 0 10px;
-    }
-    @media screen and (max-width: 450px) {
-      padding: 0 5px;
-    }
-    .cart-btn {
-      display: flex;
-      flex-direction: column;
-      gap: 15px;
-      @media screen and (max-width: 374px) {
-        .ant-btn-icon-only {
-          width: 26px;
-          height: 26px;
-          padding: 0px 0;
-          font-size: 14px;
-          border-radius: 2px;
-        }
-      }
-    }
+  .cart-btn {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
   }
+
   @media screen and (max-width: 400px) {
     .quantity {
       .ant-btn-icon-only {

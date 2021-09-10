@@ -3,6 +3,8 @@ import styled from "styled-components";
 export const CardProduct = styled.div`
   position: relative;
   cursor: pointer;
+  background-color: #fff;
+
   &:hover {
     box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
   }

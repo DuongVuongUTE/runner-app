@@ -135,10 +135,35 @@ function* editUserSaga(action) {
     });
   }
 }
+
+function* editProfileSaga(action) {
+  try {
+    const { id, data } = action.payload;
+    const result = yield axios.patch(`${SERVER_API_URL}/users/${id}`, data);
+    yield put({
+      type: SUCCESS(USER_ACTION.EDIT_USER_PROFILE),
+      payload: {
+        data: result.data,
+      },
+    });
+    yield notification.success({
+      message: "Chỉnh sửa thành công!",
+    });
+  } catch (e) {
+    yield put({
+      type: FAILURE(USER_ACTION.EDIT_USER_PROFILE),
+      payload: {
+        error: null,
+      },
+    });
+  }
+}
+
 export default function* userSaga() {
   yield takeEvery(REQUEST(USER_ACTION.LOGIN), loginSaga);
   yield takeEvery(REQUEST(USER_ACTION.REGISTER), registerSaga);
   yield takeEvery(REQUEST(USER_ACTION.GET_USER_INFO), getUserInfoSaga);
   yield takeEvery(REQUEST(USER_ACTION.GET_USER_LIST), getUserListSage);
   yield takeEvery(REQUEST(USER_ACTION.EDIT_USER), editUserSaga);
+  yield takeEvery(REQUEST(USER_ACTION.EDIT_USER_PROFILE), editProfileSaga);
 }

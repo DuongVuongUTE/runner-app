@@ -1,26 +1,26 @@
-import { useState } from 'react';
+import { useState } from "react";
 import { Route, Redirect } from "react-router-dom";
 
-import { Layout, Menu, Breadcrumb } from 'antd';
+import { Layout, Menu, Breadcrumb } from "antd";
 
-import HeaderAdmin from '../HeaderAdmin';
-import Header from '../Header';
-import Sidebar from '../Sidebar';
+import HeaderAdmin from "../HeaderAdmin";
+import Header from "../Header";
+import Sidebar from "../Sidebar";
 
-import * as Style from './styles';
+import * as Style from "./styles";
 
-function AdminLayout({ exact, path, component: Component,action }) {
+function AdminLayout({ exact, path, component: Component, action }) {
   const { Content } = Layout;
 
   const [isShowSidebar, setIsShowSidebar] = useState(true);
 
-  const userInfo = JSON.parse(localStorage.getItem('userInfo'));
+  const userInfo = JSON.parse(localStorage.getItem("userInfo"));
 
   if (!userInfo) {
-    return <Redirect to="/login" />
+    return <Redirect to="/login" />;
   } else {
-    if (userInfo.role === 'user') {
-      return <Redirect to="/" />
+    if (userInfo.role === "user") {
+      return <Redirect to="/" />;
     } else {
   return (
     <Route

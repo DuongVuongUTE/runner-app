@@ -1,5 +1,17 @@
 import styled from "styled-components";
 
+export const ProductContainer = styled.div`
+  /* padding: 15px;
+  background-color: #fff; */
+  .num-product {
+    display: inline-block;
+    color: #003a8c;
+    font-weight: 600;
+    font-size: 14px;
+    margin-bottom: 15px;
+  }
+`;
+
 export const ProductList = styled.div`
   display: grid;
   grid-template-columns: repeat(4, 1fr);

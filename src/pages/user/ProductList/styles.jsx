@@ -37,11 +37,11 @@ export const ProductLayout = styled.div`
 export const ProductFilter = styled.div`
   width: 250px;
   flex-shrink: 0;
-  /* .sticky {
+  .sticky {
     position: sticky;
-    top: 10px;
+    top: 15px;
     z-index: 10;
-  } */
+  }
   h3 {
     padding: 10px 0;
     border-bottom: 3px solid #003a8c;
