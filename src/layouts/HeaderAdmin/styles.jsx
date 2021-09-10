@@ -30,6 +30,11 @@ export const CustomSpace = styled(Space)`
   width: 100%;
   justify-content: flex-end;
 `
+export const SpaceIcons = styled(Space)`
+  font-size: 23px;
+  color: white;
+  margin-right: 30px;
+`
 export const profile = styled.div`
   display: flex;
   align-items: center;

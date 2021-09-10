@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Form, Input, Button,InputNumber, Tag, Radio, Upload } from 'antd';
+import { Space, Tag, Radio } from 'antd';
 
 export const Container = styled.div`
   &>div{
@@ -39,10 +39,14 @@ export const ImagesBox = styled.div`
     top: 0;
     right: 0;
     cursor: pointer;
-    color: red;
+    color: gray;
     font-size: 20px;
-    background-color: #80808024;
-    z-index: 9999;
+    /* z-index: 9999; */
   }
+`
+export const CustomSpace = styled(Space)`
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
 `
 
