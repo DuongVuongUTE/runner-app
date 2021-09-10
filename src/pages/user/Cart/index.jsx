@@ -164,6 +164,7 @@ function CartPage() {
       </Style.Hero>
       {cartList.data.length === 0 ? (
         <Result
+          style={{ backgroundColor: "#fff" }}
           status="404"
           title="Giỏ hàng trống"
           subTitle="Tiến hành mua hàng!"

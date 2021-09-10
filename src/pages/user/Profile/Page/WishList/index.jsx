@@ -59,6 +59,7 @@ function Wishlist() {
     <>
       {wishList.data.length === 0 ? (
         <Result
+          style={{ backgroundColor: "#fff" }}
           status="404"
           title="Danh sách yêu thích trống"
           subTitle="Tiến hành mua hàng!"
