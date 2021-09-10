@@ -31,13 +31,26 @@
       "email": "quocvuongta1023@gmail.com",
       "password": "$2a$10$lthVzYBXqAQj7MXx85qJmu32BivU5d6VyDeiy6m9ttv8D6zD/K2hu",
       "name": "Dương Vương",
-      "avatar": "https://thuthuatnhanh.com/wp-content/uploads/2020/09/avatar-cho-con-gai-mau-hong-cute.jpg",
+      "avatar": "https://res.cloudinary.com/vuongute/image/upload/v1631277919/runner-images/wdbcjcjrquxqh8ax1pvb.jpg",
       "gender": "male",
-      "carts": [],
+      "carts": [
+        {
+          "productId": "33",
+          "count": 1,
+          "name": "Scorch Runner Men's Running Shoes",
+          "price": 900000,
+          "color": "#e7352b",
+          "image": "https://images.puma.com/image/upload/f_auto,q_auto,b_rgb:fafafa,w_2000,h_2000/global/194459/12/sv03/fnd/PNA/fmt/png/Scorch-Runner-Men's-Running-Shoes",
+          "category": "Puma",
+          "type": "Giày chạy bộ",
+          "department": "Giày nam",
+          "option": {}
+        }
+      ],
       "wishlist": [],
       "role": "admin",
       "createdAt": 1630471043599,
-      "updatedAt": 1631272765174,
+      "updatedAt": 1631277889283,
       "id": 3,
       "cart": []
     },
