@@ -31,19 +31,34 @@ function ProductListPage(props) {
     console.log("🚀 ~ file: index.jsx ~ line 31 ~ handleSearchProduct ~ value", value)
     setSearchKey(value);
     dispatch(getProductListActionAdmin({
-      searchKey:value
+      searchKey: value
     }));
   }
+  const categoryFillter = categoryList.data.map((item, index) => {
+    return {
+      text: item.name,
+      value: item.id,
+    }
+  })
+
   const tableColumn = [
     {
       title: "Tên sản phẩm",
       dataIndex: "name",
       key: "name",
+      sorter: (a, b) => a.name.length - b.name.length,
+      sortDirections: ['descend'],
     },
     {
       title: "Loại",
       dataIndex: "categoryId",
       key: "categoryId",
+      filters: [
+        ...categoryFillter
+      ],
+      onFilter: (value, record) => {
+        return record.categoryId == value
+      },
       render: (value) => {
         const categoryData = categoryList.data.find(
           (item) => item.id === value
@@ -55,6 +70,7 @@ function ProductListPage(props) {
       title: "Giá",
       dataIndex: "price",
       key: "price",
+      sorter: (a, b) => a.price - b.price,
       render: (value) => value.toLocaleString(),
     },
     {
@@ -114,21 +130,22 @@ function ProductListPage(props) {
     <div>
       <div style={{ padding: 16 }}>
         <Style.Title>Quản lý sản phẩm</Style.Title>
-        <Row justify="end" style={{ marginBottom: 16 }}>
+        <Style.CustomSpace>
+          <Style.Search>
+            <Input
+              style={{ }} placeholder="Tìm kiếm..."
+              suffix={<Icon.SearchOutlined />}
+              onChange={(e) => handleSearchProduct(e.target.value)}
+            />
+          </Style.Search>
           <Style.CustomButton
             type="primary"
             onClick={() => history.push('/admin/products/create')}
           >
             Thêm mới
           </Style.CustomButton>
-        </Row>
-        <Style.Search>
-          <Input 
-            style={{width:"50%"}} placeholder="Tìm kiếm..." 
-            suffix={<Icon.SearchOutlined />} 
-            onChange={(e)=>handleSearchProduct(e.target.value)}
-            />
-        </Style.Search>
+        </Style.CustomSpace>
+
         <Style.CustomTable
           pagination={{ pageSize: 7 }}
           columns={tableColumn}
@@ -141,7 +158,7 @@ function ProductListPage(props) {
                   dataSource={record.productOptions}
                   renderItem={(item) => (
                     <Style.ListItem>
-                      <Row justify="space-between" style={{ width: '100%',padding:"0 60px" }}>
+                      <Row justify="space-between" style={{ width: '100%', padding: "0 60px" }}>
                         <div>Size: {item.size}</div>
                         <div>{(record.price + item.price).toLocaleString()}VNĐ</div>
                       </Row>

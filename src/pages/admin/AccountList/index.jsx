@@ -44,6 +44,8 @@ function AccountListPage(props) {
       title: "Tên",
       dataIndex: "name",
       key: "name",
+      sorter: (a, b) => a.name.length - b.name.length,
+      sortDirections: ['descend'],
     },
     {
       title: "Email",
@@ -54,18 +56,33 @@ function AccountListPage(props) {
       title: "Ngày tạo",
       dataIndex: "createdAt",
       key: "createdAt",
+      sorter: (a, b) => a.createdAt - b.createdAt,
       render: (value) => value && moment(value).format("DD/MM/YYYY HH:mm"),
     },
     {
       title: "Ngày sửa",
       dataIndex: "updatedAt",
       key: "updatedAt",
+      sorter: (a, b) => a.updatedAt - b.updatedAt,
       render: (value) => value && moment(value).format("DD/MM/YYYY HH:mm"),
     },
     {
       title: "Trạng thái",
       dataIndex: "status",
       key: "status",
+      filters: [
+        {
+          text: 'Kích hoạt',
+          value: 'active'
+        },
+        {
+          text: 'Khóa',
+          value: 'block'
+        }
+      ],
+      onFilter: (value, record) => {
+        return record.status == value
+      },
       render: (value) => value == "block"
         ? (<span style={{ color: 'red', whiteSpace: "500" }}>Khóa</span>)
         : (<span style={{ color: '#52c41a', whiteSpace: "500" }}>Kích hoạt</span>)
@@ -112,11 +129,11 @@ function AccountListPage(props) {
       <div style={{ padding: 16 }}>
         <Style.Title style={{ marginBottom: 26 }} >Quản Lý tài khoản</Style.Title>
         <Style.Search>
-          <Input 
-            style={{width:"50%"}} placeholder="Tìm kiếm..." 
-            suffix={<Icon.SearchOutlined />} 
-            onChange={(e)=>handleSearchAccount(e.target.value)}
-            />
+          <Input
+            style={{ width: "50%" }} placeholder="Tìm kiếm..."
+            suffix={<Icon.SearchOutlined />}
+            onChange={(e) => handleSearchAccount(e.target.value)}
+          />
         </Style.Search>
         <Style.CustomTable
           columns={tableColumn}

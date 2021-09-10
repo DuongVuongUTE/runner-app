@@ -22,7 +22,7 @@ import {
 import * as Style from './styles'
 
 function CategoryListPage(props) {
-  
+
   const [searchKey, setSearchKey] = useState('');
   const [isShowModifyModal, setIsShowModifyModal] = useState('');
   const [modifyCategoryData, setModifyCategoryData] = useState({});
@@ -39,7 +39,7 @@ function CategoryListPage(props) {
     console.log("🚀 ~ file: index.jsx ~ line 31 ~ handleSearchCategory ~ value", value)
     setSearchKey(value);
     dispatch(getCategoryListAction({
-      searchKey:value
+      searchKey: value
     }));
   }
   function handleSubmitForm(values) {
@@ -61,6 +61,8 @@ function CategoryListPage(props) {
       title: 'loại',
       dataIndex: 'name',
       key: 'name',
+      sorter: (a, b) => a.name.length - b.name.length,
+      sortDirections: ['descend'],
     },
     {
       title: '',
@@ -105,7 +107,14 @@ function CategoryListPage(props) {
     <div>
       <div style={{ padding: 16 }}>
         <Style.Title>Quản lý loại sản phẩm</Style.Title>
-        <Row justify="end" style={{ marginBottom: 16 }}>
+        <Style.CustomSpace>
+          <Style.Search>
+            <Input
+              placeholder="Tìm kiếm..."
+              suffix={<Icon.SearchOutlined />}
+              onChange={(e) => handleSearchCategory(e.target.value)}
+            />
+          </Style.Search>
           <Button
             type="primary"
             onClick={() => {
@@ -115,14 +124,7 @@ function CategoryListPage(props) {
           >
             Thêm mới
           </Button>
-        </Row>
-        <Style.Search>
-          <Input 
-            style={{width:"50%"}} placeholder="Tìm kiếm..." 
-            suffix={<Icon.SearchOutlined />} 
-            onChange={(e)=>handleSearchCategory(e.target.value)}
-            />
-        </Style.Search>
+        </Style.CustomSpace>
         <Style.CustomTable
           columns={tableColumn}
           dataSource={tableData}

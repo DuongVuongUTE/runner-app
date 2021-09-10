@@ -9,7 +9,7 @@ import { loginAction } from "../../redux/actions";
 import * as Style from "./style";
 import history from "../../utils/history";
 
-function LoginPage() {
+function LoginPage(z) {
   const { responseAction } = useSelector((state) => state.userReducer);
 
   const dispatch = useDispatch();

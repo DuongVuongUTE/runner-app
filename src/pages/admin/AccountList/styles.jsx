@@ -21,7 +21,7 @@ export const Search = styled.div`
 export const CustomTable = styled(Table)`
   & th{
     text-transform: uppercase;
-    background-color: #391085 !important;
+    background-color: #096dd9 !important;
     color: white !important;
     white-space: nowrap;
   }

@@ -1,4 +1,4 @@
-import { Row, Col, Dropdown, Menu ,Space} from 'antd';
+import { Row, Col, Dropdown, Menu, Space } from 'antd';
 import { useState, useEffect } from "react";
 import history from '../../utils/history';
 
@@ -10,7 +10,6 @@ import { useSelector, useDispatch } from "react-redux";
 
 function HeaderAdmin() {
 
-  
   const { userInfo } = useSelector((state) => state.userReducer);
   const dispatch = useDispatch();
 
@@ -45,6 +44,10 @@ function HeaderAdmin() {
           </Col>
           <Col span={17}>
             <Style.CustomSpace>
+              <Style.SpaceIcons size={[20, 16]}>
+                <Icon.BellOutlined className="icon"/>
+                <Icon.FlagOutlined className="icon"/>
+              </Style.SpaceIcons>
               <Dropdown overlay={menuProfile} trigger={['click']}>
                 <Style.profile >
                   <div>

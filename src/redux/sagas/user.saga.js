@@ -99,6 +99,7 @@ function* getUserListSage(action) {
       params: {
         _sort: "id",
         _order: "desc",
+        _embed:"orders",
         ...(searchKey && { q: searchKey }),
         ...(role && { role: role }),
       },

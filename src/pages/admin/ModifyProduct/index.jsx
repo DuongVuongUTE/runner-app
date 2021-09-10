@@ -149,7 +149,7 @@ function ModifyProduct({ action, match }) {
 
             }}
           >
-            <Icon.CloseOutlined />
+            <Icon.CloseSquareOutlined />
           </div>
         </Style.ImagesBox>
       </Col>
@@ -320,13 +320,13 @@ function ModifyProduct({ action, match }) {
   return (
     <>
       <Style.Container>
-        <Style.Title>{action == "create" ? "Thêm" : "Sửa"} Sản Phẩm</Style.Title>
-        <Row justify="end">
-          <Space style={{ marginTop: "40px" }}>
-            <Button onClick={()=>history.goBack()}>Hủy</Button>
+        <Style.CustomSpace>
+          <Style.Title>{action == "create" ? "Thêm" : "Sửa"} Sản Phẩm</Style.Title>
+          <Space>
+            <Button type={"danger"} onClick={() => history.goBack()}>Hủy</Button>
             <Button type="primary" onClick={() => handleSubmitForm()}>Lưu</Button>
           </Space>
-        </Row>
+        </Style.CustomSpace>
         <div className="form">
           <Form
             form={productForm}
@@ -450,7 +450,7 @@ function ModifyProduct({ action, match }) {
             </Row>
           </Form >
           <Form.Item
-            labelCol={{span:6}}
+            labelCol={{ span: 6 }}
             label="Tùy chọn">
             <Checkbox disabled={action === "create"}
               checked={isOptionForm} onChange={(e) => setIsOptionForm(e.target.checked)}
