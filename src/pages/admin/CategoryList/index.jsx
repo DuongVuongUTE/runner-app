@@ -55,14 +55,38 @@ function CategoryListPage(props) {
     }
     setIsShowModifyModal('');
   }
-
+  function totalQuantityProduct(productData) {
+    return productData.reduce((totalProduct, productItem) =>
+      productItem.quantity
+        ? totalProduct + productItem.quantity
+        : totalProduct, 0)
+  }
+  function totalSoldProduct(productData) {
+    return productData.reduce((totalProduct, productItem) =>
+      productItem.sold
+        ? totalProduct + productItem.sold
+        : totalProduct, 0)
+  }
   const tableColumn = [
     {
       title: 'loại',
       dataIndex: 'name',
       key: 'name',
       sorter: (a, b) => a.name.length - b.name.length,
-      sortDirections: ['descend'],
+    },
+    {
+      title: 'Tổng số lượng',
+      dataIndex: 'products',
+      key: 'products',
+      sorter: (a, b) => totalQuantityProduct(a.products) - totalQuantityProduct(b.products),
+      render: (value) => totalQuantityProduct(value)
+    },
+    {
+      title: 'Đã bán',
+      dataIndex: 'products',
+      key: 'products',
+      sorter: (a, b) => totalSoldProduct(a.products) - totalSoldProduct(b.products),
+      render: (value) => totalSoldProduct(value)
     },
     {
       title: '',
@@ -72,6 +96,7 @@ function CategoryListPage(props) {
         return (
           <Space>
             <Button
+              icon={<Icon.FormOutlined />}
               type="primary"
               ghost
               onClick={() => {
@@ -88,7 +113,7 @@ function CategoryListPage(props) {
               okText="Yes"
               cancelText="No"
             >
-              <Button danger>Xóa</Button>
+              <Button danger icon={<Icon.DeleteOutlined />}>Xóa</Button>
             </Popconfirm>
           </Space>
         )

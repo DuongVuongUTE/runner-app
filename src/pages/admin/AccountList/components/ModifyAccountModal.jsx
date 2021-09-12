@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useSelector, useDispatch } from "react-redux";
 import {
   Modal,
   Form,
@@ -20,7 +21,6 @@ function ModifyAccountModal({
   setIsShowModifyModal,
   handleSubmitForm,
   modifyUserData,
-  userList,
   uploadImages,
   setUploadImage
 }) {
@@ -28,7 +28,8 @@ function ModifyAccountModal({
   console.log("🚀 ~ file: ModifyAccountModal.jsx ~ line 25 ~ uploadImages", modifyUserData)
   const [uploadError, setUploadError] = useState('');
   const { Option } = Select;
-
+  const { userInfo } = useSelector((state) => state.userReducer);
+  
   useEffect(() => {
     if (isShowModifyModal) {
       modifyAccountForm.resetFields();
@@ -64,8 +65,8 @@ function ModifyAccountModal({
       <Form
         form={modifyAccountForm}
         name="modify-Account"
-        labelCol={{ span: 4 }}
-        wrapperCol={{ span: 20 }}
+        labelCol={{ span: 5 }}
+        wrapperCol={{ span: 19 }}
         initialValues={modifyUserData}
         onFinish={(values) => handleSubmitForm(values)}
 
@@ -108,7 +109,11 @@ function ModifyAccountModal({
           name="status"
           rules={[{ required: true, message: "Bạn chưa chọn trạng thái!" }]}
         >
-          <Select>
+          <Select
+            disabled={
+              userInfo.data.id == modifyUserData.id
+            }
+          >
             <Option value="active">Kích hoạt</Option>
             <Option value="block">Khóa</Option>
           </Select>

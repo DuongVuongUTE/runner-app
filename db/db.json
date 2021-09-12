@@ -57,15 +57,16 @@
     {
       "email": "hotuyet214@gmail.com",
       "password": "$2a$10$yyEuMPk2dAV9CuaiiGqOvOQ..RQ7DonDZMfY4ZF8Q4Sfjyva76O32",
-      "name": "tuyet",
+      "name": "tuyet t2",
       "avatar": "https://thuthuatnhanh.com/wp-content/uploads/2020/09/avatar-cho-con-gai-mau-hong-cute.jpg",
-      "gender": "male",
+      "gender": "female",
       "carts": [],
       "wishlist": [],
       "role": "admin",
       "createdAt": 1630593094197,
-      "updatedAt": 1631004926686,
-      "id": 4
+      "updatedAt": 1631436505742,
+      "id": 4,
+      "status": "active"
     },
     {
       "email": "hoaianh@gmail.com",
@@ -91,9 +92,10 @@
       "wishlist": [],
       "role": "user",
       "createdAt": 1630740022540,
-      "updatedAt": 1631099473563,
+      "updatedAt": 1631436312053,
       "id": 6,
-      "cart": []
+      "cart": [],
+      "status": "active"
     }
   ],
   "categories": [
@@ -792,7 +794,9 @@
         "https://images.puma.com/image/upload/f_auto,q_auto,b_rgb:fafafa,w_2000,h_2000/global/195419/01/dt01/fnd/PNA/fmt/png/Deviate-Nitro-Elite-Racer-SP-Men's-Running-Sneakers",
         "https://images.puma.com/image/upload/f_auto,q_auto,b_rgb:fafafa,w_2000,h_2000/global/195419/01/sv01/fnd/PNA/fmt/png/Deviate-Nitro-Elite-Racer-SP-Men's-Running-Sneakers"
       ],
-      "departmentId": 1
+      "departmentId": 1,
+      "quantity": 12,
+      "updatedAt": 1631371855530
     },
     {
       "id": 33,
@@ -811,7 +815,9 @@
         "https://images.puma.com/image/upload/f_auto,q_auto,b_rgb:fafafa,w_2000,h_2000/global/194459/12/sv04/fnd/PNA/fmt/png/Scorch-Runner-Men's-Running-Shoes",
         "https://images.puma.com/image/upload/f_auto,q_auto,b_rgb:fafafa,w_2000,h_2000/global/194459/12/dt02/fnd/PNA/fmt/png/Scorch-Runner-Men's-Running-Shoes"
       ],
-      "departmentId": 1
+      "departmentId": 1,
+      "quantity": 5,
+      "updatedAt": 1631371840393
     },
     {
       "id": 34,
@@ -831,7 +837,9 @@
         "https://images.puma.com/image/upload/f_auto,q_auto,b_rgb:fafafa,w_2000,h_2000/global/106509/01/dt01/fnd/PNA/fmt/png/Future-Z-4.2-TT-Soccer-Cleats-JR",
         "https://images.puma.com/image/upload/f_auto,q_auto,b_rgb:fafafa,w_2000,h_2000/global/106509/01/dt02/fnd/PNA/fmt/png/Future-Z-4.2-TT-Soccer-Cleats-JR"
       ],
-      "departmentId": 3
+      "departmentId": 3,
+      "updatedAt": 1631371555168,
+      "quantity": 10
     }
   ],
   "departments": [
@@ -1430,7 +1438,7 @@
       "checkoutInfo": "cod",
       "status": "waiting",
       "createdAt": 1631095063267,
-      "updatedAt": 1631095063267,
+      "updatedAt": 1631458100541,
       "id": 1
     }
   ]

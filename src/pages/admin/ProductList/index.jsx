@@ -1,16 +1,17 @@
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Row, Button, Table, Space, Popconfirm, List, Input } from "antd";
+import { Row, Button, Space, Popconfirm, List, Input } from "antd";
 import * as Icon from "@ant-design/icons";
 import history from "../../../utils/history";
-
+import UpdateQuantityModel from "./components/UpdateQuantityModel";
 import moment from "moment";
 
 import {
   setProductSelectActionAdmin,
   getCategoryListAction,
   getProductListActionAdmin,
-  deleteProductActionAdmin
+  deleteProductActionAdmin,
+  editProductActionAdmin
 } from "../../../redux/actions";
 
 import * as Style from './styles'
@@ -20,8 +21,11 @@ function ProductListPage(props) {
   const { categoryList } = useSelector((state) => state.categoryReducer);
   const { productList } = useSelector((state) => state.productReducerAdmin);
   const [searchKey, setSearchKey] = useState('');
-  const dispatch = useDispatch();
 
+  const [isShowUpdateModal, setIsShowUpdateModal] = useState('');
+  const [quantityData, setQuantityData] = useState({});
+
+  const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getCategoryListAction());
     dispatch(getProductListActionAdmin());
@@ -43,11 +47,15 @@ function ProductListPage(props) {
 
   const tableColumn = [
     {
+      dataIndex: "images",
+      key: "images",
+      render: (value) => (<Style.ShowImage src={value[0]}></Style.ShowImage>)
+    },
+    {
       title: "Tên sản phẩm",
       dataIndex: "name",
       key: "name",
       sorter: (a, b) => a.name.length - b.name.length,
-      sortDirections: ['descend'],
     },
     {
       title: "Loại",
@@ -74,6 +82,24 @@ function ProductListPage(props) {
       render: (value) => value.toLocaleString(),
     },
     {
+      title: "Màu",
+      dataIndex: "color",
+      key: "color",
+      render: (value) => (<Style.ShowColor color={value}></Style.ShowColor>),
+    },
+    {
+      title: "Số lượng",
+      dataIndex: "quantity",
+      key: "quantity",
+      render :(value)=> value ? value : 0
+    },
+    {
+      title: "Số lượng đã bán",
+      dataIndex: "sold",
+      key: "sold",
+      render :(value)=> value ? value : 0
+    },
+    {
       title: "Ngày tạo",
       dataIndex: "createdAt",
       key: "createdAt",
@@ -94,6 +120,18 @@ function ProductListPage(props) {
         return (
           <Space>
             <Button
+              icon={<Icon.EditOutlined />}
+              type="primary"
+              ghost
+              onClick={() => {
+                setIsShowUpdateModal(true);
+                setQuantityData(record);
+              }}
+            >
+              Cập nhật SL
+            </Button>
+            <Button
+              icon={<Icon.FormOutlined />}
               type="primary"
               ghost
               onClick={() => {
@@ -111,7 +149,7 @@ function ProductListPage(props) {
               okText="Yes"
               cancelText="No"
             >
-              <Button danger>Xóa</Button>
+              <Button icon={<Icon.DeleteOutlined />} danger>Xóa</Button>
             </Popconfirm>
           </Space>
         );
@@ -126,6 +164,21 @@ function ProductListPage(props) {
     };
   });
 
+  function handleSubmitForm(values) {
+    const { quantityAdd, quantity } = values
+    const quantityNew =
+      quantity
+        ? parseInt(parseInt(quantityAdd) + parseInt(quantity))
+        : parseInt(quantityAdd)
+    dispatch(editProductActionAdmin({
+      id: quantityData.id,
+      data: {
+        quantity: quantityNew
+      },
+    }))
+    setIsShowUpdateModal('');
+  }
+
   return (
     <div>
       <div style={{ padding: 16 }}>
@@ -133,7 +186,7 @@ function ProductListPage(props) {
         <Style.CustomSpace>
           <Style.Search>
             <Input
-              style={{ }} placeholder="Tìm kiếm..."
+              style={{}} placeholder="Tìm kiếm..."
               suffix={<Icon.SearchOutlined />}
               onChange={(e) => handleSearchProduct(e.target.value)}
             />
@@ -172,6 +225,12 @@ function ProductListPage(props) {
           loading={productList.load}
         />
       </div>
+      <UpdateQuantityModel
+        isShowUpdateModal={isShowUpdateModal}
+        setIsShowUpdateModal={setIsShowUpdateModal}
+        handleSubmitForm={handleSubmitForm}
+        quantityData={quantityData}
+      />
     </div>
   );
 }

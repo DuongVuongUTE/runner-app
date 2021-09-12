@@ -4,7 +4,6 @@ import { Route, Redirect } from "react-router-dom";
 import { Layout, Menu, Breadcrumb } from "antd";
 
 import HeaderAdmin from "../HeaderAdmin";
-import Header from "../Header";
 import Sidebar from "../Sidebar";
 
 import * as Style from "./styles";

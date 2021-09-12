@@ -5,7 +5,7 @@ import history from '../../utils/history';
 import * as Icon from "@ant-design/icons";
 import * as Style from './styles'
 
-import { getProductListAction, logoutAction } from "../../redux/actions";
+import { logoutAction } from "../../redux/actions";
 import { useSelector, useDispatch } from "react-redux";
 
 function HeaderAdmin() {

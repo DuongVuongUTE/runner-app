@@ -12,6 +12,7 @@ function* getCategoryListSaga(action) {
       params: {
         _sort: "id",
         _order: "desc",
+        _embed:"products",
         ...(searchKey && { q: searchKey }),
       },
     })

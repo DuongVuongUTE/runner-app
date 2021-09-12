@@ -7,7 +7,8 @@ import ModifyAccountModal from "./components/ModifyAccountModal";
 
 import {
   getUserListAction,
-  editUserListAction
+  editUserListAction,
+  loginAction
 } from "../../../redux/actions";
 
 import * as Style from './styles'
@@ -19,6 +20,7 @@ function AccountListPage(props) {
   const [modifyUserData, setModifyUserData] = useState({});
   const { userList } = useSelector((state) => state.userReducer);
   const [searchKey, setSearchKey] = useState('');
+  const { userInfo } = useSelector((state) => state.userReducer);
 
   const dispatch = useDispatch();
 
@@ -27,7 +29,6 @@ function AccountListPage(props) {
   }, []);
 
   function handleSubmitForm(values) {
-
     dispatch(editUserListAction({
       id: modifyUserData.id,
       data: {
@@ -35,11 +36,15 @@ function AccountListPage(props) {
         avatar: uploadImages
       },
     }));
-
     setIsShowModifyModal('');
   }
 
   const tableColumn = [
+    {
+      dataIndex: "avatar",
+      key: "avatar",
+      render: (value) => (<Style.ImageItem image={value}></Style.ImageItem>)
+    },
     {
       title: "Tên",
       dataIndex: "name",
@@ -51,6 +56,17 @@ function AccountListPage(props) {
       title: "Email",
       dataIndex: "email",
       key: "email",
+    },
+    {
+      title: "Giới tính",
+      dataIndex: "gender",
+      key: "gender",
+      render: (value) => value == "female" ? "Nữ" : "Nam"
+    },
+    {
+      title: "Quyền",
+      dataIndex: "role",
+      key: "role",
     },
     {
       title: "Ngày tạo",

@@ -25,6 +25,7 @@ import CategoryListPage from "./pages/admin/CategoryList";
 import CustomerListPage from "./pages/admin/CustomerList";
 import AccountListPage from "./pages/admin/AccountList";
 import ModifyProduct from "./pages/admin/ModifyProduct";
+import OrderListPage from "./pages/admin/OrderList";
 
 import "antd/dist/antd.css";
 import "swiper/swiper.min.css";
@@ -112,6 +113,11 @@ function App() {
             action="edit"
             path="/admin/products/edit/:id"
             component={ModifyProduct}
+          />
+          <AdminLayout
+            exact
+            path="/admin/orders"
+            component={OrderListPage}
           />
 
           <FullLayout exact path="/login" component={LoginPage} />

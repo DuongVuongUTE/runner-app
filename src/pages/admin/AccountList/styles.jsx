@@ -2,7 +2,6 @@ import styled from "styled-components";
 import { Row, Button, Table, Space, Popconfirm } from "antd";
 
 export const Title = styled.h3`
-  font-family: 'Times New Roman', Times, serif;
   font-size: 20px;
   text-transform: uppercase;
   color:#330867;
@@ -25,4 +24,10 @@ export const CustomTable = styled(Table)`
     color: white !important;
     white-space: nowrap;
   }
+`
+export const ImageItem = styled.div`
+  width: 80px;
+  padding-top: 50%;
+  background-image: url(${(props)=>props.image ? props.image :null});
+  background-size: contain;
 `

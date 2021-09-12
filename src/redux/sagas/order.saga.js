@@ -10,6 +10,32 @@ import {
 import { SERVER_API_URL } from "./apiUrl";
 import history from "../../utils/history";
 
+function* getOderListSaga(action) {
+  try {
+    const searchKey = action.payload?.searchKey;
+    const result = yield axios({
+      method: "GET",
+      url:`${SERVER_API_URL}/orders`,
+      params: {
+        _sort: "id",
+        _order: "desc",
+        ...(searchKey && { q: searchKey }),
+      },
+    })
+    yield put({
+      type: SUCCESS(ORDER_ACTION.GET_ORDER_LIST),
+      payload: {
+        data: result.data,
+      },
+    });
+  } catch (e) {
+    yield put({
+      type: FAILURE(ORDER_ACTION.GET_ORDER_LIST),
+      payload: e.message,
+    });
+  }
+}
+
 function* orderProductSaga(action) {
   try {
     const { id, data } = action.payload;
@@ -32,7 +58,28 @@ function* orderProductSaga(action) {
     });
   }
 }
-
+function* editOrderListSaga(action) {
+  try {
+    const { id, data } = action.payload;
+    const result = yield axios.patch(
+      `${SERVER_API_URL}/orders/${id}`,
+      data
+    );
+    yield put({
+      type: SUCCESS(ORDER_ACTION.EDIT_ORDER_LIST),
+      payload: {
+        data: result.data,
+      },
+    });
+  } catch (e) {
+    yield put({
+      type: FAILURE(ORDER_ACTION.EDIT_ORDER_LIST),
+      payload: e.message,
+    });
+  }
+}
 export default function* orderSaga() {
+  yield takeEvery(REQUEST(ORDER_ACTION.GET_ORDER_LIST), getOderListSaga);
+  yield takeEvery(REQUEST(ORDER_ACTION.EDIT_ORDER_LIST), editOrderListSaga);
   yield takeEvery(REQUEST(ORDER_ACTION.ORDER_PRODUCT), orderProductSaga);
 }
