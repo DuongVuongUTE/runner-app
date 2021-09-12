@@ -26,7 +26,6 @@ export const customTag = styled(Tag)`
   min-width: 80px;
 `
 export const Title = styled.h3`
-  font-family: 'Times New Roman', Times, serif;
   font-size: 20px;
   text-transform: uppercase;
   color:#096dd9;

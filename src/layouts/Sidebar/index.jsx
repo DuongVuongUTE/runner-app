@@ -32,6 +32,12 @@ const SIDEBAR_MENU = [
     subMenu: []
   },
   {
+    title: 'Quản Lý Đặt Hàng',
+    path: '/admin/orders',
+    icon: <Icon.ShoppingOutlined />,
+    subMenu: []
+  },
+  {
     title: 'Quản Lý tài khoản',
     path: '/admin/accounts',
     icon: <Icon.UserOutlined />,

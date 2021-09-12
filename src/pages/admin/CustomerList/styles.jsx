@@ -21,9 +21,17 @@ export const Search = styled.div`
 export const CustomTable = styled(Table)`
   & th{
     text-transform: uppercase;
-    background-color: #096dd9 !important;
+    background-color: #096dd9!important ;
     color: white !important;
     white-space: nowrap;
+  }
+`
+export const CustomTableChild = styled(Table)`
+  & th{
+    padding: 5px !important;
+    text-transform: uppercase;
+    background-color: #434343 !important ;
+    color: white !important;
   }
 `
 export const ImageItem = styled.div`

@@ -81,7 +81,7 @@ const COLOR_MENU = [
   },
   {
     'name': 'màu khác',
-    'code': 'multicolor',
+    'code': 'multiColor',
   },
 ]
 
@@ -306,7 +306,7 @@ function ModifyProduct({ action, match }) {
     return COLOR_MENU.map((colorItem, colorIndex) => {
       return (
         <Style.customRadio value={colorItem.code} >
-          {colorItem.code == "#ffffff" || colorItem.code == "multicolor"
+          {colorItem.code == "#ffffff" || colorItem.code == "multiColor"
             ? <Style.customTag >{colorItem.name}</Style.customTag>
             : <Style.customTag color={colorItem.code}>{colorItem.name}</Style.customTag>
           }
@@ -344,45 +344,21 @@ function ModifyProduct({ action, match }) {
               <Input />
             </Form.Item>
             <Form.Item
-              label="Mô tả"
-              name="description"
-              rules={[{ required: true, message: 'Bạn chưa nhập mô tả!' }]}
-            >
-              <SunEditor
-                setOptions={{
-                  height: 300,
-                  font: [
-                    'Segoe UI',
-                    'Arial',
-                    'tohoma',
-                    'Courier New,Courier'
-                  ],
-                  buttonList: [
-                    ['font', 'formatBlock', 'fontSize'],
-                    ['bold', 'underline', 'italic', 'strike', 'subscript', 'superscript'],
-                    ['fontColor', 'hiliteColor', 'outdent', 'indent', 'align', 'list', 'table'],
-                    ['link', 'image']
-                  ],
-                  defaultStyle: `font-family: 'Segoe UI', 'Aria', sans-serif; font-size: 14px;`,
-                }}
-                defaultValue={productForm.getFieldValue('description')}
-                onChange={(value) => productForm.setFieldsValue({ description: value })}
-              />
-            </Form.Item>
-            <Form.Item
               label="Giá"
               name="price"
               rules={[{ required: true, message: 'bạn chưa nhập giá!' }]}
             >
               <InputNumber />
             </Form.Item>
-            <Form.Item
-              label="Số lượng"
-              name="quantity"
-              rules={[{ required: true, message: 'bạn chưa nhập số lượng!' }]}
-            >
-              <InputNumber />
-            </Form.Item>
+            {action == "create" ? (
+              <Form.Item
+                label="Số lượng"
+                name="quantity"
+                rules={[{ required: true, message: 'bạn chưa nhập số lượng!' }]}
+              >
+                <InputNumber />
+              </Form.Item>
+            ) : null}
             <Form.Item
               label="Loại"
               name="categoryId"
@@ -448,6 +424,32 @@ function ModifyProduct({ action, match }) {
                 </div>
               </Col>
             </Row>
+            <Form.Item
+              label="Mô tả"
+              name="description"
+              rules={[{ required: true, message: 'Bạn chưa nhập mô tả!' }]}
+            >
+              <SunEditor
+                setOptions={{
+                  height: 300,
+                  font: [
+                    'Segoe UI',
+                    'Arial',
+                    'tohoma',
+                    'Courier New,Courier'
+                  ],
+                  buttonList: [
+                    ['font', 'formatBlock', 'fontSize'],
+                    ['bold', 'underline', 'italic', 'strike', 'subscript', 'superscript'],
+                    ['fontColor', 'hiliteColor', 'outdent', 'indent', 'align', 'list', 'table'],
+                    ['link', 'image']
+                  ],
+                  defaultStyle: `font-family: 'Segoe UI', 'Aria', sans-serif; font-size: 14px;`,
+                }}
+                defaultValue={productForm.getFieldValue('description')}
+                onChange={(value) => productForm.setFieldsValue({ description: value })}
+              />
+            </Form.Item>
           </Form >
           <Form.Item
             labelCol={{ span: 6 }}
