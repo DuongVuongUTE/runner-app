@@ -13,6 +13,7 @@ export const CustomButton = styled(Button)`
 `
 export const Search = styled.div`
   margin: 20px;
+  margin-top: 0;
   display: flex;
   font-weight: 900;
   justify-content: flex-end;

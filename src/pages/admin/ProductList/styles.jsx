@@ -12,7 +12,6 @@ export const CustomButton = styled(Button)`
   font-size: 16px;
 `
 export const Search = styled.div`
-  /* margin: 20px; */
   display: flex;
   min-width: 400px;
   justify-content: flex-end;

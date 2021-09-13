@@ -121,8 +121,8 @@ function OrderListPage() {
   return (
     <>
       <div>
-        <div style={{ padding: 16 }}>
-          <Style.Title>Quản lý khách hàng</Style.Title>
+        <div style={{ padding: 10 }}>
+          {/* <Style.Title>Quản lý khách hàng</Style.Title> */}
           <Style.Search>
             <Input
               style={{ width: "50%" }} placeholder="Tìm kiếm..."

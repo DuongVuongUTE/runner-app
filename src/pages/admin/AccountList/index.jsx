@@ -142,8 +142,8 @@ function AccountListPage(props) {
 
   return (
     <div>
-      <div style={{ padding: 16 }}>
-        <Style.Title style={{ marginBottom: 26 }} >Quản Lý tài khoản</Style.Title>
+      <div style={{ padding: 10 }}>
+        {/* <Style.Title style={{ marginBottom: 26 }} >Quản Lý tài khoản</Style.Title> */}
         <Style.Search>
           <Input
             style={{ width: "50%" }} placeholder="Tìm kiếm..."
