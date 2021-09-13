@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { Container } from "../../../styles/styles";
-import BreadcrumbUI from "../../../components/Breadcrumb";
 import { Collapse, Checkbox, Input, Select, Slider } from "antd";
 import * as Icons from "@ant-design/icons";
 
@@ -18,6 +17,10 @@ import Product from "./components/Product";
 import history from "../../../utils/history";
 import Loading from "../../../components/Loading";
 import TagList from "./components/TagList";
+import Hero from "../../../components/Hero";
+import { TITLE } from "../../../constants/title";
+import { SIZE_LIST } from "../../../constants/size";
+import { COLOR_MENU } from "../../../constants/color";
 const { Panel } = Collapse;
 
 function callback(key) {
@@ -25,13 +28,17 @@ function callback(key) {
 }
 
 function ProductPage() {
+  document.title = TITLE.PRODUCT_LIST;
   const { productList } = useSelector((state) => state.productReducer);
   const { categoryList } = useSelector((state) => state.categoryReducer);
   const { typeList } = useSelector((state) => state.typeReducer);
   const { departmentList } = useSelector((state) => state.departmentReducer);
   const [categoriesSelected, setCategoriesSelect] = useState([]);
+  const [sortValue, setSortValue] = useState("");
   const [typesSelected, setTypesSelect] = useState([]);
   const [departmentsSelected, setDepartmentsSelect] = useState([]);
+  const [sizeSelected, setSizeSelect] = useState([]);
+  const [colorSelected, setColorSelect] = useState([]);
   const [searchKey, setSearchKey] = useState("");
   const [priceRange, setPriceRange] = useState([0, 15000000]);
 
@@ -82,8 +89,7 @@ function ProductPage() {
         searchKey,
         priceRange,
         departmentsSelected,
-        // priceRange,
-        // searchKey,
+        colorSelected,
       })
     );
   }
@@ -98,8 +104,7 @@ function ProductPage() {
         searchKey,
         priceRange,
         departmentsSelected,
-        // priceRange,
-        // searchKey,
+        colorSelected,
       })
     );
   }
@@ -114,7 +119,7 @@ function ProductPage() {
         searchKey,
         departmentsSelected: value,
         priceRange,
-        // searchKey,
+        colorSelected,
       })
     );
   }
@@ -128,6 +133,7 @@ function ProductPage() {
         typesSelected,
         departmentsSelected,
         searchKey,
+        colorSelected,
       })
     );
   }
@@ -141,6 +147,37 @@ function ProductPage() {
         typesSelected,
         priceRange,
         searchKey: value,
+        departmentsSelected,
+        colorSelected,
+      })
+    );
+  }
+
+  function handleFilterSize(value) {
+    setSizeSelect(value);
+    dispatch(
+      getProductListAction({
+        page: 1,
+        categoriesSelected,
+        typesSelected,
+        priceRange,
+        searchKey,
+        departmentsSelected,
+        colorSelected,
+      })
+    );
+  }
+
+  function handleFilterColor(value) {
+    setColorSelect(value);
+    dispatch(
+      getProductListAction({
+        page: 1,
+        categoriesSelected,
+        typesSelected,
+        priceRange,
+        searchKey,
+        colorSelected: value,
         departmentsSelected,
       })
     );
@@ -174,8 +211,57 @@ function ProductPage() {
     );
   }
 
+  function renderSizeCheckbox() {
+    const sizeCheckbox = SIZE_LIST.map((sizeItem) => ({
+      label: sizeItem.size,
+      value: sizeItem.id,
+    }));
+    return (
+      <Checkbox.Group
+        options={sizeCheckbox}
+        onChange={(value) => handleFilterSize(value)}
+        value={sizeSelected}
+      />
+    );
+  }
+
+  function renderColorCheckbox() {
+    const colorCheckbox = COLOR_MENU.map((colorItem) => ({
+      label: (
+        <Style.Color
+          className="color"
+          color={
+            colorItem.code !== "multiColor"
+              ? `#${colorItem.code}`
+              : colorItem.code
+          }
+        ></Style.Color>
+      ),
+      value: colorItem.code,
+    }));
+    return (
+      <Checkbox.Group
+        options={colorCheckbox}
+        onChange={(value) => handleFilterColor(value)}
+        value={colorSelected}
+      />
+    );
+  }
+
   function handleChange(value) {
-    console.log(`selected ${value}`);
+    setSortValue(value);
+    dispatch(
+      getProductListAction({
+        page: 1,
+        categoriesSelected,
+        typesSelected,
+        priceRange,
+        searchKey,
+        colorSelected,
+        departmentsSelected,
+        sortValue: value,
+      })
+    );
   }
 
   function renderDepartmentCheckbox() {
@@ -200,13 +286,9 @@ function ProductPage() {
         />
       ) : (
         <>
-          <Style.Hero src="">
-            <Style.Breadcrumb>
-              <BreadcrumbUI />
-            </Style.Breadcrumb>
-
-            <Style.HeroTitle>
-              {history.location.pathname === "/product"
+          <Hero
+            title={
+              history.location.pathname === "/product"
                 ? "Tất cả sản phẩm"
                 : history.location.pathname === "/product/men"
                 ? "Giày nam"
@@ -214,9 +296,9 @@ function ProductPage() {
                 ? "Giày nữ"
                 : history.location.pathname === "/product/kids"
                 ? "Giày trẻ em"
-                : null}
-            </Style.HeroTitle>
-          </Style.Hero>
+                : null
+            }
+          />
           <Container>
             <Style.ProductLayout>
               <Style.ProductFilter>
@@ -238,6 +320,8 @@ function ProductPage() {
                     setDepartmentsSelect={setDepartmentsSelect}
                     setSearchKey={setSearchKey}
                     setPriceRange={setPriceRange}
+                    colorSelected={colorSelected}
+                    setColorSelect={setColorSelect}
                   />
                   <Collapse
                     onChange={callback}
@@ -293,7 +377,9 @@ function ProductPage() {
                       }
                       key="4"
                     >
-                      <div>Size</div>
+                      <div className="checkbox-normal">
+                        {renderSizeCheckbox()}
+                      </div>
                     </Panel>
                     <Panel
                       header={
@@ -305,7 +391,9 @@ function ProductPage() {
                       }
                       key="5"
                     >
-                      <div>Color</div>
+                      <div className="checkbox-normal color-list">
+                        {renderColorCheckbox()}
+                      </div>
                     </Panel>
                     <Panel
                       header={
@@ -359,10 +447,14 @@ function ProductPage() {
                       onChange={handleChange}
                       placeholder="Sắp xếp theo..."
                     >
-                      <Select.Option value="1">Giá cao đến thấp</Select.Option>
-                      <Select.Option value="2">Giá thấp đến cao</Select.Option>
-                      <Select.Option value="3">Mới nhất</Select.Option>
-                      <Select.Option value="4">Cũ nhất</Select.Option>
+                      <Select.Option value="price-desc">
+                        Giá cao đến thấp
+                      </Select.Option>
+                      <Select.Option value="price-asc">
+                        Giá thấp đến cao
+                      </Select.Option>
+                      <Select.Option value="id-desc">Mới nhất</Select.Option>
+                      <Select.Option value="id-asc">Cũ nhất</Select.Option>
                     </Select>
                   </div>
                 </div>

@@ -3,6 +3,7 @@ import { COMMON_ACTION } from "../constants";
 
 const initialState = {
   theme: "light",
+  load: false,
 };
 
 const commonReducer = createReducer(initialState, {
@@ -10,6 +11,12 @@ const commonReducer = createReducer(initialState, {
     return {
       ...state,
       theme: action.payload,
+    };
+  },
+  [COMMON_ACTION.SET_LOADING]: (state, action) => {
+    return {
+      ...state,
+      load: action.payload.load,
     };
   },
 });

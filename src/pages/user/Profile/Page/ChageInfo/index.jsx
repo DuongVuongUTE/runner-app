@@ -1,18 +1,35 @@
-import React, { useEffect } from "react";
-import { Form, Input, Select, Button, Typography } from "antd";
+import React, { useEffect, useState } from "react";
+import {
+  Form,
+  Input,
+  Select,
+  Button,
+  Typography,
+  Row,
+  Space,
+  Modal,
+} from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import {
   editUserProfileAction,
   getUserInfoAction,
 } from "../../../../../redux/actions";
+import { TITLE } from "../../../../../constants/title";
 
 const { Title } = Typography;
 
 function ChageInfo() {
+  document.title = TITLE.CHANGE_INFO;
   const { userInfo } = useSelector((state) => state.userReducer);
   const { responseAction } = useSelector((state) => state.userReducer);
+  const [isModalVisible, setIsModalVisible] = useState(false);
+
   const dispatch = useDispatch();
-  const [form] = Form.useForm();
+  const [form, formPass] = Form.useForm();
+
+  const showModal = () => {
+    setIsModalVisible(true);
+  };
 
   useEffect(() => {
     if (responseAction.edit_user.load) {
@@ -32,10 +49,21 @@ function ChageInfo() {
           name: values.name,
           gender: values.gender,
           email: values.email,
-          password: values.password,
         },
       })
     );
+  };
+
+  const handleChangePassword = (values) => {
+    dispatch(
+      editUserProfileAction({
+        id: userInfo.data.id,
+        data: {
+          password: values.passwordNew,
+        },
+      })
+    );
+    setIsModalVisible(false);
   };
 
   return (
@@ -89,35 +117,6 @@ function ChageInfo() {
             </Select>
           </Form.Item>
 
-          <Form.Item
-            label="Mật khẩu mới"
-            name="password"
-            rules={[
-              { required: true, message: "Bạn chưa nhập mật khẩu!" },
-              { min: 6, max: 16, message: "Mật khẩu phải từ 6-16 kí tự" },
-            ]}
-          >
-            <Input.Password />
-          </Form.Item>
-
-          <Form.Item
-            label="Xác nhận mật khẩu mới"
-            name="prePassword"
-            rules={[
-              { required: true, message: "Bạn chưa xác nhận mật khẩu!" },
-              ({ getFieldValue }) => ({
-                validator(_, value) {
-                  if (!value || getFieldValue("password") === value) {
-                    return Promise.resolve();
-                  }
-                  return Promise.reject("Mật khẩu xác nhận không đúng!");
-                },
-              }),
-            ]}
-          >
-            <Input.Password />
-          </Form.Item>
-
           <Button
             type="primary"
             htmlType="submit"
@@ -128,6 +127,68 @@ function ChageInfo() {
             Thay đổi
           </Button>
         </Form>
+        <Row style={{ marginTop: 15 }} justify="end">
+          <Space>
+            <Button type="default" onClick={() => showModal()}>
+              Thay đổi mật khẩu
+            </Button>
+          </Space>
+        </Row>
+        <Modal
+          title="Thay đổi mật khẩu"
+          visible={isModalVisible}
+          onCancel={() => setIsModalVisible(false)}
+          footer={null}
+        >
+          <Form
+            name="changePassword"
+            form={formPass}
+            onFinish={(values) => handleChangePassword(values)}
+            autoComplete="off"
+            layout="vertical"
+          >
+            <Form.Item
+              label="Mật khẩu cũ"
+              name="passwordOld"
+              rules={[
+                { required: true, message: "Vui lòng nhập mật khẩu hiện tại!" },
+              ]}
+            >
+              <Input.Password />
+            </Form.Item>
+            <Form.Item
+              label="Mật khẩu mới"
+              name="passwordNew"
+              rules={[
+                { required: true, message: "Vui lòng nhập mật khẩu mới!" },
+              ]}
+            >
+              <Input.Password />
+            </Form.Item>
+            <Form.Item
+              label="Xác nhận mật khẩu"
+              name="passwordConfirm"
+              rules={[
+                { required: true, message: "Vui lòng xác nhận lại mật khẩu!" },
+                ({ getFieldValue }) => ({
+                  validator(_, value) {
+                    if (!value || getFieldValue("passwordNew") === value) {
+                      return Promise.resolve();
+                    }
+                    return Promise.reject("Mật khẩu xác nhận không đúng!");
+                  },
+                }),
+              ]}
+            >
+              <Input.Password />
+            </Form.Item>
+            <Form.Item>
+              <Button type="primary" htmlType="submit" block size="large">
+                Thay đổi
+              </Button>
+            </Form.Item>
+          </Form>
+        </Modal>
       </div>
     </div>
   );

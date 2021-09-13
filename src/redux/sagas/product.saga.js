@@ -8,12 +8,19 @@ import { PRODUCT_LIMIT } from "../../constants/product";
 function* getProductListSaga(action) {
   try {
     const page = action.payload?.page;
+    const sortValue = action.payload?.sortValue;
     const categoriesSelected = action.payload?.categoriesSelected;
     const typesSelected = action.payload?.typesSelected;
     const departmentsSelected = action.payload?.departmentsSelected;
     const priceRange = action.payload?.priceRange;
     const searchKey = action.payload?.searchKey;
+    const colorSelected = action.payload?.colorSelected;
     const more = action.payload?.more;
+
+    const sortObj = {
+      _sort: sortValue?.split("-")[0],
+      _order: sortValue?.split("-")[1],
+    };
     let categoryParams = "";
     if (categoriesSelected) {
       categoriesSelected.forEach((categoryId, categoryIndex) => {
@@ -41,6 +48,14 @@ function* getProductListSaga(action) {
       });
     }
 
+    let colorParams = "";
+    if (colorSelected) {
+      colorSelected.forEach((colorCode, colorIndex) => {
+        const andParams = colorIndex < colorSelected.length - 1 ? "&" : "";
+        colorParams = colorParams + `color=${colorCode}${andParams}`;
+      });
+    }
+
     let url = `${SERVER_API_URL}/products`;
     url = categoriesSelected?.length > 0 ? url + `?${categoryParams}` : url;
     if (typesSelected?.length > 0) {
@@ -57,12 +72,24 @@ function* getProductListSaga(action) {
         url = url + `?${departmentParams}`;
       }
     }
+
+    if (colorSelected?.length > 0) {
+      if (
+        categoriesSelected?.length > 0 ||
+        typesSelected?.length > 0 ||
+        departmentsSelected?.length > 0
+      ) {
+        url = url + `&${colorParams}`;
+      } else {
+        url = url + `?${colorParams}`;
+      }
+    }
     const result = yield axios({
       method: "GET",
       url,
       params: {
-        _sort: "id",
-        _order: "desc",
+        _sort: sortObj?._sort || "id",
+        _order: sortObj?._order || "desc",
         _expand: ["department", "category", "type"],
         ...(page && {
           _page: page,
@@ -75,7 +102,6 @@ function* getProductListSaga(action) {
         ...(searchKey && { q: searchKey }),
       },
     });
-    console.log(result);
     yield put({
       type: SUCCESS(PRODUCT_ACTION.GET_PRODUCT_LIST),
       payload: {

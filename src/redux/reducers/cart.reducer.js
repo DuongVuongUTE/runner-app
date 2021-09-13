@@ -76,7 +76,7 @@ const cartReducer = createReducer(initialState, {
     };
   },
 
-  [CART_ACTION.CLEAR_CART_LIST]: (state, action) => {
+  [CART_ACTION.CLEAR_CART_LIST]: (state) => {
     return {
       ...state,
       cartList: {

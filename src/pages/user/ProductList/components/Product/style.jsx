@@ -18,7 +18,12 @@ export const ProductList = styled.div`
   min-height: 700px;
   grid-gap: 15px;
   @media screen and (max-width: 1023px) {
+    min-height: unset;
     grid-template-columns: repeat(3, 1fr);
+  }
+  @media screen and (max-width: 850px) {
+    min-height: unset;
+    grid-template-columns: repeat(2, 1fr);
   }
   @media screen and (max-width: 767px) {
     grid-template-columns: repeat(3, 1fr);

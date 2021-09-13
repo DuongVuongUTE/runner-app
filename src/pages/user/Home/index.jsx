@@ -14,8 +14,10 @@ import GalleryHome from "./components/Gallery";
 import { useDispatch, useSelector } from "react-redux";
 import { getProductListAction } from "../../../redux/actions";
 import Loading from "../../../components/Loading";
+import { TITLE } from "../../../constants/title";
 
 function HomePage() {
+  document.title = TITLE.HOME;
   const { productList } = useSelector((state) => state.productReducer);
 
   const dispatch = useDispatch();

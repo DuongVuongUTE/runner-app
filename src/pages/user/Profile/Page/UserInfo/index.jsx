@@ -2,21 +2,17 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { Typography, List, Button } from "antd";
 import history from "../../../../../utils/history";
+import { TITLE } from "../../../../../constants/title";
 
 const { Title } = Typography;
 function UserInfo() {
+  document.title = TITLE.USER_INFO;
   const { userInfo } = useSelector((state) => state.userReducer);
 
   const data = [
     `Tên: ${userInfo.data?.name}`,
     `Email: ${userInfo.data?.email}`,
     `Giới tính: ${userInfo.data?.gender === "female" ? "Nữ" : "Nam"}`,
-    <>
-      <span>Thay đổi mật khẩu:</span>
-      <Button onClick={() => history.push("/profile/change-info")}>
-        Thay đổi
-      </Button>
-    </>,
   ];
 
   return (

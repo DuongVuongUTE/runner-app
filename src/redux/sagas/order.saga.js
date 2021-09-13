@@ -41,7 +41,7 @@ function* orderProductSaga(action) {
     const { id, data } = action.payload;
     const result = yield axios.post(`${SERVER_API_URL}/orders`, data);
     yield axios.patch(`${SERVER_API_URL}/users/${id}`, {
-      cart: [],
+      carts: [],
     });
     yield put({ type: CART_ACTION.CLEAR_CART_LIST });
     yield history.push("/");

@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const ProfilePage = styled.div`
-  padding: 30px 0;
+  padding: 15px 0 30px;
   min-height: 100vh;
   background-color: #f3f3f3;
 `;
@@ -64,6 +64,7 @@ export const ProfileMenu = styled.div`
 
 export const ProfilePanel = styled.div`
   background-color: #fff;
+  position: relative;
   min-height: 465px;
   padding: 15px;
   border: 1px solid #dee2e6;
