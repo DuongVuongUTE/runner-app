@@ -1507,11 +1507,6 @@
       "totalPrice": 16750000,
       "checkoutInfo": "momo",
       "status": "waiting",
-<<<<<<< HEAD
-      "createdAt": 1631095063267,
-      "updatedAt": 1631458100541,
-      "id": 1
-=======
       "createdAt": 1631529838052,
       "updatedAt": 1631529838052,
       "id": 2
@@ -1644,7 +1639,6 @@
       "createdAt": 1631530694188,
       "updatedAt": 1631530694188,
       "id": 5
->>>>>>> 2efe503 (fix order,user page add filter color sort)
     }
   ]
 }
