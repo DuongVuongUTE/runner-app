@@ -5,8 +5,10 @@ import * as Icons from "@ant-design/icons";
 import { deleteWishlistItemAction } from "../../../../../redux/actions";
 import * as Style from "./style";
 import history from "../../../../../utils/history";
+import { TITLE } from "../../../../../constants/title";
 const { Meta } = Card;
 function Wishlist() {
+  document.title = TITLE.WISH_LIST;
   const { userInfo } = useSelector((state) => state.userReducer);
   const { wishList } = useSelector((state) => state.wishlistReducer);
   const dispatch = useDispatch();
@@ -39,16 +41,7 @@ function Wishlist() {
               history.push(`/product/${wishItem.name}-${wishItem.productId}`)
             }
           >
-            <Meta
-              title={wishItem.name}
-              description={
-                <Space wrap>
-                  <span>Thương hiệu: {wishItem.category}</span>
-                  <span>Loại giày: {wishItem.department}</span>
-                  <span>Giá: {wishItem.price}</span>
-                </Space>
-              }
-            />
+            <Meta title={wishItem.name} />
           </Card>
         </Col>
       );
@@ -58,17 +51,17 @@ function Wishlist() {
   return (
     <>
       {wishList.data.length === 0 ? (
-        <Result
-          style={{ backgroundColor: "#fff" }}
-          status="404"
-          title="Danh sách yêu thích trống"
-          subTitle="Tiến hành mua hàng!"
-          extra={
-            <Button onClick={() => history.push("/product")} type="primary">
-              Go Shop
-            </Button>
-          }
-        />
+        <Style.Empty>
+          <h2>Danh sách yêu thích trống</h2>
+
+          <Button
+            onClick={() => history.push("/product")}
+            type="primary"
+            size="large"
+          >
+            Mua Ngay
+          </Button>
+        </Style.Empty>
       ) : (
         <Style.CartPage>
           <h2 style={{ textAlign: "center", marginBottom: 30 }}>

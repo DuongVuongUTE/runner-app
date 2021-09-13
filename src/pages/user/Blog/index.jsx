@@ -3,7 +3,7 @@ import BreadcrumbUI from "../../../components/Breadcrumb";
 import { List, Avatar, Space } from "antd";
 import * as Icons from "@ant-design/icons";
 import * as Style from "./styles";
-
+import { TITLE } from "../../../constants/title";
 const listData = [];
 for (let i = 0; i < 23; i++) {
   listData.push({
@@ -26,6 +26,7 @@ const IconText = ({ icon, text }) => (
 );
 
 function BlogPage() {
+  document.title = TITLE.BLOG;
   return (
     <Style.BlogPage>
       <Style.Hero src="">

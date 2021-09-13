@@ -27,8 +27,11 @@ import BreadcrumbUI from "../../../components/Breadcrumb";
 
 import * as Style from "./styles";
 import { Container } from "../../../styles/styles";
+import { TITLE } from "../../../constants/title";
+import Hero from "../../../components/Hero";
 
 function CartPage() {
+  document.title = TITLE.CART;
   const { cartList } = useSelector((state) => state.cartReducer);
   const { userInfo } = useSelector((state) => state.userReducer);
   let totalPrice = 0;
@@ -155,25 +158,21 @@ function CartPage() {
 
   return (
     <Style.CartPage>
-      <Style.Hero src="">
-        <Style.Breadcrumb>
-          <BreadcrumbUI />
-        </Style.Breadcrumb>
-
-        <Style.HeroTitle>Giỏ hàng</Style.HeroTitle>
-      </Style.Hero>
+      <Hero title="Giỏ hàng" />
       {cartList.data.length === 0 ? (
-        <Result
-          style={{ backgroundColor: "#fff" }}
-          status="404"
-          title="Giỏ hàng trống"
-          subTitle="Tiến hành mua hàng!"
-          extra={
-            <Button onClick={() => history.push("/product")} type="primary">
-              Go Shop
+        <Style.Empty>
+          <div>
+            <h2>Giỏ hàng trống</h2>
+
+            <Button
+              onClick={() => history.push("/product")}
+              type="primary"
+              size="large"
+            >
+              Mua Ngay
             </Button>
-          }
-        />
+          </div>
+        </Style.Empty>
       ) : (
         <Container>
           <div className="cart">

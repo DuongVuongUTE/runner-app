@@ -3,6 +3,7 @@ import { Space, Tag } from "antd";
 import { useDispatch } from "react-redux";
 import history from "../../../../../utils/history";
 import { getProductListAction } from "../../../../../redux/actions";
+import { COLOR_MENU } from "../../../../../constants/color";
 
 function TagList({
   typeList,
@@ -18,12 +19,15 @@ function TagList({
   setTypesSelect,
   setDepartmentsSelect,
   setPriceRange,
+  colorSelected,
+  setColorSelect,
 }) {
   const dispatch = useDispatch();
 
   function renderTagFilter() {
     if (
       categoriesSelected.length === 0 &&
+      colorSelected.length === 0 &&
       !searchKey &&
       typesSelected.length === 0 &&
       (departmentsSelected.length === 0 ||
@@ -43,7 +47,7 @@ function TagList({
             );
             return (
               <Tag
-                color="geekblue"
+                color="#1790c8"
                 key={`category-${selectedIndex}`}
                 closable
                 onClose={(e) => {
@@ -59,6 +63,7 @@ function TagList({
                       departmentsSelected: departmentsSelected,
                       typesSelected: typesSelected,
                       searchKey: searchKey,
+                      colorSelected,
                     })
                   );
                 }}
@@ -74,7 +79,7 @@ function TagList({
             );
             return (
               <Tag
-                color="geekblue"
+                color="#1790c8"
                 key={`type-${typeSelectedIndex}`}
                 closable
                 onClose={(e) => {
@@ -90,6 +95,7 @@ function TagList({
                       priceRange,
                       departmentsSelected: departmentsSelected,
                       searchKey: searchKey,
+                      colorSelected,
                     })
                   );
                 }}
@@ -107,7 +113,7 @@ function TagList({
               );
               return (
                 <Tag
-                  color="geekblue"
+                  color="#1790c8"
                   key={`type-${departmentSelectedIndex}`}
                   closable
                   onClose={(e) => {
@@ -123,6 +129,7 @@ function TagList({
                         departmentsSelected: newDepartmentSelect,
                         priceRange,
                         searchKey: searchKey,
+                        colorSelected,
                       })
                     );
                   }}
@@ -132,30 +139,41 @@ function TagList({
               );
             }
           )}
-        {/* {searchKey && (
-          <Tag
-            color="geekblue"
-            closable
-            onClose={() => {
-              setSearchKey("");
-              dispatch(
-                getProductListAction({
-                  page: 1,
-                  categoriesSelected,
-                  priceRange,
-                  typesSelected,
-                  departmentsSelected,
-                  searchKey: undefined,
-                })
-              );
-            }}
-          >
-            {`Tìm theo từ khóa: ${searchKey}`}
-          </Tag>
-        )} */}
+        {colorSelected.length > 0 &&
+          colorSelected.map((colorSelectedItem, colorSelectedIndex) => {
+            const colorSelectedData = COLOR_MENU.find(
+              (colorItem) => colorItem.code === colorSelectedItem
+            );
+            return (
+              <Tag
+                color="#1790c8"
+                key={`type-${colorSelectedIndex}`}
+                closable
+                onClose={(e) => {
+                  e.preventDefault();
+                  const newColorSelect = [...colorSelected];
+                  newColorSelect.splice(colorSelectedIndex, 1);
+                  setColorSelect(newColorSelect);
+                  dispatch(
+                    getProductListAction({
+                      page: 1,
+                      categoriesSelected: categoriesSelected,
+                      typesSelected: typesSelected,
+                      colorSelected: newColorSelect,
+                      priceRange,
+                      departmentsSelected: departmentsSelected,
+                      searchKey: searchKey,
+                    })
+                  );
+                }}
+              >
+                {colorSelectedData.name}
+              </Tag>
+            );
+          })}
         {(priceRange[0] !== 0 || priceRange[1] !== 15000000) && (
           <Tag
-            color="geekblue"
+            color="#1790c8"
             closable
             onClose={() => {
               setPriceRange([0, 15000000]);
@@ -167,6 +185,7 @@ function TagList({
                   departmentsSelected,
                   priceRange: [0, 15000000],
                   searchKey,
+                  colorSelected,
                 })
               );
             }}
@@ -179,14 +198,16 @@ function TagList({
           (departmentsSelected.length > 0 &&
             history.location.pathname === "/product") ||
           typesSelected.length > 0 ||
+          colorSelected.length > 0 ||
           categoriesSelected.length > 0) && (
           <Tag
             closable
-            color="red"
+            color="#ff324d"
             onClose={() => {
               setPriceRange([0, 15000000]);
               setCategoriesSelect([]);
               setTypesSelect([]);
+              setColorSelect([]);
               if (history.location.pathname === "/product") {
                 setDepartmentsSelect([]);
               }
@@ -201,6 +222,7 @@ function TagList({
                       : departmentsSelected,
                   priceRange: [0, 15000000],
                   searchKey,
+                  colorSelected: [],
                 })
               );
             }}

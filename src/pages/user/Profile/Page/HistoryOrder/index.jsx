@@ -4,10 +4,12 @@ import { useSelector } from "react-redux";
 import { Redirect } from "react-router";
 
 import * as Style from "./style";
+import { TITLE } from "../../../../../constants/title";
 
 const { Title } = Typography;
 
 function HistoryOrder() {
+  document.title = TITLE.HISTORY_ORDER;
   const { userInfo } = useSelector((state) => state.userReducer);
   const { orderList } = useSelector((state) => state.orderReducer);
 
@@ -29,6 +31,8 @@ function HistoryOrder() {
       render: (value) => {
         return value === "waiting" ? (
           <Badge status="processing" text={value} />
+        ) : value === "shipping" ? (
+          <Badge status="warning" text={value} />
         ) : (
           <Badge status="success" text={value} />
         );
@@ -76,6 +80,7 @@ function HistoryOrder() {
           ),
           rowExpandable: (record) => record.name !== "Not Expandable",
         }}
+        scroll={{ x: "max-content" }}
         dataSource={data}
       />
     </Style.HistoryOrder>

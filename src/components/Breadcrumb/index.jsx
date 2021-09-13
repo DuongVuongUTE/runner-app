@@ -11,7 +11,14 @@ function BreadcrumbUI() {
     "/product/woman": "Giày nữ",
     "/product/kids": "Giày trẻ em",
     "/blog": "Bài viết",
+    "/contact": "Liên hệ",
     "/cart": "Giỏ hàng",
+    "/profile": "Tài khoản",
+    "/checkout": "Thanh toán",
+    "/profile/user-info": "Thông tin tài khoản",
+    "/profile/change-info": "Thay đổi thông tin",
+    "/profile/history-order": "Lịch sử mua hàng",
+    "/profile/wish-list": "Sản phẩm yêu thích",
   };
   const { location } = history;
   const pathSnippets = location.pathname.split("/").filter((i) => i);

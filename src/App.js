@@ -41,6 +41,7 @@ import { useEffect } from "react";
 import { getUserInfoAction } from "./redux/actions";
 import BlogPage from "./pages/user/Blog";
 import ProfilePage from "./pages/user/Profile";
+import ContactPage from "./pages/user/Contact";
 
 const THEME = {
   light: lightTheme,
@@ -70,7 +71,8 @@ function App() {
           <DefaultLayout exact path="/product/woman" component={ProductPage} />
           <DefaultLayout exact path="/product/kids" component={ProductPage} />
           <DefaultLayout exact path="/blog" component={BlogPage} />
-          <DefaultLayout exact path="/contact" component={AboutPage} />
+          <DefaultLayout exact path="/contact" component={ContactPage} />
+          <DefaultLayout exact path="/profile" component={ProfilePage} />
           <DefaultLayout exact path="/profile/:page" component={ProfilePage} />
           <DefaultLayout exact path="/about" component={AboutPage} />
           <DefaultLayout

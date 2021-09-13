@@ -1,34 +1,8 @@
 import styled from "styled-components";
 
-export const Breadcrumb = styled.div`
-  position: absolute;
-  top: 20px;
-  left: 50%;
-  width: 100%;
-  transform: translateX(-50%);
-  color: white;
-`;
-export const Hero = styled.div`
-  position: relative;
-  padding-top: 150px;
-  background-image: linear-gradient(to right, #cb5eee, #4be1ec);
-  margin-bottom: 45px;
-`;
-
-export const HeroTitle = styled.h2`
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 100%;
-  text-align: center;
-  transform: translate(-50%, -50%);
-  font-size: 24px;
-  color: #fff;
-  margin-bottom: 30px;
-`;
 export const ProductLayout = styled.div`
   display: flex;
-  padding: 0 0 30px 0;
+  padding: 30px 0 30px 0;
   gap: 30px;
   .ant-collapse-item {
     border: 1px solid #e3e7ef;
@@ -80,6 +54,28 @@ export const ProductFilter = styled.div`
   .ant-checkbox-group-item {
     display: flex;
   }
+  .checkbox-normal {
+    .ant-checkbox-group-item {
+      display: inline-flex;
+      min-width: 50px;
+    }
+  }
+  .color-list {
+    .ant-checkbox-group-item {
+      display: inline-flex;
+      min-width: unset;
+    }
+    .ant-checkbox {
+      display: none;
+    }
+    .ant-checkbox-wrapper-checked {
+      .color {
+        border-color: #2d88ff;
+        border-style: dotted;
+        box-shadow: 0 0 0 2px #003a8c;
+      }
+    }
+  }
   @media screen and (max-width: 767px) {
     display: none;
   }
@@ -108,4 +104,20 @@ export const ProductContent = styled.div`
       width: 100%;
     }
   }
+`;
+
+export const Color = styled.div`
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: 2px solid rgb(229, 229, 229);
+  background: ${(props) =>
+    props.color
+      ? props.color === "multiColor"
+        ? "radial-gradient(circle, #59ae12, #a5a100, #d88f1f, #f77e54, #ff7887, #fb81b6, #e493df, #bfa8fd, #8bc3ff, #4cdaff, #29edff, #5ffbf1);"
+        : props.color
+      : "white"};
 `;

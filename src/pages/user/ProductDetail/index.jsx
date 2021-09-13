@@ -17,10 +17,10 @@ import ProductRelated from "./components/ProductRelated";
 import { Container } from "../../../styles/styles";
 
 import * as Style from "./styles";
+import { TITLE } from "../../../constants/title";
 
 function ProductDetailPage() {
   let { productID } = useParams();
-
   const { userInfo } = useSelector((state) => state.userReducer);
   const { productDetail } = useSelector((state) => state.productReducer);
   const { productList } = useSelector((state) => state.productReducer);
@@ -36,6 +36,8 @@ function ProductDetailPage() {
     const arr = params.split("-");
     return decodeURIComponent(arr[0]);
   }
+
+  document.title = TITLE.PRODUCT_DETAIL + " " + getNameParams(productID);
 
   useEffect(() => {
     productID = getIdParams(productID);

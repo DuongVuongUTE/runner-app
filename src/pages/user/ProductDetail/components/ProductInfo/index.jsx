@@ -25,6 +25,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   addToWishlistAction,
   addToCartAction,
+  deleteWishlistItemAction,
 } from "../../../../../redux/actions";
 
 import * as Icons from "@ant-design/icons";
@@ -82,17 +83,17 @@ function ProductInfo({
     );
     if (existProductIndex !== -1) {
       // Xoá yêu thích
-      // const newWishlistData = [...wishList.data];
-      // newWishlistData.splice(existProductIndex, 1);
-      // dispatch(
-      //   deleteWishlistItemAction({
-      //     userId: userInfo.data.id,
-      //     data: { wishlist: newWishlistData },
-      //   })
-      // );
-      notification.success({
-        message: "Sản phẩm đã được thêm!",
-      });
+      const newWishlistData = [...wishList.data];
+      newWishlistData.splice(existProductIndex, 1);
+      dispatch(
+        deleteWishlistItemAction({
+          userId: userInfo.data.id,
+          data: { wishlist: newWishlistData },
+        })
+      );
+      // notification.success({
+      //   message: "Sản phẩm đã được thêm!",
+      // });
     } else {
       dispatch(
         addToWishlistAction({
@@ -308,7 +309,7 @@ function ProductInfo({
           onClick={onSubmit}
           type="primary"
         >
-          Add Comment
+          Thêm đánh giá
         </Button>
       </Form.Item>
     </>
@@ -426,12 +427,24 @@ function ProductInfo({
                   </Button>
                 </Space>
                 <Button
-                  type="primary"
+                  type="default"
                   danger
                   onClick={() => handleAddToWishlist()}
-                  icon={<Icons.HeartOutlined />}
+                  icon={
+                    wishList.data?.findIndex(
+                      (item) => item.productId === productID
+                    ) !== -1 ? (
+                      <Icons.HeartFilled />
+                    ) : (
+                      <Icons.HeartOutlined />
+                    )
+                  }
                 >
-                  Thêm yêu thích
+                  {wishList.data?.findIndex(
+                    (item) => item.productId === productID
+                  ) !== -1
+                    ? "Đã yêu thích"
+                    : "Thêm yêu thích"}
                 </Button>
               </div>
 
