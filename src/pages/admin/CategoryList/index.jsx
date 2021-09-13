@@ -130,8 +130,8 @@ function CategoryListPage(props) {
 
   return (
     <div>
-      <div style={{ padding: 16 }}>
-        <Style.Title>Quản lý loại sản phẩm</Style.Title>
+      <div style={{ padding: 10 }}>
+        {/* <Style.Title>Quản lý loại sản phẩm</Style.Title> */}
         <Style.CustomSpace>
           <Style.Search>
             <Input

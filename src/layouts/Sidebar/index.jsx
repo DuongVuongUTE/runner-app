@@ -46,7 +46,7 @@ const SIDEBAR_MENU = [
   
 ]
 
-function Sidebar({ location, isShowSidebar }) {
+function Sidebar({ location}) {
   const [collapsed, setCollapsed] = useState(false);
   const onCollapse = (collapsed) => {
     setCollapsed(collapsed);

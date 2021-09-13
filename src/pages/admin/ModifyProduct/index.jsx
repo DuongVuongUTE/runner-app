@@ -321,9 +321,9 @@ function ModifyProduct({ action, match }) {
     <>
       <Style.Container>
         <Style.CustomSpace>
-          <Style.Title>{action == "create" ? "Thêm" : "Sửa"} Sản Phẩm</Style.Title>
+          {/* <Style.Title>{action == "create" ? "Thêm" : "Sửa"} Sản Phẩm</Style.Title> */}
           <Space>
-            <Button type={"danger"} onClick={() => history.goBack()}>Hủy</Button>
+            <Button type="default"  onClick={() => history.goBack()}>Hủy</Button>
             <Button type="primary" onClick={() => handleSubmitForm()}>Lưu</Button>
           </Space>
         </Style.CustomSpace>
@@ -332,7 +332,7 @@ function ModifyProduct({ action, match }) {
             form={productForm}
             className="form"
             name="basic"
-            labelCol={{ span: 6 }}
+            labelCol={{ span: 4 }}
             initialValues={productId ? productDetail.data : {}}
             onFinish={handleSubmitForm}
           >
@@ -387,7 +387,7 @@ function ModifyProduct({ action, match }) {
               </Radio.Group>
             </Form.Item>
             <Row>
-              <Col span={6} style={{ textAlign: "right" }}>
+              <Col span={4} style={{ textAlign: "right" }}>
                 <Space style={{ marginTop: 4 }} size={0}>
                   <div
                     style={{

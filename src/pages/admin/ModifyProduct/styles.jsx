@@ -2,15 +2,9 @@ import styled from "styled-components";
 import { Space, Tag, Radio } from 'antd';
 
 export const Container = styled.div`
-  &>div{
-    max-width: 80%;
-    margin: 0 auto;
-  }
   &>.form{
-    margin: 30px auto;
-    padding: 60px 40px;
+    padding: 30px 10px;
     max-width: 80%;
-    background-color: #80808022;
   }
   & label{
     font-size: 14px;
@@ -45,7 +39,7 @@ export const ImagesBox = styled.div`
 `
 export const CustomSpace = styled(Space)`
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   margin-bottom: 10px;
 `
 
