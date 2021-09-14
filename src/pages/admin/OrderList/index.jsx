@@ -33,10 +33,16 @@ function OrderListPage() {
 
   const tableColumn = [
     {
-      title: 'Tên khách hàng',
+      title: 'Người Đặt',
+      dataIndex: 'user',
+      key: 'user',
+      sorter: (a, b) => a.user.name.length - b.user.name.length,
+      render:(value)=>value.name
+    },
+    {
+      title: 'Người Nhận',
       dataIndex: 'name',
       key: 'name',
-      sorter: (a, b) => a.name.length - b.name.length,
     },
     {
       title: 'Email',
@@ -57,12 +63,30 @@ function OrderListPage() {
       title: "Tổng tiền",
       dataIndex: "totalPrice",
       key: "totalPrice",
+      sorter: (a, b) => a.totalPrice - b.totalPrice,
       render: (value) => `${(value).toLocaleString()}VNĐ`
     },
     {
       title: "Trạng thái",
       dataIndex: "status",
       key: "status",
+      filters: [
+        {
+          text:"waiting",
+          value:"waiting"
+        },
+        {
+          text:"shipping",
+          value:"shipping"
+        },
+        {
+          text:"delivery",
+          value:"delivery"
+        }
+      ],
+      onFilter: (value, record) => {
+        return record.status == value
+      },
       render: (value) => (
         <p style={{
           color: value === "waiting"

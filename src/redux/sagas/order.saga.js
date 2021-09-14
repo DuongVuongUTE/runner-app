@@ -19,6 +19,7 @@ function* getOderListSaga(action) {
       params: {
         _sort: "id",
         _order: "desc",
+        _expand:"user",
         ...(searchKey && { q: searchKey }),
       },
     })
