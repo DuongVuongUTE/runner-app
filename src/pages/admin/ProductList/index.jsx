@@ -91,13 +91,13 @@ function ProductListPage(props) {
       title: "Số lượng",
       dataIndex: "quantity",
       key: "quantity",
-      render :(value)=> value ? value : 0
+      render: (value) => value ? value : 0
     },
     {
       title: "Số lượng đã bán",
       dataIndex: "sold",
       key: "sold",
-      render :(value)=> value ? value : 0
+      render: (value) => value ? value : 0
     },
     {
       title: "Ngày tạo",
@@ -182,23 +182,24 @@ function ProductListPage(props) {
   return (
     <div>
       <div style={{ padding: 10 }}>
-        {/* <Style.Title>Quản lý sản phẩm</Style.Title> */}
-        <Style.CustomSpace>
-          <Style.Search>
-            <Input
-              style={{}} placeholder="Tìm kiếm..."
-              suffix={<Icon.SearchOutlined />}
-              onChange={(e) => handleSearchProduct(e.target.value)}
-            />
-          </Style.Search>
-          <Style.CustomButton
-            type="primary"
-            onClick={() => history.push('/admin/products/create')}
-          >
-            Thêm mới
-          </Style.CustomButton>
-        </Style.CustomSpace>
-
+        <Style.CustomSpaceBox>
+          <Style.Title>Quản lý sản phẩm</Style.Title>
+          <Style.CustomSpace>
+            <Style.Search>
+              <Input
+                style={{}} placeholder="Tìm kiếm..."
+                suffix={<Icon.SearchOutlined />}
+                onChange={(e) => handleSearchProduct(e.target.value)}
+              />
+            </Style.Search>
+            <Style.CustomButton
+              type="primary"
+              onClick={() => history.push('/admin/products/create')}
+            >
+              Thêm mới
+            </Style.CustomButton>
+          </Style.CustomSpace>
+        </Style.CustomSpaceBox>
         <Style.CustomTable
           pagination={{ pageSize: 7 }}
           columns={tableColumn}

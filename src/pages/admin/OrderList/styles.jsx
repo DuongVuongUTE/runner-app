@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Row, Button, Table, List, Popconfirm } from "antd";
+import { Space, Button, Table, List, Popconfirm } from "antd";
 
 export const Title = styled.h3`
   font-size: 20px;
@@ -15,6 +15,7 @@ export const Search = styled.div`
   margin: 20px;
   margin-top: 0;
   display: flex;
+  width: 500px;
   font-weight: 900;
   justify-content: flex-end;
 `
@@ -44,4 +45,8 @@ export const ShowImage = styled.img`
   align-items: center;
   height: 50px;
   width: 50px;
+`
+export const CustomSpaceBox = styled(Space)`
+  display: flex;
+  justify-content: space-between;
 `

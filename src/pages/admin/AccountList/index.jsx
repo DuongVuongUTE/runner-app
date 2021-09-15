@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Row, Button, Input, Space } from "antd";
+import { Tag, Button, Input, Space } from "antd";
 import moment from "moment";
 import * as Icon from "@ant-design/icons";
 import ModifyAccountModal from "./components/ModifyAccountModal";
@@ -67,6 +67,7 @@ function AccountListPage(props) {
       title: "Quyền",
       dataIndex: "role",
       key: "role",
+      render:(value)=> value == "admin" ? <Tag color="#2db7f5">{value}</Tag> : <Tag color="#f50">{value}</Tag>
     },
     {
       title: "Ngày tạo",
@@ -143,14 +144,16 @@ function AccountListPage(props) {
   return (
     <div>
       <div style={{ padding: 10 }}>
-        {/* <Style.Title style={{ marginBottom: 26 }} >Quản Lý tài khoản</Style.Title> */}
-        <Style.Search>
-          <Input
-            style={{ width: "50%" }} placeholder="Tìm kiếm..."
-            suffix={<Icon.SearchOutlined />}
-            onChange={(e) => handleSearchAccount(e.target.value)}
-          />
-        </Style.Search>
+        <Style.CustomSpace>
+          <Style.Title style={{ marginBottom: 26 }} >Quản Lý tài khoản</Style.Title>
+          <Style.Search>
+            <Input
+              placeholder="Tìm kiếm..."
+              suffix={<Icon.SearchOutlined />}
+              onChange={(e) => handleSearchAccount(e.target.value)}
+            />
+          </Style.Search>
+        </Style.CustomSpace>
         <Style.CustomTable
           columns={tableColumn}
           dataSource={tableData}

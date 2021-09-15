@@ -15,6 +15,7 @@ export const Search = styled.div`
   margin: 20px;
   margin-top: 0;
   display: flex;
+  width: 400px;
   font-weight: 900;
   justify-content: flex-end;
 `
@@ -31,4 +32,8 @@ export const ImageItem = styled.div`
   padding-top: 50%;
   background-image: url(${(props)=>props.image ? props.image :null});
   background-size: contain;
+`
+export const CustomSpace = styled(Space)`
+  display: flex;
+  justify-content: space-between;
 `

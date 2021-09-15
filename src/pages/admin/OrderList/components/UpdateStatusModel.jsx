@@ -7,6 +7,12 @@ import {
   Select
 } from "antd";
 
+const STATUS = {
+  waiting: "Đang chờ",
+  shipping:"Đang chuyển hàng",
+  delivery:"Đã giao"
+}
+
 function UpdateStatusModel({
   isShowUpdateModal,
   setIsShowUpdateModal,
@@ -51,10 +57,10 @@ function UpdateStatusModel({
           name="status"
           rules={[{ required: true, message: "Please input your name!" }]}
         >
-          <Select style={{ width: 120 }} >
-            <Option value="waiting"> waiting </Option>
-            <Option value="shipping">shipping</Option>
-            <Option value="delivery">delivery</Option>
+          <Select  >
+            <Option value="waiting"> {STATUS["waiting"]} </Option>
+            <Option value="shipping">{STATUS["shipping"]}</Option>
+            <Option value="delivery">{STATUS["delivery"]}</Option>
           </Select>
         </Form.Item>
 

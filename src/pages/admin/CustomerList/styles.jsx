@@ -12,9 +12,8 @@ export const CustomButton = styled(Button)`
   font-size: 16px;
 `
 export const Search = styled.div`
-  /* margin: 20px; */
   display: flex;
-  min-width: 400px;
+  width: 500px;
   justify-content: flex-end;
   font-weight: 900;
 `
@@ -30,7 +29,7 @@ export const CustomTableChild = styled(Table)`
   & th{
     padding: 5px !important;
     text-transform: uppercase;
-    background-color: #434343 !important ;
+    background-color: #535050d5 !important ;
     color: white !important;
   }
 `
@@ -49,4 +48,8 @@ export const ShowImage = styled.img`
   align-items: center;
   height: 50px;
   width: 50px;
+`
+export const CustomSpaceBox = styled(Space)`
+  display: flex;
+  justify-content: space-between;
 `

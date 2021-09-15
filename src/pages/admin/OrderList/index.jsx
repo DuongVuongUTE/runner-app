@@ -19,12 +19,18 @@ import {
 
 import * as Style from './styles'
 
+const STATUS = {
+  waiting: "Đang chờ",
+  shipping:"Đang chuyển hàng",
+  delivery:"Đã giao"
+}
+
 function OrderListPage() {
 
   const [searchKey, setSearchKey] = useState('');
   const [isShowUpdateModal, setIsShowUpdateModal] = useState('');
   const [orderData, setOrderData] = useState({});
-  const { orderList } = useSelector((state) => state.orderReducer);
+  const { orderList } = useSelector((state) => state.orderReducerAdmin);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -36,8 +42,8 @@ function OrderListPage() {
       title: 'Người Đặt',
       dataIndex: 'user',
       key: 'user',
-      sorter: (a, b) => a.user.name.length - b.user.name.length,
-      render:(value)=>value.name
+      sorter: (a, b) => a.user.name?.length - b.user.name?.length,
+      render: (value) => value?.name
     },
     {
       title: 'Người Nhận',
@@ -72,16 +78,16 @@ function OrderListPage() {
       key: "status",
       filters: [
         {
-          text:"waiting",
-          value:"waiting"
+          value: "waiting",
+          text: STATUS.waiting
         },
         {
-          text:"shipping",
-          value:"shipping"
+          value: "shipping",
+          text: STATUS.shipping
         },
         {
-          text:"delivery",
-          value:"delivery"
+          value: "delivery",
+          text: STATUS.delivery
         }
       ],
       onFilter: (value, record) => {
@@ -93,7 +99,7 @@ function OrderListPage() {
             ? "#52c41a"
             : value === "delivery" ? "#d4380d" : "#fadb14"
         }}>
-          {value}
+          {STATUS[value]}
         </p>
       )
     },
@@ -146,14 +152,16 @@ function OrderListPage() {
     <>
       <div>
         <div style={{ padding: 10 }}>
-          {/* <Style.Title>Quản lý khách hàng</Style.Title> */}
-          <Style.Search>
-            <Input
-              style={{ width: "50%" }} placeholder="Tìm kiếm..."
-              suffix={<Icon.SearchOutlined />}
-              onChange={(e) => handleSearchOrder(e.target.value)}
-            />
-          </Style.Search>
+          <Style.CustomSpaceBox>
+            <Style.Title>Quản lý khách hàng</Style.Title>
+            <Style.Search>
+              <Input
+                placeholder="Tìm kiếm..."
+                suffix={<Icon.SearchOutlined />}
+                onChange={(e) => handleSearchOrder(e.target.value)}
+              />
+            </Style.Search>
+          </Style.CustomSpaceBox>
           <Style.CustomTable
             style={{ marginTop: 10 }}
             columns={tableColumn}

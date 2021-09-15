@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { List, Row, Input, Table,Col } from "antd";
+import { List, Row, Input, Table, Col } from "antd";
 import moment from "moment";
 import * as Icon from "@ant-design/icons";
 
@@ -115,8 +115,8 @@ function CustomerListPage(props) {
       title: "Trạng thái",
       dataIndex: "status",
       key: "status",
-      render: (value) =>(
-        <p style={{color: value==="waiting"? "#52c41a" : "yellow"}}>
+      render: (value) => (
+        <p style={{ color: value === "waiting" ? "#52c41a" : "yellow" }}>
           {value}
         </p>
       )
@@ -132,14 +132,16 @@ function CustomerListPage(props) {
   return (
     <div>
       <div style={{ padding: 10 }}>
-        {/* <Style.Title>Quản lý khách hàng</Style.Title> */}
-        <Style.Search>
-          <Input
-            style={{ width: "50%" }} placeholder="Tìm kiếm..."
-            suffix={<Icon.SearchOutlined />}
-            onChange={(e) => handleSearchCustomer(e.target.value)}
-          />
-        </Style.Search>
+        <Style.CustomSpaceBox>
+          <Style.Title>Quản lý khách hàng</Style.Title>
+          <Style.Search>
+            <Input
+              placeholder="Tìm kiếm..."
+              suffix={<Icon.SearchOutlined />}
+              onChange={(e) => handleSearchCustomer(e.target.value)}
+            />
+          </Style.Search>
+        </Style.CustomSpaceBox>
         <Style.CustomTable
           style={{ marginTop: 10 }}
           columns={tableColumn}
@@ -180,7 +182,7 @@ function CustomerListPage(props) {
                     },
                     rowExpandable: (record) => record.products?.length > 0
                   }}
-                  
+
                 >
 
                 </Style.CustomTableChild>

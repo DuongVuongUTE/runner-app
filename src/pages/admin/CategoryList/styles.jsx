@@ -34,3 +34,7 @@ export const CustomSpace = styled(Space)`
   justify-content: flex-end;
   margin-bottom: 10px;
 `
+export const CustomSpaceBox = styled(Space)`
+  display: flex;
+  justify-content: space-between;
+`

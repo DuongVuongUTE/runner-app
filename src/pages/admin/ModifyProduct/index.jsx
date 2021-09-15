@@ -37,50 +37,50 @@ import * as Style from './styles'
 const COLOR_MENU = [
   {
     'name': 'đỏ',
-    'code': '#e7352b'
+    'code': 'e7352b'
   },
   {
     'name': 'trắng',
-    'code': '#ffffff',
+    'code': 'ffffff',
   },
   {
     'name': 'đen',
-    'code': '#000000',
+    'code': '000000',
   },
   {
     'name': 'xanh dương',
-    'code': '#1790c8',
+    'code': '1790c8',
   },
   {
     'name': 'cam',
-    'code': '#f36b26',
+    'code': 'f36b26',
   },
   {
     'name': 'nâu',
-    'code': '#825d41',
+    'code': '825d41',
   },
   {
     'name': 'xanh la',
-    'code': '#7bba3c',
+    'code': '7bba3c',
   },
   {
     'name': 'vàng',
-    'code': '#fed533',
+    'code': 'fed533',
   },
   {
     'name': 'xám',
-    'code': '#808080',
+    'code': '808080',
   },
   {
     'name': 'hồng',
-    'code': '#f0728f',
+    'code': 'f0728f',
   },
   {
     'name': 'xanh ngọc',
-    'code': '#02cbb5',
+    'code': '02cbb5',
   },
   {
-    'name': 'màu khác',
+    'name': 'nhiều màu',
     'code': 'multiColor',
   },
 ]
@@ -215,32 +215,32 @@ function ModifyProduct({ action, match }) {
   }
   function renderProductOptionForm() {
     return (
-      <div style={{ marginTop: 16 }}>
-        <h4>Danh sách tùy chọn</h4>
-        {
-          productSelected.id &&
-          productSelected.productOptions.length > 0 &&
-          renderProductOptionItems()
-        }
-        {isShowCreateOption
-          ? renderCreateOptionForm()
-          : (
-            <Button
-              type="dashed"
-              block
-              icon={<Icon.PlusOutlined />}
-              onClick={() => setIsShowCreateOption(true)}
-            >
-              Thên tùy chọn
-            </Button>
-          )
-        }
-      </div>
+      <Row style={{ marginTop: 16 }}>
+        <Col span={4}></Col>
+        <Col span={20}>
+          <h4>Danh sách tùy chọn</h4>
+          {
+            productSelected.id &&
+            productSelected.productOptions.length > 0 &&
+            renderProductOptionItems()
+          }
+          {isShowCreateOption
+            ? renderCreateOptionForm()
+            : (
+              <Button
+                type="dashed"
+                block
+                icon={<Icon.PlusOutlined />}
+                onClick={() => setIsShowCreateOption(true)}
+              >
+                Thên tùy chọn
+              </Button>
+            )
+          }
+        </Col>
+      </Row>
     )
   }
-
-  // console.log("🚀 ~ file: index.jsx ~ line 49 ~ handleSetInitialValues ~ handleSetInitialValues", handleSetInitialValues())
-
 
   function handleSubmitForm() {
     if (uploadImages.length === 0) {
@@ -306,9 +306,9 @@ function ModifyProduct({ action, match }) {
     return COLOR_MENU.map((colorItem, colorIndex) => {
       return (
         <Style.customRadio value={colorItem.code} >
-          {colorItem.code == "#ffffff" || colorItem.code == "multiColor"
+          {colorItem.code == "ffffff" || colorItem.code == "multiColor"
             ? <Style.customTag >{colorItem.name}</Style.customTag>
-            : <Style.customTag color={colorItem.code}>{colorItem.name}</Style.customTag>
+            : <Style.customTag color={ `#${colorItem.code}`}>{colorItem.name}</Style.customTag>
           }
 
         </Style.customRadio>
@@ -320,13 +320,13 @@ function ModifyProduct({ action, match }) {
   return (
     <>
       <Style.Container>
-        <Style.CustomSpace>
-          {/* <Style.Title>{action == "create" ? "Thêm" : "Sửa"} Sản Phẩm</Style.Title> */}
+        <Style.CustomSpaceBox>
+          <Style.Title>{action == "create" ? "Thêm" : "Sửa"} Sản Phẩm</Style.Title>
           <Space>
-            <Button type="default"  onClick={() => history.goBack()}>Hủy</Button>
+            <Button type="default" onClick={() => history.goBack()}>Hủy</Button>
             <Button type="primary" onClick={() => handleSubmitForm()}>Lưu</Button>
           </Space>
-        </Style.CustomSpace>
+        </Style.CustomSpaceBox>
         <div className="form">
           <Form
             form={productForm}
@@ -433,6 +433,7 @@ function ModifyProduct({ action, match }) {
                 setOptions={{
                   height: 300,
                   font: [
+                    'Times New Roman',
                     'Segoe UI',
                     'Arial',
                     'tohoma',
@@ -451,13 +452,16 @@ function ModifyProduct({ action, match }) {
               />
             </Form.Item>
           </Form >
-          <Form.Item
-            labelCol={{ span: 6 }}
-            label="Tùy chọn">
-            <Checkbox disabled={action === "create"}
-              checked={isOptionForm} onChange={(e) => setIsOptionForm(e.target.checked)}
-            />
-          </Form.Item>
+          {action === "edit"
+            ? <Form.Item
+              labelCol={{ span: 4 }}
+              label="Tùy chọn">
+              <Checkbox
+                checked={isOptionForm} onChange={(e) => setIsOptionForm(e.target.checked)}
+              />
+            </Form.Item>
+            : null}
+
           {isOptionForm && productSelected.id && renderProductOptionForm()}
 
         </div>

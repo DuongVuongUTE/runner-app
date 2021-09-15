@@ -1,17 +1,25 @@
-import { Row, Col, Dropdown, Menu, Space } from 'antd';
+import { Row, Col, Dropdown, Menu, Space, Badge } from 'antd';
 import { useState, useEffect } from "react";
 import history from '../../utils/history';
 
 import * as Icon from "@ant-design/icons";
 import * as Style from './styles'
 
-import { logoutAction } from "../../redux/actions";
+import {
+  logoutAction,
+  getOrderWaitingAction
+} from "../../redux/actions";
 import { useSelector, useDispatch } from "react-redux";
 
 function HeaderAdmin() {
 
   const { userInfo } = useSelector((state) => state.userReducer);
+  const { orderWaitingList } = useSelector((state) => state.orderReducerAdmin);
+
   const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getOrderWaitingAction());
+  }, []);
 
   function handleLogout() {
     localStorage.removeItem("userInfo");
@@ -45,8 +53,15 @@ function HeaderAdmin() {
           <Col span={17}>
             <Style.CustomSpace>
               <Style.SpaceIcons size={[20, 16]}>
-                <Icon.BellOutlined className="icon"/>
-                <Icon.FlagOutlined className="icon"/>
+                <Icon.BellOutlined className="icon" />
+                <Badge
+                  style={{ cursor: "point" }}
+                  count={orderWaitingList.data?.length}
+                  size="small"
+                  onClick={()=>history.push('/admin/orders')}
+                >
+                  <Icon.FlagOutlined className="icon" />
+                </Badge>
               </Style.SpaceIcons>
               <Dropdown overlay={menuProfile} trigger={['click']}>
                 <Style.profile >

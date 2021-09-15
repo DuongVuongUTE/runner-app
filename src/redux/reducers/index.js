@@ -9,6 +9,7 @@ import wishlistReducer from "./wishlist.reducer";
 import commonReducer from "./common.reducer";
 import productReducerAdmin from "./admin/product.reducer";
 import commonProductReducerAdmin from "./admin/common.reducer";
+import orderReducerAdmin from "./admin/order.reducer";
 
 import rootSaga from "../sagas";
 import typeReducer from "./type.reducer";
@@ -30,6 +31,7 @@ const store = configureStore({
     productReducerAdmin: productReducerAdmin,
     orderReducer: orderReducer,
     commonProductReducerAdmin: commonProductReducerAdmin,
+    orderReducerAdmin:orderReducerAdmin
   },
   middleware: [...getDefaultMiddleware({ thunk: false }), sagaMiddleware],
 });
