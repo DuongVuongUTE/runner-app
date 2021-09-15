@@ -131,7 +131,8 @@ function CategoryListPage(props) {
   return (
     <div>
       <div style={{ padding: 10 }}>
-        {/* <Style.Title>Quản lý loại sản phẩm</Style.Title> */}
+        <Style.CustomSpaceBox>
+        <Style.Title>Quản lý loại sản phẩm</Style.Title>
         <Style.CustomSpace>
           <Style.Search>
             <Input
@@ -150,6 +151,7 @@ function CategoryListPage(props) {
             Thêm mới
           </Button>
         </Style.CustomSpace>
+        </Style.CustomSpaceBox>
         <Style.CustomTable
           columns={tableColumn}
           dataSource={tableData}

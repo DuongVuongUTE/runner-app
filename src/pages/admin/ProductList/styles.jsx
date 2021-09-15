@@ -46,9 +46,13 @@ export const ShowColor = styled.div`
   ${(props) => {
     if (props.color) {
       return props.color == "multiColor"
-        ? "background: radial-gradient(#59ae12,#a5a100,#d88f1f,#f77e54,#ff7887,#fb81b6,#e493df,#bfa8fd,#8bc3ff,#4cdaff,#29edff,#5ffbf1);"
-        : `background-color:${props.color}`
+        ? "background:linear-gradient(90deg, rgba(131,58,180,1) 0%, rgba(253,29,29,1) 50%, rgba(252,176,69,1) 100%);"
+        : `background-color:#${props.color}`
     }
   }};
   border: 1px solid #096dd9;
+`
+export const CustomSpaceBox = styled(Space)`
+  display: flex;
+  justify-content: space-between;
 `

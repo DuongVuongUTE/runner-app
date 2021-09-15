@@ -37,6 +37,29 @@ function* getOderListSaga(action) {
   }
 }
 
+function* getOderListWaitingSaga(action) {
+  try {
+    const result = yield axios({
+      method: "GET",
+      url:`${SERVER_API_URL}/orders`,
+      params: {
+        status:"waiting"
+      },
+    })
+    yield put({
+      type: SUCCESS(ORDER_ACTION.GET_ORDER_WAITING),
+      payload: {
+        data: result.data,
+      },
+    });
+  } catch (e) {
+    yield put({
+      type: FAILURE(ORDER_ACTION.GET_ORDER_WAITING),
+      payload: e.message,
+    });
+  }
+}
+
 function* orderProductSaga(action) {
   try {
     const { id, data } = action.payload;
@@ -83,4 +106,5 @@ export default function* orderSaga() {
   yield takeEvery(REQUEST(ORDER_ACTION.GET_ORDER_LIST), getOderListSaga);
   yield takeEvery(REQUEST(ORDER_ACTION.EDIT_ORDER_LIST), editOrderListSaga);
   yield takeEvery(REQUEST(ORDER_ACTION.ORDER_PRODUCT), orderProductSaga);
+  yield takeEvery(REQUEST(ORDER_ACTION.GET_ORDER_WAITING), getOderListWaitingSaga);
 }

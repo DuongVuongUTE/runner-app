@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Row, Col ,Space} from 'antd';
+import { Row, Col, Space } from 'antd';
 
 export const HeaderContainer = styled.div`
   padding: 10px 40px;
@@ -31,9 +31,11 @@ export const CustomSpace = styled(Space)`
   justify-content: flex-end;
 `
 export const SpaceIcons = styled(Space)`
-  font-size: 23px;
-  color: white;
   margin-right: 30px;
+  & .icon{
+    font-size: 23px;
+    color: white;
+  }
 `
 export const profile = styled.div`
   display: flex;
