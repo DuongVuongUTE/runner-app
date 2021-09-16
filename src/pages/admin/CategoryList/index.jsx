@@ -153,6 +153,7 @@ function CategoryListPage(props) {
         </Style.CustomSpace>
         </Style.CustomSpaceBox>
         <Style.CustomTable
+          scroll={{ y: 370, x: '1000px' }}
           columns={tableColumn}
           dataSource={tableData}
           loading={categoryList.load}

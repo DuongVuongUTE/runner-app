@@ -32,7 +32,7 @@ function AdminLayout({ exact, path, component: Component, action }) {
                 <HeaderAdmin />
                 <Layout >
                   <Sidebar {...routeProps} isShowSidebar={isShowSidebar} />
-                  <Style.SiteLayout style={{ margin: '16px' }}>
+                  <Style.SiteLayout >
                     <BreadcrumbLayout {...routeProps} />
                     <Style.CustomContent >
                       <div className="site-layout-background" style={{ padding: 24, minHeight: 360, height: '100%' }}>

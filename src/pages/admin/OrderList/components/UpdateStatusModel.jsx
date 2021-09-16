@@ -9,8 +9,9 @@ import {
 
 const STATUS = {
   waiting: "Đang chờ",
-  shipping:"Đang chuyển hàng",
-  delivery:"Đã giao"
+  shipping: "Đang chuyển hàng",
+  delivery: "Đã giao",
+  confirm: "xác nhận"
 }
 
 function UpdateStatusModel({
@@ -58,6 +59,7 @@ function UpdateStatusModel({
           rules={[{ required: true, message: "Please input your name!" }]}
         >
           <Select  >
+            <Option value="confirm">{STATUS["confirm"]}</Option>
             <Option value="waiting"> {STATUS["waiting"]} </Option>
             <Option value="shipping">{STATUS["shipping"]}</Option>
             <Option value="delivery">{STATUS["delivery"]}</Option>

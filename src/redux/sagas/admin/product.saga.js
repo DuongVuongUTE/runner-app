@@ -5,6 +5,7 @@ import { SERVER_API_URL } from "../apiUrl";
 
 function* getProductListSaga(action) {
   try {
+    const page = action.payload?.page;
     const searchKey = action.payload?.searchKey;
     const result = yield axios({
       method: "GET",
@@ -13,6 +14,10 @@ function* getProductListSaga(action) {
         _sort: "id",
         _order: "desc",
         _embed:'productOptions',
+        ...(page && {
+          _page: page,
+          _limit: 10,
+        }),
         ...(searchKey && { q: searchKey }),
       },
     });

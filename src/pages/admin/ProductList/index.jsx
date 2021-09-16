@@ -201,7 +201,7 @@ function ProductListPage(props) {
           </Style.CustomSpace>
         </Style.CustomSpaceBox>
         <Style.CustomTable
-          pagination={{ pageSize: 7 }}
+          scroll={{ y: 370, x:2000 }}
           columns={tableColumn}
           dataSource={tableData}
           expandable={{

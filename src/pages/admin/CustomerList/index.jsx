@@ -144,6 +144,7 @@ function CustomerListPage(props) {
         </Style.CustomSpaceBox>
         <Style.CustomTable
           style={{ marginTop: 10 }}
+          scroll={{ y: 360, x: '1000px' }}
           columns={tableColumn}
           dataSource={tableData}
           loading={userList.load}

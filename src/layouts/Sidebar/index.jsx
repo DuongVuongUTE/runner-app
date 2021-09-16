@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Layout, Menu, Breadcrumb } from 'antd';
 
 import history from '../../utils/history';
@@ -10,7 +10,7 @@ const SIDEBAR_MENU = [
   {
     title: 'Dashboard',
     path: '/admin',
-    icon: <Icon.HomeOutlined/>,
+    icon: <Icon.HomeOutlined />,
     subMenu: []
   },
   {
@@ -43,25 +43,34 @@ const SIDEBAR_MENU = [
     icon: <Icon.UserOutlined />,
     subMenu: []
   },
-  
+
 ]
 
-function Sidebar({ location}) {
+function Sidebar({ location }) {
+
   const [collapsed, setCollapsed] = useState(false);
+  const [selectSiderItem, setSelectSiderItem] = useState(0);
   const onCollapse = (collapsed) => {
     setCollapsed(collapsed);
   };
-  const { Header, Content, Footer, Sider } = Layout;
   const { SubMenu } = Menu;
+
+  useEffect(() => {
+    const siderbarIndex = SIDEBAR_MENU.findIndex((item, index) => {
+      return item.path === location.pathname
+    })
+    setSelectSiderItem(siderbarIndex)
+  }, [location]);
+
   function renderSidebarMenu() {
     return SIDEBAR_MENU.map((sidebarItem, sidebarIndex) => {
       return (
         <>
           {sidebarItem.subMenu.length === 0
             ? (
-              <Menu.Item 
+              <Menu.Item
                 icon={sidebarItem.icon}
-                key={`sidebar-${sidebarIndex}`}
+                key={sidebarIndex}
                 active={location.pathname === sidebarItem.path}
                 onClick={() => history.push(sidebarItem.path)}
               >
@@ -106,9 +115,10 @@ function Sidebar({ location}) {
         theme="light"
         collapsible
         collapsed={collapsed}
+        // trigger={null}
         onCollapse={onCollapse}
       >
-        <Style.CustomMenu  defaultSelectedKeys={['1']} mode="inline">
+        <Style.CustomMenu selectedKeys={[`${selectSiderItem}`]} mode="inline">
           {renderSidebarMenu()}
         </Style.CustomMenu>
       </Style.CustomSider>

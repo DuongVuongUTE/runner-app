@@ -3,8 +3,11 @@ import { Space, Tag, Radio } from 'antd';
 
 export const Container = styled.div`
   &>.form{
-    padding: 30px 10px;
+    display: block;
+    padding: 30px 20px;
     max-width: 80%;
+    height:500px;
+    overflow: scroll;
   }
   & label{
     font-size: 14px;
