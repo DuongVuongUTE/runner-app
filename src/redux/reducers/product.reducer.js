@@ -7,6 +7,7 @@ const initialState = {
     total: 0,
     page: 1,
     load: false,
+    loadMore: false,
     error: null,
   },
   productDetail: {
@@ -14,15 +15,27 @@ const initialState = {
     load: false,
     error: null,
   },
+  commentList: {
+    data: [],
+    rate: 0,
+    load: false,
+    error: null,
+  },
 };
 
 const productReducer = createReducer(initialState, {
   [REQUEST(PRODUCT_ACTION.GET_PRODUCT_LIST)]: (state, action) => {
+    let page = action?.payload?.page;
+    const loadHome = action?.payload?.loadHome;
+    if (loadHome) {
+      page = 1;
+    }
     return {
       ...state,
       productList: {
         ...state.productList,
-        load: true,
+        load: page <= 1 ? true : false,
+        loadMore: true,
       },
     };
   },
@@ -37,6 +50,7 @@ const productReducer = createReducer(initialState, {
           total,
           page,
           load: false,
+          loadMore: false,
           error: null,
         },
       };
@@ -49,6 +63,7 @@ const productReducer = createReducer(initialState, {
           total,
           page: 1,
           load: false,
+          loadMore: false,
           error: null,
         },
       };
@@ -61,6 +76,7 @@ const productReducer = createReducer(initialState, {
       productList: {
         ...state.productList,
         load: false,
+        loadMore: false,
         error,
       },
     };
@@ -95,6 +111,51 @@ const productReducer = createReducer(initialState, {
         ...state.productDetail,
         load: false,
         error,
+      },
+    };
+  },
+
+  [REQUEST(PRODUCT_ACTION.GET_COMMENT_DETAIL_LIST)]: (state, action) => {
+    return {
+      ...state,
+      commentList: {
+        ...state.commentList,
+        load: true,
+      },
+    };
+  },
+  [SUCCESS(PRODUCT_ACTION.GET_COMMENT_DETAIL_LIST)]: (state, action) => {
+    const { rate, data } = action.payload;
+    return {
+      ...state,
+      commentList: {
+        ...state.commentList,
+        data,
+        rate: rate,
+        load: false,
+        error: null,
+      },
+    };
+  },
+  [FAILURE(PRODUCT_ACTION.GET_COMMENT_DETAIL_LIST)]: (state, action) => {
+    const { error } = action.payload;
+    return {
+      ...state,
+      commentList: {
+        ...state.commentList,
+        load: false,
+        error,
+      },
+    };
+  },
+
+  [SUCCESS(PRODUCT_ACTION.ADD_COMMENT_PRODUCT)]: (state, action) => {
+    const { data } = action.payload;
+    return {
+      ...state,
+      commentList: {
+        ...state.commentList,
+        data: [data, ...state.commentList.data],
       },
     };
   },

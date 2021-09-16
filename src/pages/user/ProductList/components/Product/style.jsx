@@ -17,11 +17,11 @@ export const ProductList = styled.div`
   grid-template-columns: repeat(4, 1fr);
   min-height: 700px;
   grid-gap: 15px;
-  @media screen and (max-width: 1023px) {
+  @media screen and (max-width: 1200px) {
     min-height: unset;
     grid-template-columns: repeat(3, 1fr);
   }
-  @media screen and (max-width: 850px) {
+  @media screen and (max-width: 900px) {
     min-height: unset;
     grid-template-columns: repeat(2, 1fr);
   }
@@ -29,7 +29,7 @@ export const ProductList = styled.div`
     grid-template-columns: repeat(3, 1fr);
     min-height: unset;
   }
-  @media screen and (max-width: 460px) {
+  @media screen and (max-width: 620px) {
     grid-gap: 15px 10px;
     grid-template-columns: repeat(2, 1fr);
   }

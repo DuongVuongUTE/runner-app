@@ -36,7 +36,7 @@ export const ProductImage = styled.div`
   }
 `;
 export const ProductContent = styled.div`
-  padding: 10px 10px 15px;
+  padding: 10px 10px 15px 10px;
   text-align: left;
   h3 {
     color: #000;
@@ -60,24 +60,50 @@ export const ProductContent = styled.div`
   }
   strong {
     display: block;
-    font-size: 14px;
+    font-size: 18px;
     padding-top: 10px;
     word-break: break-word;
-  }
-  .star {
-    font-size: 10px;
-    .ant-rate-star:not(:last-child) {
-      margin-right: 4px;
-    }
+    color: crimson;
   }
   .card-info {
+    display: flex;
+    align-items: baseline;
     width: 100%;
     justify-content: space-between;
-    margin-top: 20px;
+    margin-top: 15px;
+    &.brand-info {
+      align-items: center;
+    }
+    .star {
+      font-size: 9px;
+      .ant-rate-star:not(:last-child) {
+        margin-right: 4px;
+      }
+      @media screen and (max-width: 410px) {
+        display: none;
+      }
+    }
+    .quantity,
+    .option {
+      font-size: 12px;
+      font-weight: 500;
+      color: #002878;
+    }
+
     .brand {
       font-size: 14px;
       font-weight: 500;
       color: #002878;
+    }
+    .logo_brand {
+      display: inline-block;
+      width: 25px;
+      height: 25px;
+      object-fit: contain;
+      @media screen and (max-width: 450px) {
+        width: 20px;
+        height: 20px;
+      }
     }
   }
 `;

@@ -36,12 +36,14 @@ function Wishlist() {
           key={`${wishItem.name}-${wishIndex}`}
         >
           <Card
+            style={{ cursor: "pointer" }}
+            size="small"
             cover={<img alt="example" src={wishItem.image} />}
             onClick={() =>
               history.push(`/product/${wishItem.name}-${wishItem.productId}`)
             }
           >
-            <Meta title={wishItem.name} />
+            <Meta title={wishItem.name} description={wishItem.category} />
           </Card>
         </Col>
       );

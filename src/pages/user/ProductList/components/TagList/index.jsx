@@ -28,7 +28,6 @@ function TagList({
     if (
       categoriesSelected.length === 0 &&
       colorSelected.length === 0 &&
-      !searchKey &&
       typesSelected.length === 0 &&
       (departmentsSelected.length === 0 ||
         (departmentsSelected.length > 0 &&

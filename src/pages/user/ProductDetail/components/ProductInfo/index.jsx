@@ -26,6 +26,7 @@ import {
   addToWishlistAction,
   addToCartAction,
   deleteWishlistItemAction,
+  addCommentProductAction,
 } from "../../../../../redux/actions";
 
 import * as Icons from "@ant-design/icons";
@@ -34,6 +35,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/swiper.min.css";
 import "swiper/components/pagination/pagination.min.css";
 import history from "../../../../../utils/history";
+import "moment/locale/vi";
 
 const { TabPane } = Tabs;
 const { TextArea } = Input;
@@ -43,14 +45,21 @@ function ProductInfo({
   productDetail,
   setOptionSelected,
   optionSelected,
+  commentList,
   productID,
 }) {
   const { wishList } = useSelector((state) => state.wishlistReducer);
   const { cartList } = useSelector((state) => state.cartReducer);
 
+  console.log(cartList.data);
   const [swiper, setSwiper] = useState(null);
   const [productCount, setProductCount] = useState(1);
   const [viewMore, setViewMore] = useState(false);
+  const [showEditComment, setShowEditComment] = useState(false);
+
+  const [formComment] = Form.useForm();
+
+  moment.locale("vi");
 
   const dispatch = useDispatch();
 
@@ -144,12 +153,17 @@ function ProductInfo({
       if (existOptionIndex !== -1) {
         const newCartList = [...cartList.data];
         newCartList?.splice(existOptionIndex, 1, {
-          productId: productID,
-          count: cartList.data[existOptionIndex].count + productCount,
+          productId: parseInt(productID),
+          count:
+            cartList.data[existOptionIndex].count + productCount >=
+            productDetail.data.quantity
+              ? productDetail.data.quantity
+              : cartList.data[existOptionIndex].count + productCount,
           name: productDetail.data.name,
           price: productDetail.data.price,
           color: productDetail.data.color,
           image: productDetail.data.images[0],
+          quantity: productDetail.data.quantity,
           category: productDetail.data.category.name,
           type: productDetail.data.type.name,
           department: productDetail.data.department.description,
@@ -172,13 +186,14 @@ function ProductInfo({
             carts: [
               ...cartList.data,
               {
-                productId: productID,
+                productId: parseInt(productID),
                 count: productCount,
                 name: productDetail.data.name,
                 price: productDetail.data.price,
                 color: productDetail.data.color,
                 image: productDetail.data.images[0],
                 category: productDetail.data.category.name,
+                quantity: productDetail.data.quantity,
                 type: productDetail.data.type.name,
                 department: productDetail.data.department.description,
                 option: {
@@ -193,17 +208,22 @@ function ProductInfo({
       }
     } else {
       const existProductIndex = cartList.data?.findIndex(
-        (item) => item.productId === productID
+        (item) => item.productId === parseInt(productID)
       );
       if (existProductIndex !== -1) {
         const newCart = [...cartList.data];
         newCart?.splice(existProductIndex, 1, {
-          productId: productID,
-          count: cartList.data[existProductIndex].count + productCount,
+          productId: parseInt(productID),
+          count:
+            cartList.data[existProductIndex].count + productCount >=
+            productDetail.data.quantity
+              ? productDetail.data.quantity
+              : cartList.data[existProductIndex].count + productCount,
           name: productDetail.data.name,
           price: productDetail.data.price,
           color: productDetail.data.color,
           image: productDetail.data.images[0],
+          quantity: productDetail.data.quantity,
           category: productDetail.data.category.name,
           type: productDetail.data.type.name,
           department: productDetail.data.department.description,
@@ -222,12 +242,13 @@ function ProductInfo({
             carts: [
               ...cartList.data,
               {
-                productId: productID,
+                productId: parseInt(productID),
                 count: productCount,
                 name: productDetail.data.name,
                 price: productDetail.data.price,
                 color: productDetail.data.color,
                 image: productDetail.data.images[0],
+                quantity: productDetail.data.quantity,
                 category: productDetail.data.category.name,
                 type: productDetail.data.type.name,
                 department: productDetail.data.department.description,
@@ -238,6 +259,7 @@ function ProductInfo({
         );
       }
     }
+    setProductCount(1);
   }
 
   const DataList = [
@@ -255,64 +277,81 @@ function ProductInfo({
     },
   ];
 
-  const data = [
-    {
-      actions: [<span key="comment-list-reply-to-0">Reply to</span>],
-      author: "Han Solo",
-      avatar:
-        "https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png",
-      content: (
-        <p>
-          We supply a series of design principles, practical patterns and high
-          quality design resources (Sketch and Axure), to help people create
-          their product prototypes beautifully and efficiently.
-        </p>
-      ),
-      datetime: (
-        <Tooltip
-          title={moment().subtract(1, "days").format("YYYY-MM-DD HH:mm:ss")}
-        >
-          <span>{moment().subtract(1, "days").fromNow()}</span>
-        </Tooltip>
-      ),
-    },
-    {
-      actions: [<span key="comment-list-reply-to-0">Reply to</span>],
-      author: "Han Solo",
-      avatar:
-        "https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png",
-      content: (
-        <p>
-          We supply a series of design principles, practical patterns and high
-          quality design resources (Sketch and Axure), to help people create
-          their product prototypes beautifully and efficiently.
-        </p>
-      ),
-      datetime: (
-        <Tooltip
-          title={moment().subtract(2, "days").format("YYYY-MM-DD HH:mm:ss")}
-        >
-          <span>{moment().subtract(2, "days").fromNow()}</span>
-        </Tooltip>
-      ),
-    },
-  ];
-  const Editor = ({ onChange, onSubmit, submitting, value }) => (
-    <>
-      <Form.Item>
-        <TextArea rows={4} onChange={onChange} value={value} />
+  function renderCommentList() {
+    return commentList.data?.map((commentItem, commentIndex) => {
+      const comment = {
+        author: commentItem?.user?.name,
+        avatar: commentItem?.user?.avatar,
+        content: (
+          <>
+            <div style={{ marginBottom: 5 }}>
+              <Rate
+                style={{ fontSize: 10 }}
+                disabled
+                allowHalf
+                value={commentItem.rating}
+              />
+            </div>
+            <p>{commentItem.content}</p>
+          </>
+        ),
+        datetime: (
+          <Tooltip
+            title={moment(commentItem.createdAt).format("YYYY-MM-DD HH:mm:ss")}
+          >
+            <span>{moment(commentItem.createdAt).fromNow()}</span>
+          </Tooltip>
+        ),
+      };
+      return (
+        <li key={`${commentItem.id}-${commentIndex}`}>
+          <Comment
+            author={comment.author}
+            avatar={comment.avatar}
+            content={comment.content}
+            datetime={comment.datetime}
+          />
+        </li>
+      );
+    });
+  }
+
+  const EditorComment = () => (
+    <Form
+      form={formComment}
+      layout="vertical"
+      onFinish={(values) => handleAddComment(values)}
+    >
+      <Form.Item
+        name="rating"
+        label="Đánh giá"
+        rules={[
+          {
+            required: true,
+            message: "Phải có đánh giá",
+          },
+        ]}
+      >
+        <Rate allowHalf />
+      </Form.Item>
+      <Form.Item
+        name="content"
+        label="Nội dung"
+        rules={[
+          {
+            required: true,
+            message: "Phải có nội dung đánh giá",
+          },
+        ]}
+      >
+        <TextArea rows={3} />
       </Form.Item>
       <Form.Item>
-        <Button
-          htmlType="submit"
-          loading={submitting}
-          onClick={onSubmit}
-          type="primary"
-        >
+        <Button htmlType="submit" type="primary">
           Thêm đánh giá
         </Button>
       </Form.Item>
-    </>
+    </Form>
   );
 
   function renderProductOptions() {
@@ -324,6 +363,30 @@ function ProductInfo({
       );
     });
   }
+
+  function handleAddComment(values) {
+    dispatch(
+      addCommentProductAction({
+        idProduct: parseInt(productID),
+        idUser: userInfo.data.id,
+        data: {
+          ...values,
+          userId: userInfo.data.id,
+          productId: parseInt(productID),
+        },
+      })
+    );
+    formComment.resetFields();
+  }
+
+  let maxCount = cartList.data.find(
+    (cartitem) => cartitem.productId === parseInt(productID)
+  )
+    ? productDetail.data.quantity -
+      cartList.data.find(
+        (cartitem) => cartitem.productId === parseInt(productID)
+      ).count
+    : productDetail.data.quantity;
   return (
     <Style.ProductInfo>
       <Style.MainInfo>
@@ -370,8 +433,15 @@ function ProductInfo({
             <div className="product-content">
               <h3>{` ${productDetail.data.name}`}</h3>
               <div className="product-rate">
-                <Rate className="rate" disabled allowHalf defaultValue={4.5} />
-                <span className="number-rate"> 0 Khách hàng đánh giá</span>
+                <Rate
+                  className="rate"
+                  disabled
+                  allowHalf
+                  value={commentList.rate}
+                />
+                <span className="number-rate">
+                  {commentList.data?.length} Khách hàng đánh giá
+                </span>
               </div>
               <div className="product-price">
                 <strong>
@@ -384,16 +454,35 @@ function ProductInfo({
               <div className="product-info-list">
                 <div className="product-brand-item">
                   <span className="product-info-tag">Thương hiệu:</span>
-                  <span className="product-info-text">{` ${productDetail.data.category?.name}`}</span>
+                  <span className="product-info-text">
+                    <Space align="center">
+                      <img
+                        src={productDetail.data.category?.logo}
+                        height="30px"
+                        alt=""
+                      />
+                      <span>{` ${productDetail.data.category?.name}`}</span>
+                    </Space>
+                  </span>
                 </div>
                 <div className="product-type-item">
                   <span className="product-info-tag">Loại giày:</span>
                   <span className="product-info-text">{` ${productDetail.data.type?.name}`}</span>
                 </div>
               </div>
-              <div className="product-department">
-                <span className="product-info-tag">Sản phẩm dành cho:</span>
-                <span className="product-info-text">{` ${productDetail.data.department?.name}`}</span>
+              <div className="product-info-list">
+                <div className="product-type-item">
+                  <span className="product-info-tag">Sản phẩm dành cho:</span>
+                  <span className="product-info-text">{` ${productDetail.data.department?.name}`}</span>
+                </div>
+                <div className="product-type-item">
+                  <span className="product-info-tag">Số lượng sản phẩm:</span>
+                  <span className="product-info-text">
+                    {productDetail.data.quantity === 0
+                      ? "đã hết"
+                      : ` ${productDetail.data.quantity}`}
+                  </span>
+                </div>
               </div>
               <div className="product-color">
                 <span className="product-info-tag">Màu sắc:</span>
@@ -411,21 +500,27 @@ function ProductInfo({
                 </div>
               )}
               <div className="product-action">
-                <Space wrap>
-                  <InputNumber
-                    min={1}
-                    onChange={(value) => setProductCount(value)}
-                    value={productCount}
-                  />
-
-                  <Button
-                    type="primary"
-                    icon={<Icons.ShoppingCartOutlined />}
-                    onClick={() => handleAddToCart()}
-                  >
-                    Thêm vào giỏ
-                  </Button>
-                </Space>
+                {productDetail.data?.quantity === 0 ? (
+                  <Button disabled>Hết hàng</Button>
+                ) : (
+                  <Space wrap>
+                    <InputNumber
+                      disabled={maxCount === 0 ? true : false}
+                      min={1}
+                      max={maxCount}
+                      onChange={(value) => setProductCount(value)}
+                      value={productCount}
+                    />
+                    <Button
+                      disabled={maxCount === 0 ? true : false}
+                      type="primary"
+                      icon={<Icons.ShoppingCartOutlined />}
+                      onClick={() => handleAddToCart()}
+                    >
+                      Thêm vào giỏ
+                    </Button>
+                  </Space>
+                )}
                 <Button
                   type="default"
                   danger
@@ -466,7 +561,11 @@ function ProductInfo({
         </Row>
       </Style.MainInfo>
       <Row gutter={[15, 30]}>
-        <Col lg={{ span: 15, order: 1 }} xs={{ order: 2 }}>
+        <Col
+          lg={{ span: 15, order: 1 }}
+          xs={{ order: 2 }}
+          style={{ width: "100%" }}
+        >
           <Style.TabCard>
             <Tabs defaultActiveKey="1" type="card">
               <TabPane
@@ -514,39 +613,24 @@ function ProductInfo({
                 }
                 key="2"
               >
-                <Comment
-                  avatar={
-                    <Avatar
-                      src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
-                      alt="Han Solo"
-                    />
-                  }
-                  content={
-                    <Editor
-                    // onChange={this.handleChange}
-                    // onSubmit={this.handleSubmit}
-                    // submitting={submitting}
-                    // value={value}
-                    />
-                  }
-                />
+                {userInfo.data?.name && (
+                  <Comment
+                    avatar={
+                      <Avatar
+                        src={userInfo.data?.avatar}
+                        alt={userInfo.data?.name}
+                      />
+                    }
+                    content={<EditorComment />}
+                  />
+                )}
                 <List
                   className="comment-list"
-                  header={`${data.length} replies`}
+                  header={`${commentList.data?.length} đánh giá`}
                   itemLayout="horizontal"
-                  dataSource={data}
-                  renderItem={(item) => (
-                    <li>
-                      <Comment
-                        actions={item.actions}
-                        author={item.author}
-                        avatar={item.avatar}
-                        content={item.content}
-                        datetime={item.datetime}
-                      />
-                    </li>
-                  )}
-                />
+                >
+                  {renderCommentList()}
+                </List>
               </TabPane>
             </Tabs>
           </Style.TabCard>

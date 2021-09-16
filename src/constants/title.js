@@ -13,7 +13,7 @@ export const TITLE = {
   ABOUT: "Giới thiệu",
   CHECKOUT: "Thanh toán",
   USER_PROFILE: "Quản lý tài khoản",
-  USER_INFO: "Thông tin tài khoản",
+  USER_INFO: "Thông tin cá nhân",
   WISH_LIST: "Danh sách yêu thích",
   HISTORY_ORDER: "Lịch sử mua hàng",
   CHANGE_INFO: "Thay đổi thông tin",

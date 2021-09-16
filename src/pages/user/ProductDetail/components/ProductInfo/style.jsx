@@ -1,6 +1,10 @@
 import styled from "styled-components";
 
-export const ProductInfo = styled.div``;
+export const ProductInfo = styled.div`
+  .ant-form-item {
+    margin-bottom: 15px;
+  }
+`;
 
 export const MainInfo = styled.div`
   padding: 15px;
@@ -115,6 +119,11 @@ export const MainInfo = styled.div`
         align-items: flex-start;
         gap: 15px;
       }
+    }
+    .product-brand-item {
+      display: flex;
+      align-items: baseline;
+      gap: 5px;
     }
     .product-info-tag {
       font-size: 14px;

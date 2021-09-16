@@ -36,6 +36,7 @@ export const CategoryItem = styled.div`
   padding-top: 100%;
   border-radius: 10px;
   overflow: hidden;
+  cursor: pointer;
   img {
     position: absolute;
     top: 0;

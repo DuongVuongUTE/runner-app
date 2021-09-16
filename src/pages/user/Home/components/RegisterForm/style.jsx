@@ -11,6 +11,10 @@ export const Register = styled.div`
   background-size: cover;
   padding: 190px 0;
   position: relative;
+  @media screen and (max-width: 767px) {
+    background-attachment: unset;
+  }
+
   .register-content {
     position: absolute;
     position: absolute;

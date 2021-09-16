@@ -13,7 +13,7 @@ export const ProductList = styled.div`
     margin-bottom: calc(var(--spacing) + 10px);
     width: calc((100% / var(--column)) - var(--spacing));
   }
-  @media screen and (max-width: 1080px) {
+  @media screen and (max-width: 1180px) {
     --spacing: 15px;
     --column: 4;
     justify-content: center;

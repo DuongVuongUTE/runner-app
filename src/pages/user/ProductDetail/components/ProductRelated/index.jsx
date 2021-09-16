@@ -14,21 +14,23 @@ function ProductRelated({ productList }) {
           </div>
         </Col>
         {productList.data.map((productItem, productIndex) => {
-          return (
-            <Col
-              xl={{ span: 6 }}
-              lg={{ span: 8 }}
-              sm={{ span: 12 }}
-              xs={{ span: 12 }}
-              key={productIndex}
-              className="col-custom"
-            >
-              <CardProduct
-                path={`/product/${productItem.name}-${productItem.id}`}
-                product={productItem}
-              ></CardProduct>
-            </Col>
-          );
+          if (productIndex <= 7) {
+            return (
+              <Col
+                xl={{ span: 6 }}
+                lg={{ span: 8 }}
+                sm={{ span: 12 }}
+                xs={{ span: 12 }}
+                key={productIndex}
+                className="col-custom"
+              >
+                <CardProduct
+                  path={`/product/${productItem.name}-${productItem.id}`}
+                  product={productItem}
+                ></CardProduct>
+              </Col>
+            );
+          }
         })}
       </Row>
     </Style.ProductRelated>

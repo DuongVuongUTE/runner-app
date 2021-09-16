@@ -34,7 +34,8 @@ function RegisterPage() {
       registerAction({
         data: {
           name: values.name,
-          avatar: "https://img-9gag-fun.9cache.com/photo/aLpNbjg_700bwp.webp",
+          avatar:
+            "https://res.cloudinary.com/vuongute/image/upload/v1631771352/avatar-default/avatar.jpg",
           email: values.email,
           password: values.password,
           gender: values.gender,

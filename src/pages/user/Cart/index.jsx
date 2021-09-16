@@ -12,6 +12,7 @@ import {
   Result,
 } from "antd";
 import * as Icons from "@ant-design/icons";
+import empty from "../../../assets/images/empty_cart.png";
 import { PlusOutlined, MinusOutlined, CloseOutlined } from "@ant-design/icons";
 import { useSelector, useDispatch } from "react-redux";
 
@@ -42,7 +43,10 @@ function CartPage() {
     const newCartData = [...cartList.data];
     newCartData.splice(index, 1, {
       ...newCartData[index],
-      count: newCartData[index].count + 1,
+      count:
+        newCartData[index].count === newCartData[index].quantity
+          ? newCartData[index].count
+          : newCartData[index].count + 1,
     });
     dispatch(
       plusItemCountAction({
@@ -57,7 +61,10 @@ function CartPage() {
     const newCartData = [...cartList.data];
     newCartData.splice(index, 1, {
       ...newCartData[index],
-      count: newCartData[index].count - 1,
+      count:
+        newCartData[index].count === 1
+          ? newCartData[index].count
+          : newCartData[index].count - 1,
     });
     dispatch(
       minusItemCountAction({
@@ -162,6 +169,7 @@ function CartPage() {
       {cartList.data.length === 0 ? (
         <Style.Empty>
           <div>
+            <img src={empty} alt="" />
             <h2>Giỏ hàng trống</h2>
 
             <Button

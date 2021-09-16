@@ -1,10 +1,10 @@
-import { Button, Empty, Row, Typography } from "antd";
-import React from "react";
+import { Button, Empty, Row } from "antd";
+import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import CardProduct from "../../../../../components/Card";
 import { getProductListAction } from "../../../../../redux/actions";
 import * as Style from "./style";
-const { Title } = Typography;
+
 function Product({
   productList,
   categoriesSelected,
@@ -55,7 +55,14 @@ function Product({
 
           {productList.data.length % PRODUCT_LIMIT === 0 && (
             <Row justify="center" style={{ marginTop: 16 }}>
-              <Button onClick={() => handleShowMore()}>Show more</Button>
+              <Button
+                loading={productList.loadMore}
+                onClick={() => {
+                  handleShowMore();
+                }}
+              >
+                Xem thêm
+              </Button>
             </Row>
           )}
         </>

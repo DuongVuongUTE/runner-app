@@ -7,6 +7,7 @@ import {
   FAILURE,
   ORDER_ACTION,
   CART_ACTION,
+  PRODUCT_ACTION,
 } from "../constants";
 import { SERVER_API_URL } from "./apiUrl";
 import history from "../../utils/history";
@@ -23,7 +24,7 @@ function* getOderListSaga(action) {
         _expand: "user",
         ...(searchKey && { q: searchKey }),
       },
-    })
+    });
     yield put({
       type: SUCCESS(ORDER_ACTION.GET_ORDER_LIST),
       payload: {
@@ -86,10 +87,7 @@ function* orderProductSaga(action) {
 function* editOrderListSaga(action) {
   try {
     const { id, data } = action.payload;
-    const result = yield axios.patch(
-      `${SERVER_API_URL}/orders/${id}`,
-      data
-    );
+    const result = yield axios.patch(`${SERVER_API_URL}/orders/${id}`, data);
     yield put({
       type: SUCCESS(ORDER_ACTION.EDIT_ORDER_LIST),
       payload: {
