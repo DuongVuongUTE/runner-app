@@ -91,6 +91,7 @@ function* getProductListSaga(action) {
         _sort: sortObj?._sort || "id",
         _order: sortObj?._order || "desc",
         _expand: ["department", "category", "type"],
+        _embed: ["comments", "productOptions"],
         ...(page && {
           _page: page,
           _limit: PRODUCT_LIMIT,
@@ -102,10 +103,27 @@ function* getProductListSaga(action) {
         ...(searchKey && { q: searchKey }),
       },
     });
+
+    const productData = result.data.map((productItem) => {
+      return {
+        ...productItem,
+        rate:
+          productItem.comments.length === 0
+            ? 0
+            : Math.round(
+                (productItem.comments.reduce(
+                  (result, comment) => (result += comment.rating),
+                  0
+                ) /
+                  productItem.comments.length) *
+                  2
+              ) / 2,
+      };
+    });
     yield put({
       type: SUCCESS(PRODUCT_ACTION.GET_PRODUCT_LIST),
       payload: {
-        data: result.data,
+        data: productData,
         total: result.headers["x-total-count"],
         page,
         more,
@@ -126,19 +144,92 @@ function* getProductDetailSaga(action) {
       method: "GET",
       url: `${SERVER_API_URL}/products/${id}`,
       params: {
-        _embed: "productOptions",
+        _embed: ["productOptions", "comments"],
         _expand: ["department", "category", "type"],
       },
     });
+
+    const productDetailData = {
+      ...result.data,
+      rate:
+        result.data.comments.length === 0
+          ? 0
+          : Math.round(
+              (result.data.comments.reduce(
+                (result, comment) => (result += comment.rating),
+                0
+              ) /
+                result.data.comments.length) *
+                2
+            ) / 2,
+    };
     yield put({
       type: SUCCESS(PRODUCT_ACTION.GET_PRODUCT_DETAIL),
       payload: {
-        data: result.data,
+        data: productDetailData,
       },
     });
   } catch (e) {
     yield put({
       type: FAILURE(PRODUCT_ACTION.GET_PRODUCT_DETAIL),
+      payload: e.message,
+    });
+  }
+}
+
+function* getCommentDetailListSaga(action) {
+  try {
+    const { idProduct } = action.payload;
+    const result = yield axios({
+      method: "GET",
+      url: `${SERVER_API_URL}/comments`,
+      params: {
+        productId: idProduct,
+        _expand: ["user"],
+      },
+    });
+    const rate =
+      result.data.length === 0
+        ? 0
+        : Math.round(
+            (result.data.reduce(
+              (result, comment) => (result += comment.rating),
+              0
+            ) /
+              result.data.length) *
+              2
+          ) / 2;
+
+    yield put({
+      type: SUCCESS(PRODUCT_ACTION.GET_COMMENT_DETAIL_LIST),
+      payload: {
+        data: result.data,
+        rate: rate,
+      },
+    });
+  } catch (e) {
+    yield put({
+      type: FAILURE(PRODUCT_ACTION.GET_COMMENT_DETAIL_LIST),
+      payload: e.message,
+    });
+  }
+}
+
+function* addCommentProductSaga(action) {
+  try {
+    const { idProduct, idUser, data } = action.payload;
+    const result = yield axios.post(`${SERVER_API_URL}/comments`, data);
+    yield put({
+      type: SUCCESS(PRODUCT_ACTION.ADD_COMMENT_PRODUCT),
+      payload: {
+        idProduct,
+        idUser,
+        data: result.data,
+      },
+    });
+  } catch (e) {
+    yield put({
+      type: FAILURE(PRODUCT_ACTION.ADD_COMMENT_PRODUCT),
       payload: e.message,
     });
   }
@@ -209,4 +300,12 @@ export default function* productSaga() {
   yield takeEvery(REQUEST(PRODUCT_ACTION.CREATE_PRODUCT), createProductSaga);
   yield takeEvery(REQUEST(PRODUCT_ACTION.EDIT_PRODUCT), editProductSaga);
   yield takeEvery(REQUEST(PRODUCT_ACTION.DELETE_PRODUCT), deleteProductSaga);
+  yield takeEvery(
+    REQUEST(PRODUCT_ACTION.GET_COMMENT_DETAIL_LIST),
+    getCommentDetailListSaga
+  );
+  yield takeEvery(
+    REQUEST(PRODUCT_ACTION.ADD_COMMENT_PRODUCT),
+    addCommentProductSaga
+  );
 }

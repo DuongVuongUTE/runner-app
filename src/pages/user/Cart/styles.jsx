@@ -183,6 +183,13 @@ export const Empty = styled.div`
   align-items: center;
   div {
     text-align: center;
+    img {
+      display: inline-block;
+      width: 400px;
+      max-width: 100%;
+      margin-bottom: 15px;
+      object-fit: contain;
+    }
     h2 {
       margin-bottom: 15px;
     }

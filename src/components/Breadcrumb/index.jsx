@@ -15,7 +15,7 @@ function BreadcrumbUI() {
     "/cart": "Giỏ hàng",
     "/profile": "Tài khoản",
     "/checkout": "Thanh toán",
-    "/profile/user-info": "Thông tin tài khoản",
+    "/profile/user-info": "Thông tin cá nhân",
     "/profile/change-info": "Thay đổi thông tin",
     "/profile/history-order": "Lịch sử mua hàng",
     "/profile/wish-list": "Sản phẩm yêu thích",

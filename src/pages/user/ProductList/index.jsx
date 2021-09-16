@@ -1,7 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { Container } from "../../../styles/styles";
-import { Collapse, Checkbox, Input, Select, Slider } from "antd";
-import * as Icons from "@ant-design/icons";
 
 import { useSelector, useDispatch } from "react-redux";
 import {
@@ -11,21 +8,18 @@ import {
   getTypeListAction,
 } from "../../../redux/actions";
 
-import * as Style from "./styles";
 import { PRODUCT_LIMIT } from "../../../constants/product";
 import Product from "./components/Product";
 import history from "../../../utils/history";
 import Loading from "../../../components/Loading";
-import TagList from "./components/TagList";
 import Hero from "../../../components/Hero";
-import { TITLE } from "../../../constants/title";
-import { SIZE_LIST } from "../../../constants/size";
-import { COLOR_MENU } from "../../../constants/color";
-const { Panel } = Collapse;
+import FilterProduct from "./components/FilterProduct";
 
-function callback(key) {
-  console.log(key);
-}
+import * as Style from "./styles";
+import { Container } from "../../../styles/styles";
+
+import { TITLE } from "../../../constants/title";
+import SortProduct from "./components/SortProduct";
 
 function ProductPage() {
   document.title = TITLE.PRODUCT_LIST;
@@ -39,15 +33,12 @@ function ProductPage() {
   const [departmentsSelected, setDepartmentsSelect] = useState([]);
   const [sizeSelected, setSizeSelect] = useState([]);
   const [colorSelected, setColorSelect] = useState([]);
+  const [ratingSelected, setRatingSelect] = useState([]);
   const [searchKey, setSearchKey] = useState("");
   const [priceRange, setPriceRange] = useState([0, 15000000]);
 
   const dispatch = useDispatch();
-  const marks = {
-    0: "0₫",
-    7500000: "7.5tr",
-    15000000: "15tr",
-  };
+
   useEffect(() => {
     dispatch(getCategoryListAction());
     dispatch(getProductListAction({ page: 1 }));
@@ -60,6 +51,7 @@ function ProductPage() {
     setTypesSelect([]);
     setDepartmentsSelect([]);
     setSearchKey("");
+    setSortValue("");
     setPriceRange([0, 15000000]);
     if (history.location.pathname === "/product/men") {
       setDepartmentsSelect([1]);
@@ -90,6 +82,7 @@ function ProductPage() {
         priceRange,
         departmentsSelected,
         colorSelected,
+        sortValue,
       })
     );
   }
@@ -105,6 +98,7 @@ function ProductPage() {
         priceRange,
         departmentsSelected,
         colorSelected,
+        sortValue,
       })
     );
   }
@@ -120,6 +114,7 @@ function ProductPage() {
         departmentsSelected: value,
         priceRange,
         colorSelected,
+        sortValue,
       })
     );
   }
@@ -134,6 +129,7 @@ function ProductPage() {
         departmentsSelected,
         searchKey,
         colorSelected,
+        sortValue,
       })
     );
   }
@@ -149,6 +145,7 @@ function ProductPage() {
         searchKey: value,
         departmentsSelected,
         colorSelected,
+        sortValue,
       })
     );
   }
@@ -164,6 +161,7 @@ function ProductPage() {
         searchKey,
         departmentsSelected,
         colorSelected,
+        sortValue,
       })
     );
   }
@@ -179,76 +177,28 @@ function ProductPage() {
         searchKey,
         colorSelected: value,
         departmentsSelected,
+        sortValue,
       })
     );
   }
 
-  function renderCategoryCheckbox() {
-    const categoryCheckbox = categoryList.data.map((categoryItem) => ({
-      label: categoryItem.name,
-      value: categoryItem.id,
-    }));
-    return (
-      <Checkbox.Group
-        options={categoryCheckbox}
-        onChange={(value) => handleFilterCategory(value)}
-        value={categoriesSelected}
-      />
+  function handleFilterRating(value) {
+    setRatingSelect(value);
+    dispatch(
+      getProductListAction({
+        page: 1,
+        categoriesSelected,
+        typesSelected,
+        priceRange,
+        searchKey,
+        colorSelected: value,
+        departmentsSelected,
+        sortValue,
+      })
     );
   }
 
-  function renderTypeCheckbox() {
-    const typeCheckbox = typeList.data.map((typeItem) => ({
-      label: typeItem.name,
-      value: typeItem.id,
-    }));
-    return (
-      <Checkbox.Group
-        options={typeCheckbox}
-        onChange={(value) => handleFilterType(value)}
-        value={typesSelected}
-      />
-    );
-  }
-
-  function renderSizeCheckbox() {
-    const sizeCheckbox = SIZE_LIST.map((sizeItem) => ({
-      label: sizeItem.size,
-      value: sizeItem.id,
-    }));
-    return (
-      <Checkbox.Group
-        options={sizeCheckbox}
-        onChange={(value) => handleFilterSize(value)}
-        value={sizeSelected}
-      />
-    );
-  }
-
-  function renderColorCheckbox() {
-    const colorCheckbox = COLOR_MENU.map((colorItem) => ({
-      label: (
-        <Style.Color
-          className="color"
-          color={
-            colorItem.code !== "multiColor"
-              ? `#${colorItem.code}`
-              : colorItem.code
-          }
-        ></Style.Color>
-      ),
-      value: colorItem.code,
-    }));
-    return (
-      <Checkbox.Group
-        options={colorCheckbox}
-        onChange={(value) => handleFilterColor(value)}
-        value={colorSelected}
-      />
-    );
-  }
-
-  function handleChange(value) {
+  function handleChangeSelect(value) {
     setSortValue(value);
     dispatch(
       getProductListAction({
@@ -261,20 +211,6 @@ function ProductPage() {
         departmentsSelected,
         sortValue: value,
       })
-    );
-  }
-
-  function renderDepartmentCheckbox() {
-    const departmentsCheckbox = departmentList.data.map((departmentItem) => ({
-      label: departmentItem.name,
-      value: departmentItem.id,
-    }));
-    return (
-      <Checkbox.Group
-        options={departmentsCheckbox}
-        onChange={(value) => handleFilterDepartment(value)}
-        value={departmentsSelected}
-      />
     );
   }
 
@@ -301,163 +237,43 @@ function ProductPage() {
           />
           <Container>
             <Style.ProductLayout>
-              <Style.ProductFilter>
-                <div className="sticky">
-                  <h3>
-                    <Icons.FilterOutlined /> Lọc theo
-                  </h3>
-                  <TagList
-                    typeList={typeList}
-                    categoryList={categoryList}
-                    departmentList={departmentList}
-                    categoriesSelected={categoriesSelected}
-                    typesSelected={typesSelected}
-                    departmentsSelected={departmentsSelected}
-                    priceRange={priceRange}
-                    searchKey={searchKey}
-                    setTypesSelect={setTypesSelect}
-                    setCategoriesSelect={setCategoriesSelect}
-                    setDepartmentsSelect={setDepartmentsSelect}
-                    setSearchKey={setSearchKey}
-                    setPriceRange={setPriceRange}
-                    colorSelected={colorSelected}
-                    setColorSelect={setColorSelect}
-                  />
-                  <Collapse
-                    onChange={callback}
-                    ghost
-                    expandIconPosition="right"
-                  >
-                    <Panel
-                      header={
-                        <>
-                          <div class="title-collapse">
-                            <span>Thương hiệu</span>
-                          </div>
-                        </>
-                      }
-                      key="1"
-                    >
-                      <div>{renderCategoryCheckbox()}</div>
-                    </Panel>
-                    <Panel
-                      header={
-                        <>
-                          <div class="title-collapse">
-                            <span>Loại sản phẩm</span>
-                          </div>
-                        </>
-                      }
-                      key="2"
-                    >
-                      <div>{renderTypeCheckbox()}</div>
-                    </Panel>
-                    {history.location.pathname === "/product" ? (
-                      <Panel
-                        header={
-                          <>
-                            <div class="title-collapse">
-                              <span>Giới tính</span>
-                            </div>
-                          </>
-                        }
-                        key="3"
-                      >
-                        <div>{renderDepartmentCheckbox()}</div>
-                      </Panel>
-                    ) : null}
-
-                    <Panel
-                      header={
-                        <>
-                          <div class="title-collapse">
-                            <span>Size</span>
-                          </div>
-                        </>
-                      }
-                      key="4"
-                    >
-                      <div className="checkbox-normal">
-                        {renderSizeCheckbox()}
-                      </div>
-                    </Panel>
-                    <Panel
-                      header={
-                        <>
-                          <div class="title-collapse">
-                            <span>Color</span>
-                          </div>
-                        </>
-                      }
-                      key="5"
-                    >
-                      <div className="checkbox-normal color-list">
-                        {renderColorCheckbox()}
-                      </div>
-                    </Panel>
-                    <Panel
-                      header={
-                        <>
-                          <div class="title-collapse">
-                            <span>Khoảng giá</span>
-                          </div>
-                        </>
-                      }
-                      key="6"
-                    >
-                      <div>
-                        <Slider
-                          marks={marks}
-                          min={0}
-                          max={15000000}
-                          step={100000}
-                          range
-                          tipFormatter={(value) => value.toLocaleString()}
-                          onChange={(value) => handleRangePrice(value)}
-                          value={priceRange}
-                        />
-                      </div>
-                    </Panel>
-                    <Panel
-                      header={
-                        <>
-                          <div class="title-collapse">
-                            <span>Đánh giá</span>
-                          </div>
-                        </>
-                      }
-                      key="7"
-                    >
-                      <div>Đánh giá</div>
-                    </Panel>
-                  </Collapse>
-                </div>
-              </Style.ProductFilter>
+              <Style.ProductFilterContainer>
+                <FilterProduct
+                  handleFilterCategory={handleFilterCategory}
+                  handleFilterColor={handleFilterColor}
+                  handleFilterDepartment={handleFilterDepartment}
+                  handleFilterSize={handleFilterSize}
+                  handleFilterType={handleFilterType}
+                  handleRangePrice={handleRangePrice}
+                  handleFilterRating={handleFilterRating}
+                  typeList={typeList}
+                  categoryList={categoryList}
+                  departmentList={departmentList}
+                  categoriesSelected={categoriesSelected}
+                  typesSelected={typesSelected}
+                  departmentsSelected={departmentsSelected}
+                  priceRange={priceRange}
+                  searchKey={searchKey}
+                  setTypesSelect={setTypesSelect}
+                  setCategoriesSelect={setCategoriesSelect}
+                  setDepartmentsSelect={setDepartmentsSelect}
+                  setSearchKey={setSearchKey}
+                  setPriceRange={setPriceRange}
+                  colorSelected={colorSelected}
+                  setColorSelect={setColorSelect}
+                  sizeSelected={sizeSelected}
+                  setSizeSelect={setSizeSelect}
+                  ratingSelected={ratingSelected}
+                  setRatingSelect={setRatingSelect}
+                />
+              </Style.ProductFilterContainer>
               <Style.ProductContent>
-                <div className="search-sort">
-                  <Input
-                    placeholder="Search..."
-                    onChange={(e) => handleSearchProduct(e.target.value)}
-                    value={searchKey}
-                    suffix={<Icons.SearchOutlined />}
-                  />
-                  <div className="select-sort">
-                    <Select
-                      style={{ width: "100%" }}
-                      onChange={handleChange}
-                      placeholder="Sắp xếp theo..."
-                    >
-                      <Select.Option value="price-desc">
-                        Giá cao đến thấp
-                      </Select.Option>
-                      <Select.Option value="price-asc">
-                        Giá thấp đến cao
-                      </Select.Option>
-                      <Select.Option value="id-desc">Mới nhất</Select.Option>
-                      <Select.Option value="id-asc">Cũ nhất</Select.Option>
-                    </Select>
-                  </div>
-                </div>
+                <SortProduct
+                  handleSearchProduct={handleSearchProduct}
+                  handleChangeSelect={handleChangeSelect}
+                  sortValue={sortValue}
+                  searchKey={searchKey}
+                />
                 <div style={{ position: "relative" }}>
                   {productList.load ? (
                     <Loading load={productList.load} />

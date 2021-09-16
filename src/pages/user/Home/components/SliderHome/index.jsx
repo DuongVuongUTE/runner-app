@@ -58,7 +58,7 @@ function SliderHome() {
           disableOnInteraction: false,
         }}
         loop={true}
-        navigation={true}
+        navigation={false}
         className="mySwiper"
       >
         {renderSlider()}

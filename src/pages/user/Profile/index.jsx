@@ -45,7 +45,7 @@ function ProfilePage() {
 
   const USER_MENU = [
     {
-      title: "Thông tin tài khoản",
+      title: "Thông tin cá nhân",
       key: "user-info",
       path: "/profile/user-info",
       action: function (e) {
@@ -75,7 +75,7 @@ function ProfilePage() {
       subMenu: [],
     },
     {
-      title: "Thay đổi thông tin tài khoản",
+      title: "Thay đổi mật khẩu",
       key: "change-info",
       path: "/profile/change-info",
       action: function (e) {

@@ -21,11 +21,28 @@ function CardProduct({ product, path }) {
         </Style.ProductImage>
         <Style.ProductContent>
           <h3 onClick={() => history.push(path)}>{product.name}</h3>
-          <strong>{product.price}₫</strong>
-          <Space align="center" className="card-info">
+          <strong>{product?.price?.toLocaleString()}₫</strong>
+          <div align="center" className="card-info">
+            <Rate className="star" allowHalf disabled value={product.rate} />
+            <span className="quantity">
+              {product.quantity === 0
+                ? "đã hết"
+                : `còn ${product.quantity} sản phẩm`}
+            </span>
+          </div>
+          <div align="center" className="card-info brand-info">
+            {/* <img
+              src={product.category?.logo}
+              className="logo_brand"
+              alt={product.category?.name}
+            /> */}
+            <span className="option">
+              {product.productOptions.length === 0
+                ? "size mặc định"
+                : `có ${product.productOptions.length} size`}
+            </span>
             <span className="brand">{product.category?.name}</span>
-            <Rate className="star" allowHalf disabled defaultValue={4.5} />
-          </Space>
+          </div>
         </Style.ProductContent>
       </Style.CardProduct>
     </Badge.Ribbon>

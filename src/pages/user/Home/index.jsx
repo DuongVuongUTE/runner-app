@@ -26,22 +26,22 @@ function HomePage() {
     //preload Image
     const img = new Image();
     img.src = register;
-    dispatch(getProductListAction());
+    dispatch(getProductListAction({ loadHome: true }));
   }, []);
 
   const shoesMenList = {
     data: productList.data?.filter(
-      (productItem) => productItem.department.name === "Nam"
+      (productItem) => productItem?.department?.name === "Nam"
     ),
   };
   const shoesWomenList = {
     data: productList.data?.filter(
-      (productItem) => productItem.department.name === "Nữ"
+      (productItem) => productItem?.department?.name === "Nữ"
     ),
   };
   const shoesKidsList = {
     data: productList.data?.filter(
-      (productItem) => productItem.department.name === "Trẻ em"
+      (productItem) => productItem?.department?.name === "Trẻ em"
     ),
   };
 

@@ -6,6 +6,7 @@ import Loading from "../../../components/Loading";
 import { useDispatch, useSelector } from "react-redux";
 
 import {
+  getCommentDetailListAction,
   getProductDetailAction,
   getProductListAction,
 } from "../../../redux/actions";
@@ -23,6 +24,7 @@ function ProductDetailPage() {
   let { productID } = useParams();
   const { userInfo } = useSelector((state) => state.userReducer);
   const { productDetail } = useSelector((state) => state.productReducer);
+  const { commentList } = useSelector((state) => state.productReducer);
   const { productList } = useSelector((state) => state.productReducer);
   const [optionSelected, setOptionSelected] = useState({});
 
@@ -46,6 +48,11 @@ function ProductDetailPage() {
         id: productID,
       })
     );
+    dispatch(
+      getCommentDetailListAction({
+        idProduct: productID,
+      })
+    );
   }, [productID]);
 
   useEffect(() => {
@@ -59,6 +66,15 @@ function ProductDetailPage() {
       setOptionSelected(productDetail.data.productOptions[0] || {});
     }
   }, [productDetail.data]);
+
+  useEffect(() => {
+    productID = getIdParams(productID);
+    dispatch(
+      getCommentDetailListAction({
+        idProduct: productID,
+      })
+    );
+  }, [commentList.data?.length]);
 
   return (
     <>
@@ -77,6 +93,7 @@ function ProductDetailPage() {
               <ProductInfo
                 userInfo={userInfo}
                 productDetail={productDetail}
+                commentList={commentList}
                 setOptionSelected={setOptionSelected}
                 optionSelected={optionSelected}
                 productID={getIdParams(productID)}
