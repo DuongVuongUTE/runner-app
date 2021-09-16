@@ -1,5 +1,6 @@
 import { put, takeEvery } from "redux-saga/effects";
 import axios from "axios";
+import moment from "moment";
 import {
   REQUEST,
   SUCCESS,
@@ -15,11 +16,11 @@ function* getOderListSaga(action) {
     const searchKey = action.payload?.searchKey;
     const result = yield axios({
       method: "GET",
-      url:`${SERVER_API_URL}/orders`,
+      url: `${SERVER_API_URL}/orders`,
       params: {
         _sort: "id",
         _order: "desc",
-        _expand:"user",
+        _expand: "user",
         ...(searchKey && { q: searchKey }),
       },
     })
@@ -41,9 +42,9 @@ function* getOderListWaitingSaga(action) {
   try {
     const result = yield axios({
       method: "GET",
-      url:`${SERVER_API_URL}/orders`,
+      url: `${SERVER_API_URL}/orders`,
       params: {
-        status:"waiting"
+        status: "waiting"
       },
     })
     yield put({
@@ -102,9 +103,69 @@ function* editOrderListSaga(action) {
     });
   }
 }
+
+function* getOrderWeekSaga(action) {
+  try {
+    const firstOfWeek = moment().startOf('isoweek').valueOf();
+    const endOfWeek = moment().endOf('isoweek').valueOf();
+    const timeRange = [firstOfWeek, endOfWeek]
+    const result = yield axios({
+      method: "GET",
+      url: `${SERVER_API_URL}/orders`,
+      params: {
+        ...(timeRange && {
+          createdAt_gte: timeRange[0],
+          createdAt_lte: timeRange[1],
+        }),
+      },
+    });
+    yield put({
+      type: SUCCESS(ORDER_ACTION.GET_TOTAL_SOLD_ORDER_WEEK),
+      payload: {
+        data: result.data,
+      },
+    });
+  } catch (e) {
+    yield put({
+      type: FAILURE(ORDER_ACTION.GET_TOTAL_SOLD_ORDER_WEEK),
+      payload: e.message,
+    });
+  }
+}
+function* getOrderMonthSaga(action) {
+  try {
+    const firstOfMonth = moment().startOf('month').valueOf();
+    const endOfMonth = moment().endOf('month').valueOf();
+    const timeRange = [firstOfMonth, endOfMonth]
+    const result = yield axios({
+      method: "GET",
+      url: `${SERVER_API_URL}/orders`,
+      params: {
+        ...(timeRange && {
+          createdAt_gte: timeRange[0],
+          createdAt_lte: timeRange[1],
+        }),
+      },
+    });
+    yield put({
+      type: SUCCESS(ORDER_ACTION.GET_TOTAL_SOLD_ORDER_MONTH),
+      payload: {
+        data: result.data,
+      },
+    });
+  } catch (e) {
+    yield put({
+      type: FAILURE(ORDER_ACTION.GET_TOTAL_SOLD_ORDER_MONTH),
+      payload: e.message,
+    });
+  }
+}
+
 export default function* orderSaga() {
   yield takeEvery(REQUEST(ORDER_ACTION.GET_ORDER_LIST), getOderListSaga);
   yield takeEvery(REQUEST(ORDER_ACTION.EDIT_ORDER_LIST), editOrderListSaga);
   yield takeEvery(REQUEST(ORDER_ACTION.ORDER_PRODUCT), orderProductSaga);
   yield takeEvery(REQUEST(ORDER_ACTION.GET_ORDER_WAITING), getOderListWaitingSaga);
+  yield takeEvery(REQUEST(ORDER_ACTION.GET_TOTAL_SOLD_ORDER_WEEK), getOrderWeekSaga);
+  yield takeEvery(REQUEST(ORDER_ACTION.GET_TOTAL_SOLD_ORDER_MONTH), getOrderMonthSaga);
 }

@@ -21,8 +21,9 @@ import * as Style from './styles'
 
 const STATUS = {
   waiting: "Đang chờ",
-  shipping:"Đang chuyển hàng",
-  delivery:"Đã giao"
+  shipping: "Đang chuyển hàng",
+  delivery: "Đã giao",
+  confirm: "xác nhận"
 }
 
 function OrderListPage() {
@@ -88,6 +89,10 @@ function OrderListPage() {
         {
           value: "delivery",
           text: STATUS.delivery
+        },
+        {
+          value: "confirm",
+          text: STATUS.confirm
         }
       ],
       onFilter: (value, record) => {
@@ -97,7 +102,11 @@ function OrderListPage() {
         <p style={{
           color: value === "waiting"
             ? "#52c41a"
-            : value === "delivery" ? "#d4380d" : "#fadb14"
+            : value === "delivery"
+              ? "#d4380d"
+              : value === "confirm"
+                ? "#13c2c2"
+                : "#fadb14"
         }}>
           {STATUS[value]}
         </p>
@@ -163,6 +172,7 @@ function OrderListPage() {
             </Style.Search>
           </Style.CustomSpaceBox>
           <Style.CustomTable
+            scroll={{ y: 360, x: '2000px' }}
             style={{ marginTop: 10 }}
             columns={tableColumn}
             dataSource={tableData}

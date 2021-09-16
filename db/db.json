@@ -90,11 +90,24 @@
       "name": "tuyet",
       "avatar": "https://img-9gag-fun.9cache.com/photo/aLpNbjg_700bwp.webp",
       "gender": "female",
-      "carts": [],
+      "carts": [
+        {
+          "productId": "32",
+          "count": 1,
+          "name": "Deviate Nitro Elite Racer SP Men's Running Sneakers",
+          "price": 4600000,
+          "color": "multiColor",
+          "image": "https://images.puma.com/image/upload/f_auto,q_auto,b_rgb:fafafa,w_2000,h_2000/global/195419/01/sv03/fnd/PNA/fmt/png/Deviate-Nitro-Elite-Racer-SP-Men's-Running-Sneakers",
+          "category": "Puma",
+          "type": "Giày chạy bộ",
+          "department": "Giày nam",
+          "option": {}
+        }
+      ],
       "wishlist": [],
       "role": "user",
       "createdAt": 1631696264346,
-      "updatedAt": 1631696330616,
+      "updatedAt": 1631710508515,
       "id": 7
     }
   ],
@@ -1675,9 +1688,9 @@
       ],
       "totalPrice": 13800000,
       "checkoutInfo": "cod",
-      "status": "delivery",
+      "status": "confirm",
       "createdAt": 1631696330576,
-      "updatedAt": 1631699065541,
+      "updatedAt": 1631710967626,
       "id": 6
     }
   ]

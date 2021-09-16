@@ -1,9 +1,21 @@
 import styled from "styled-components";
-import { Row, Col, Space } from 'antd';
+import { Dropdown, Menu, Space } from 'antd';
 
 export const HeaderContainer = styled.div`
   padding: 10px 40px;
   background: #1d3a98;
+`
+export const CustomMenu = styled(Menu)`
+  max-height: 300px;
+  overflow-y:scroll;
+  margin-top: 12px;
+  & .icon{
+    color: #ffd000;
+  }
+`
+export const CustomMenuItem = styled(Menu.Item)`
+  padding: 13px 20px;
+ 
 `
 export const HeaderLogo = styled.h1`
   flex-shrink: 0;

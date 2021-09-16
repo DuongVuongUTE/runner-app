@@ -41,6 +41,20 @@ function HeaderAdmin() {
 
     </Menu>
   );
+
+  function rendernotification() {
+    return orderWaitingList.data.map((item, index) => {
+      return (
+        <Style.CustomMenuItem key={index} onClick={() =>history.push('/admin/orders')}>
+          <Space size={5} align="center">
+            <Icon.NotificationFilled className="icon" />
+            <span>{item.name} đã đặt {item.products?.length} Sản phẩm</span>
+          </Space>
+        </Style.CustomMenuItem>
+      )
+    })
+  }
+
   return (
     <>
       <Style.HeaderContainer>
@@ -51,17 +65,21 @@ function HeaderAdmin() {
             </Style.HeaderLogo>
           </Col>
           <Col span={17}>
-            <Style.CustomSpace>
+            <Style.CustomSpace size={[20, 16]}>
               <Style.SpaceIcons size={[20, 16]}>
-                <Icon.BellOutlined className="icon" />
-                <Badge
-                  style={{ cursor: "point" }}
-                  count={orderWaitingList.data?.length}
-                  size="small"
-                  onClick={()=>history.push('/admin/orders')}
-                >
-                  <Icon.FlagOutlined className="icon" />
-                </Badge>
+                <Icon.FlagOutlined className="icon" />
+                <Dropdown
+                  placement="bottomCenter"
+                  overlay={<Style.CustomMenu>{rendernotification()}</Style.CustomMenu>}
+                  trigger={['click']}>
+                  <Badge
+                    style={{ cursor: "point" }}
+                    count={orderWaitingList.data?.length}
+                    size="small"
+                  >
+                    <Icon.BellOutlined className="icon" />
+                  </Badge>
+                </Dropdown>
               </Style.SpaceIcons>
               <Dropdown overlay={menuProfile} trigger={['click']}>
                 <Style.profile >

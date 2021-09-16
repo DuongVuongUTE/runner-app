@@ -12,6 +12,12 @@ const initialState = {
     load: false,
     error: null,
   },
+  totalProcuctOrder: {
+    totalWeek:0,
+    totalMonth:0,
+    load: false,
+    error: null,
+  },
 };
 
 const orderReducerAdmin = createReducer(initialState, {
@@ -51,7 +57,8 @@ const orderReducerAdmin = createReducer(initialState, {
     const { data } = action.payload;
     const newOrderList = [...state.orderList.data];
     const orderIndex = newOrderList.findIndex((order) => order.id === data.id);
-    newOrderList.splice(orderIndex, 1, data);
+    const newData = {...newOrderList[orderIndex],status : data.status}
+    newOrderList.splice(orderIndex, 1, newData);
     return {
       ...state,
       orderList: {
@@ -71,6 +78,67 @@ const orderReducerAdmin = createReducer(initialState, {
       },
     }
   },
+
+  [REQUEST(ORDER_ACTION.GET_TOTAL_SOLD_ORDER_WEEK)]: (state, action) => {
+    return {
+      ...state,
+      totalProcuctOrder: {
+        ...state.totalProcuctOrder,
+        load: true,
+      },
+    };
+  },
+
+  [SUCCESS(ORDER_ACTION.GET_TOTAL_SOLD_ORDER_WEEK)]: (state, action) => {
+    const { data } = action.payload;
+    let countProduct = 0;
+    
+    data.forEach((item) => {
+      countProduct = countProduct + item.products.reduce((total, itemPr) => {
+        return total + itemPr.count
+      }, 0)
+    })
+    return {
+      ...state,
+      totalProcuctOrder: {
+        ...state.totalProcuctOrder,
+        totalWeek : countProduct,
+        load: false,
+        error: null,
+      },
+    }
+  },
+
+  [REQUEST(ORDER_ACTION.GET_TOTAL_SOLD_ORDER_MONTH)]: (state, action) => {
+    return {
+      ...state,
+      totalProcuctOrder: {
+        ...state.totalProcuctOrder,
+        load: true,
+      },
+    };
+  },
+
+  [SUCCESS(ORDER_ACTION.GET_TOTAL_SOLD_ORDER_MONTH)]: (state, action) => {
+    const { data } = action.payload;
+    let countProduct = 0;
+    
+    data.forEach((item) => {
+      countProduct = countProduct + item.products.reduce((total, itemPr) => {
+        return total + itemPr.count
+      }, 0)
+    })
+    return {
+      ...state,
+      totalProcuctOrder: {
+        ...state.totalProcuctOrder,
+        totalMonth: countProduct,
+        load: false,
+        error: null,
+      },
+    }
+  },
+
 });
 
 export default orderReducerAdmin;

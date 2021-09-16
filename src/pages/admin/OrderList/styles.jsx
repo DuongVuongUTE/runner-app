@@ -26,9 +26,6 @@ export const CustomTable = styled(Table)`
     color: white !important;
     white-space: nowrap;
   }
-  & td{
-    white-space: nowrap;
-  }
 `
 export const ImageItem = styled.div`
   width: 80px;

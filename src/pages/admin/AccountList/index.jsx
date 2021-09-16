@@ -67,7 +67,7 @@ function AccountListPage(props) {
       title: "Quyền",
       dataIndex: "role",
       key: "role",
-      render:(value)=> value == "admin" ? <Tag color="#2db7f5">{value}</Tag> : <Tag color="#f50">{value}</Tag>
+      render:(value)=> value == "admin" ? <Tag color="#8f9117">{value}</Tag> : <Tag color="#126d19">{value}</Tag>
     },
     {
       title: "Ngày tạo",
@@ -155,6 +155,7 @@ function AccountListPage(props) {
           </Style.Search>
         </Style.CustomSpace>
         <Style.CustomTable
+          scroll={{ y: 360, x: '1500px' }}
           columns={tableColumn}
           dataSource={tableData}
           loading={userList.load}
