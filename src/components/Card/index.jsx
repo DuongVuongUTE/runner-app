@@ -37,9 +37,9 @@ function CardProduct({ product, path }) {
               alt={product.category?.name}
             /> */}
             <span className="option">
-              {product.productOptions.length === 0
+              {product?.productOptions?.length === 0
                 ? "size mặc định"
-                : `có ${product.productOptions.length} size`}
+                : `có ${product?.productOptions?.length} size`}
             </span>
             <span className="brand">{product.category?.name}</span>
           </div>

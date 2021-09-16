@@ -45,9 +45,9 @@ function* getOderListWaitingSaga(action) {
       method: "GET",
       url: `${SERVER_API_URL}/orders`,
       params: {
-        status: "waiting"
+        status: "waiting",
       },
-    })
+    });
     yield put({
       type: SUCCESS(ORDER_ACTION.GET_ORDER_WAITING),
       payload: {
@@ -104,9 +104,9 @@ function* editOrderListSaga(action) {
 
 function* getOrderWeekSaga(action) {
   try {
-    const firstOfWeek = moment().startOf('isoweek').valueOf();
-    const endOfWeek = moment().endOf('isoweek').valueOf();
-    const timeRange = [firstOfWeek, endOfWeek]
+    const firstOfWeek = moment().startOf("isoweek").valueOf();
+    const endOfWeek = moment().endOf("isoweek").valueOf();
+    const timeRange = [firstOfWeek, endOfWeek];
     const result = yield axios({
       method: "GET",
       url: `${SERVER_API_URL}/orders`,
@@ -132,9 +132,9 @@ function* getOrderWeekSaga(action) {
 }
 function* getOrderMonthSaga(action) {
   try {
-    const firstOfMonth = moment().startOf('month').valueOf();
-    const endOfMonth = moment().endOf('month').valueOf();
-    const timeRange = [firstOfMonth, endOfMonth]
+    const firstOfMonth = moment().startOf("month").valueOf();
+    const endOfMonth = moment().endOf("month").valueOf();
+    const timeRange = [firstOfMonth, endOfMonth];
     const result = yield axios({
       method: "GET",
       url: `${SERVER_API_URL}/orders`,
@@ -163,7 +163,16 @@ export default function* orderSaga() {
   yield takeEvery(REQUEST(ORDER_ACTION.GET_ORDER_LIST), getOderListSaga);
   yield takeEvery(REQUEST(ORDER_ACTION.EDIT_ORDER_LIST), editOrderListSaga);
   yield takeEvery(REQUEST(ORDER_ACTION.ORDER_PRODUCT), orderProductSaga);
-  yield takeEvery(REQUEST(ORDER_ACTION.GET_ORDER_WAITING), getOderListWaitingSaga);
-  yield takeEvery(REQUEST(ORDER_ACTION.GET_TOTAL_SOLD_ORDER_WEEK), getOrderWeekSaga);
-  yield takeEvery(REQUEST(ORDER_ACTION.GET_TOTAL_SOLD_ORDER_MONTH), getOrderMonthSaga);
+  yield takeEvery(
+    REQUEST(ORDER_ACTION.GET_ORDER_WAITING),
+    getOderListWaitingSaga
+  );
+  yield takeEvery(
+    REQUEST(ORDER_ACTION.GET_TOTAL_SOLD_ORDER_WEEK),
+    getOrderWeekSaga
+  );
+  yield takeEvery(
+    REQUEST(ORDER_ACTION.GET_TOTAL_SOLD_ORDER_MONTH),
+    getOrderMonthSaga
+  );
 }
