@@ -30,7 +30,8 @@ function AdminLayout({ exact, path, component: Component, action }) {
             return (
               <>
                 <HeaderAdmin />
-                <Layout >
+                <Layout
+                 >
                   <Sidebar {...routeProps} isShowSidebar={isShowSidebar} />
                   <Style.SiteLayout >
                     <BreadcrumbLayout {...routeProps} />

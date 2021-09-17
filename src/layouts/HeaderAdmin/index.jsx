@@ -28,7 +28,7 @@ function HeaderAdmin() {
   }
   const menuProfile = (
     <Menu>
-      <Menu.Item key="0">
+      <Menu.Item key="0" onClick={() =>history.push('/admin/profile/user-info')}>
         <Space size={5} align="center">
           <Icon.FireOutlined /> <span>Xem thông tin</span>
         </Space>

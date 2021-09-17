@@ -39,6 +39,10 @@ const BREADCRUMB_MENU = [
     title: 'Quản Lý tài khoản',
     path: '/admin/accounts',
   },
+  {
+    title: 'Thông tin cá nhân',
+    path: '/admin/profile/:page',
+  },
 ]
 
 function BreadcrumbLayout({ match }) {
