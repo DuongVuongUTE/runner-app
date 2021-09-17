@@ -67,7 +67,6 @@ function HeaderAdmin() {
           <Col span={17}>
             <Style.CustomSpace size={[20, 16]}>
               <Style.SpaceIcons size={[20, 16]}>
-                <Icon.FlagOutlined className="icon" />
                 <Dropdown
                   placement="bottomCenter"
                   overlay={<Style.CustomMenu>{rendernotification()}</Style.CustomMenu>}

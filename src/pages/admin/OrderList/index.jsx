@@ -9,7 +9,7 @@ import {
   Col
 } from "antd";
 import UpdateStatusModel from "./components/UpdateStatusModel";
-
+import moment from "moment";
 import * as Icon from "@ant-design/icons";
 
 import {
@@ -42,6 +42,7 @@ function OrderListPage() {
     {
       title: 'Người Đặt',
       dataIndex: 'user',
+      width: 150,
       key: 'user',
       sorter: (a, b) => a.user.name?.length - b.user.name?.length,
       render: (value) => value?.name
@@ -50,6 +51,7 @@ function OrderListPage() {
       title: 'Người Nhận',
       dataIndex: 'name',
       key: 'name',
+      width: 150,
     },
     {
       title: 'Email',
@@ -60,6 +62,7 @@ function OrderListPage() {
       title: 'SĐT',
       dataIndex: 'phoneNumber',
       key: 'phoneNumber',
+      width: 150,
     },
     {
       title: 'Địa chỉ',
@@ -67,9 +70,16 @@ function OrderListPage() {
       key: 'address',
     },
     {
+      title: 'Ngày đặt',
+      dataIndex: 'createdAt',
+      key: "createdAt",
+      render: (value) => value && moment(value).format("DD/MM/YYYY HH:mm"),
+    },
+    {
       title: "Tổng tiền",
       dataIndex: "totalPrice",
       key: "totalPrice",
+      width: 150,
       sorter: (a, b) => a.totalPrice - b.totalPrice,
       render: (value) => `${(value).toLocaleString()}VNĐ`
     },
@@ -77,6 +87,7 @@ function OrderListPage() {
       title: "Trạng thái",
       dataIndex: "status",
       key: "status",
+      width: 150,
       filters: [
         {
           value: "waiting",
@@ -172,7 +183,7 @@ function OrderListPage() {
             </Style.Search>
           </Style.CustomSpaceBox>
           <Style.CustomTable
-            scroll={{ y: 360, x: '2000px' }}
+            scroll={{ y: 360, x: 1500 }}
             style={{ marginTop: 10 }}
             columns={tableColumn}
             dataSource={tableData}

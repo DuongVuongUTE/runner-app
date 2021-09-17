@@ -12,7 +12,8 @@ const initialState = {
     load: false,
     error: null,
   },
-  totalProcuctOrder: {
+  totalProductOrder: {
+    dataWeek:[],
     totalWeek:0,
     totalMonth:0,
     load: false,
@@ -82,8 +83,8 @@ const orderReducerAdmin = createReducer(initialState, {
   [REQUEST(ORDER_ACTION.GET_TOTAL_SOLD_ORDER_WEEK)]: (state, action) => {
     return {
       ...state,
-      totalProcuctOrder: {
-        ...state.totalProcuctOrder,
+      totalProductOrder: {
+        ...state.totalProductOrder,
         load: true,
       },
     };
@@ -100,8 +101,9 @@ const orderReducerAdmin = createReducer(initialState, {
     })
     return {
       ...state,
-      totalProcuctOrder: {
-        ...state.totalProcuctOrder,
+      totalProductOrder: {
+        ...state.totalProductOrder,
+        dataWeek:data,
         totalWeek : countProduct,
         load: false,
         error: null,

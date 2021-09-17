@@ -81,7 +81,6 @@ function ModifyAccountModal({
         <Form.Item
           label="Giới tính: "
           name="gender"
-          rules={[{ required: true, message: "Bạn chưa chọn giới tính!" }]}
         >
           <Radio.Group>
             <Radio value="female">Nữ</Radio>
@@ -89,7 +88,7 @@ function ModifyAccountModal({
           </Radio.Group>
         </Form.Item>
         <Form.Item
-          label="hinh ảnh:"
+          label="Hinh ảnh:"
         >
           <Upload name="logo"
             showUploadList={false}
@@ -105,9 +104,21 @@ function ModifyAccountModal({
           </div>
         </Form.Item>
         <Form.Item
+          label="Quyền: "
+          name="role"
+        >
+          <Select
+            disabled={
+              userInfo.data.id == modifyUserData.id
+            }
+          >
+            <Option value="user">User</Option>
+            <Option value="admin">Admin</Option>
+          </Select>
+        </Form.Item>
+        <Form.Item
           label="Trạng thái: "
           name="status"
-          rules={[{ required: true, message: "Bạn chưa chọn trạng thái!" }]}
         >
           <Select
             disabled={

@@ -42,12 +42,14 @@ function AccountListPage(props) {
   const tableColumn = [
     {
       dataIndex: "avatar",
+      width: 150,
       key: "avatar",
       render: (value) => (<Style.ImageItem image={value}></Style.ImageItem>)
     },
     {
       title: "Tên",
       dataIndex: "name",
+      width: 150,
       key: "name",
       sorter: (a, b) => a.name.length - b.name.length,
       sortDirections: ['descend'],
@@ -60,17 +62,20 @@ function AccountListPage(props) {
     {
       title: "Giới tính",
       dataIndex: "gender",
+      width: 100,
       key: "gender",
       render: (value) => value == "female" ? "Nữ" : "Nam"
     },
     {
       title: "Quyền",
       dataIndex: "role",
+      width: 100,
       key: "role",
       render:(value)=> value == "admin" ? <Tag color="#8f9117">{value}</Tag> : <Tag color="#126d19">{value}</Tag>
     },
     {
       title: "Ngày tạo",
+      width: 150,
       dataIndex: "createdAt",
       key: "createdAt",
       sorter: (a, b) => a.createdAt - b.createdAt,
@@ -78,6 +83,7 @@ function AccountListPage(props) {
     },
     {
       title: "Ngày sửa",
+      width: 150,
       dataIndex: "updatedAt",
       key: "updatedAt",
       sorter: (a, b) => a.updatedAt - b.updatedAt,
@@ -86,6 +92,7 @@ function AccountListPage(props) {
     {
       title: "Trạng thái",
       dataIndex: "status",
+      width: 150,
       key: "status",
       filters: [
         {
@@ -155,7 +162,7 @@ function AccountListPage(props) {
           </Style.Search>
         </Style.CustomSpace>
         <Style.CustomTable
-          scroll={{ y: 360, x: '1500px' }}
+          scroll={{ y: 360, x: 1200 }}
           columns={tableColumn}
           dataSource={tableData}
           loading={userList.load}

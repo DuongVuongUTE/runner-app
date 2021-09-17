@@ -49,10 +49,12 @@ function ProductListPage(props) {
     {
       dataIndex: "images",
       key: "images",
+      width: 100,
       render: (value) => (<Style.ShowImage src={value[0]}></Style.ShowImage>)
     },
     {
       title: "Tên sản phẩm",
+      width: 200,
       dataIndex: "name",
       key: "name",
       sorter: (a, b) => a.name.length - b.name.length,
@@ -61,6 +63,7 @@ function ProductListPage(props) {
       title: "Loại",
       dataIndex: "categoryId",
       key: "categoryId",
+      width: 100,
       filters: [
         ...categoryFillter
       ],
@@ -77,6 +80,7 @@ function ProductListPage(props) {
     {
       title: "Giá",
       dataIndex: "price",
+      width: 150,
       key: "price",
       sorter: (a, b) => a.price - b.price,
       render: (value) => value.toLocaleString(),
@@ -84,28 +88,33 @@ function ProductListPage(props) {
     {
       title: "Màu",
       dataIndex: "color",
+      width: 80,
       key: "color",
       render: (value) => (<Style.ShowColor color={value}></Style.ShowColor>),
     },
     {
       title: "Số lượng",
       dataIndex: "quantity",
+      width: 150,
       key: "quantity",
       render: (value) => value ? value : 0
     },
     {
       title: "Số lượng đã bán",
+      width: 200,
       dataIndex: "sold",
       key: "sold",
       render: (value) => value ? value : 0
     },
     {
       title: "Ngày tạo",
+      width: 150,
       dataIndex: "createdAt",
       key: "createdAt",
       render: (value) => value && moment(value).format("DD/MM/YYYY HH:mm"),
     },
     {
+      width: 150,
       title: "Ngày sửa",
       dataIndex: "updatedAt",
       key: "updatedAt",
@@ -201,7 +210,7 @@ function ProductListPage(props) {
           </Style.CustomSpace>
         </Style.CustomSpaceBox>
         <Style.CustomTable
-          scroll={{ y: 370, x:2000 }}
+          scroll={{ y: 370, x:1700 }}
           columns={tableColumn}
           dataSource={tableData}
           expandable={{

@@ -14,10 +14,6 @@ function* getProductListSaga(action) {
         _sort: "id",
         _order: "desc",
         _embed:'productOptions',
-        ...(page && {
-          _page: page,
-          _limit: 10,
-        }),
         ...(searchKey && { q: searchKey }),
       },
     });
