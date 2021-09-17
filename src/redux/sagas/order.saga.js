@@ -14,6 +14,7 @@ import history from "../../utils/history";
 
 function* getOderListSaga(action) {
   try {
+    const page = action.payload?.page;
     const searchKey = action.payload?.searchKey;
     const result = yield axios({
       method: "GET",
@@ -22,6 +23,10 @@ function* getOderListSaga(action) {
         _sort: "id",
         _order: "desc",
         _expand: "user",
+        ...(page && {
+          _page: page,
+          _limit: 10,
+        }),
         ...(searchKey && { q: searchKey }),
       },
     });
@@ -117,6 +122,7 @@ function* getOrderWeekSaga(action) {
         }),
       },
     });
+    
     yield put({
       type: SUCCESS(ORDER_ACTION.GET_TOTAL_SOLD_ORDER_WEEK),
       payload: {

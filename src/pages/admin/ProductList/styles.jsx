@@ -22,7 +22,6 @@ export const CustomTable = styled(Table)`
     text-transform: uppercase;
     background-color: #096dd9 !important;
     color: white !important;
-    white-space: nowrap;
   }
 `
 export const ListItem = styled(List.Item)`

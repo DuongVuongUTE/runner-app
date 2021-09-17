@@ -190,7 +190,7 @@ function ModifyProduct({ action, match }) {
             label="Size"
             rules={[{ required: true, message: 'Bạn chưa điền tên của tùy chọn' }]}
           >
-            <Input placeholder="Tùy chọn" />
+            <InputNumber style={{ width: '100%' }} placeholder="Tùy chọn" />
           </Form.Item>
           <Form.Item
             name="price"

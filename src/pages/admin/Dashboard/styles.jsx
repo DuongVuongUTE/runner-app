@@ -7,6 +7,10 @@ export const Title = styled.h3`
   color:#1d3a98;
   font-weight: 900;
 `
+export const ContentBox = styled.div`
+  height:500px;
+  overflow-y: scroll;
+`
 export const CustomButton = styled(Button)`
   height: auto;
   font-size: 16px;
@@ -59,7 +63,7 @@ export const CustomSpaceBox = styled(Space)`
 export const ShowTotalItem = styled.div`
   text-align: center;
   padding: 30px;
-  border-radius: 30px;
+  border-radius: 5px;
   color: white;
   &>h3{
     color: white;
@@ -70,7 +74,7 @@ export const ShowTotalItem = styled.div`
     font-size: 60px;
   }
   &.week{
-    background-color: yellowgreen;
+    background-color: #99cd327f;
   }
   &.month{
     background-color: orange;
