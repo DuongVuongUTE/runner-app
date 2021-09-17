@@ -7,7 +7,7 @@ export const ComponentsLayout=styled.div`
   
 `
 export const SiteLayout = styled(Layout)`
-  height: calc(100vh - 100px);
+  height: calc(100vh - 77px);
   margin-bottom: 10px;
   margin-left: 16px;
   margin-right: 16px;

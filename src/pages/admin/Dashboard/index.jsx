@@ -22,7 +22,7 @@ const STATUS = {
 
 function AdminDashboardPage(props) {
 
-  const firstOfWeek = moment().month("Feb").format("DD/MM/YYYY") ;
+  const firstOfWeek = moment().month("Feb").format("DD/MM/YYYY");
   console.log("🚀 ~ file: index.jsx ~ line 25 ~ AdminDashboardPage ~ firstOfWeek", firstOfWeek)
 
   const { categoryList } = useSelector((state) => state.categoryReducer);
@@ -73,13 +73,13 @@ function AdminDashboardPage(props) {
   console.log(sunday)
 
   const data = [
-    { name: 'Thứ 2', sl: countProductSold(monday), pv: 1 },
-    { name: 'Thứ 3', sl: countProductSold(tuesday), pv: 2 },
-    { name: 'Thứ 4', sl: countProductSold(wednesday), pv: 3 },
-    { name: 'Thứ 5', sl: countProductSold(thursday), pv: 4 },
-    { name: 'Thứ 6', sl: countProductSold(friday), pv: 5 },
-    { name: 'Thứ 7', sl: countProductSold(saturday), pv: 6 },
-    { name: 'Chủ nhật', sl: countProductSold(sunday), pv: 7 }
+    { name: 'T2', sl: countProductSold(monday), pv: 1 },
+    { name: 'T3', sl: countProductSold(tuesday), pv: 2 },
+    { name: 'T4', sl: countProductSold(wednesday), pv: 3 },
+    { name: 'T5', sl: countProductSold(thursday), pv: 4 },
+    { name: 'T6', sl: countProductSold(friday), pv: 5 },
+    { name: 'T7', sl: countProductSold(saturday), pv: 6 },
+    { name: 'CN', sl: countProductSold(sunday), pv: 7 }
   ];
 
   const tableColumn = [

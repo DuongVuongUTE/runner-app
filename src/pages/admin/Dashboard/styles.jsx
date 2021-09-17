@@ -8,7 +8,7 @@ export const Title = styled.h3`
   font-weight: 900;
 `
 export const ContentBox = styled.div`
-  height:500px;
+  height:580px;
   overflow-y: scroll;
 `
 export const CustomButton = styled(Button)`

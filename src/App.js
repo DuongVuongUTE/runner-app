@@ -27,6 +27,9 @@ import AccountListPage from "./pages/admin/AccountList";
 import ModifyProduct from "./pages/admin/ModifyProduct";
 import OrderListPage from "./pages/admin/OrderList";
 
+import ProfileAdminPage from "./pages/admin/Profile";
+// import 
+
 import "antd/dist/antd.css";
 import "swiper/swiper.min.css";
 import "swiper/components/effect-fade/effect-fade.min.css";
@@ -121,6 +124,17 @@ function App() {
             path="/admin/orders"
             component={OrderListPage}
           />
+          {/* <AdminLayout
+            exact
+            path="/admin/profile"
+            component={ProfileAdminPage}
+          /> */}
+          <AdminLayout
+            exact
+            path="/admin/profile/:page"
+            component={ProfileAdminPage}
+          />
+          
 
           <FullLayout exact path="/login" component={LoginPage} />
           <FullLayout exact path="/register" component={RegisterPage} />

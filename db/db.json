@@ -68,15 +68,15 @@
     },
     {
       "email": "hotuyet214@gmail.com",
-      "password": "$2a$10$yyEuMPk2dAV9CuaiiGqOvOQ..RQ7DonDZMfY4ZF8Q4Sfjyva76O32",
+      "password": "$2a$10$mGs80Rv0gmrzRZBJFkd8B.mJ7u.SDxbMzt0yOX2AqndKtzt2KXcGa",
       "name": "tuyet t2",
       "avatar": "https://thuthuatnhanh.com/wp-content/uploads/2020/09/avatar-cho-con-gai-mau-hong-cute.jpg",
-      "gender": "female",
+      "gender": "male",
       "carts": [],
       "wishlist": [],
       "role": "admin",
       "createdAt": 1630593094197,
-      "updatedAt": 1631436505742,
+      "updatedAt": 1631887781825,
       "id": 4,
       "status": "active"
     },
