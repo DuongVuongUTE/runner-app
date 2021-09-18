@@ -18,17 +18,11 @@ const initialState = {
     load: false,
     error: null,
   },
-<<<<<<< HEAD
   totalProductOrder: {
-    dataWeek:[],
-    dataMonth:[],
-    totalWeek:0,
-    totalMonth:0,
-=======
-  totalProcuctOrder: {
+    dataWeek: [],
+    dataMonth: [],
     totalWeek: 0,
     totalMonth: 0,
->>>>>>> 0c00fa4 (blog)
     load: false,
     error: null,
   },
@@ -115,16 +109,10 @@ const orderReducerAdmin = createReducer(initialState, {
     });
     return {
       ...state,
-<<<<<<< HEAD
       totalProductOrder: {
         ...state.totalProductOrder,
-        dataWeek:data,
-        totalWeek : countProduct,
-=======
-      totalProcuctOrder: {
-        ...state.totalProcuctOrder,
+        dataWeek: data,
         totalWeek: countProduct,
->>>>>>> 0c00fa4 (blog)
         load: false,
         error: null,
       },
@@ -156,8 +144,8 @@ const orderReducerAdmin = createReducer(initialState, {
       ...state,
       totalProductOrder: {
         ...state.totalProductOrder,
-        dataMonth:data,
-        totalMonth : countProduct,
+        dataMonth: data,
+        totalMonth: countProduct,
         load: false,
         error: null,
       },

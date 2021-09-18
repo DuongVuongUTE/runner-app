@@ -27,14 +27,10 @@ import AccountListPage from "./pages/admin/AccountList";
 import ModifyProduct from "./pages/admin/ModifyProduct";
 import OrderListPage from "./pages/admin/OrderList";
 
-<<<<<<< HEAD
 import ProfileAdminPage from "./pages/admin/Profile";
-// import 
+// import
 
 import "antd/dist/antd.css";
-=======
-import "antd/dist/antd.less";
->>>>>>> 0c00fa4 (blog)
 import "swiper/swiper.min.css";
 import "swiper/components/effect-fade/effect-fade.min.css";
 import "swiper/components/navigation/navigation.min.css";
@@ -141,7 +137,6 @@ function App() {
             path="/admin/blog/edit/:id"
             component={ModifyBlog}
           />
-<<<<<<< HEAD
           {/* <AdminLayout
             exact
             path="/admin/profile"
@@ -152,10 +147,6 @@ function App() {
             path="/admin/profile/:page"
             component={ProfileAdminPage}
           />
-          
-=======
-          <AdminLayout exact path="/admin/orders" component={OrderListPage} />
->>>>>>> 0c00fa4 (blog)
 
           <FullLayout exact path="/login" component={LoginPage} />
           <FullLayout exact path="/register" component={RegisterPage} />
