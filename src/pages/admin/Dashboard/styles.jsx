@@ -61,13 +61,16 @@ export const CustomSpaceBox = styled(Space)`
   justify-content: flex-end;
 `
 export const ShowTotalItem = styled.div`
-  text-align: center;
-  padding: 30px;
+  padding: 10px 15px;
   border-radius: 5px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   color: white;
   &>h3{
     color: white;
-    margin-bottom: 30px;
+    margin-bottom: 10px;
   }
   &>span{
     font-weight: 900;
