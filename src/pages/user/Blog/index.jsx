@@ -1,92 +1,143 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import BreadcrumbUI from "../../../components/Breadcrumb";
-import { List, Avatar, Space } from "antd";
+
 import * as Icons from "@ant-design/icons";
 import * as Style from "./styles";
 import { TITLE } from "../../../constants/title";
-const listData = [];
-for (let i = 0; i < 23; i++) {
-  listData.push({
-    href: "http://animevietsub.tv/phim/tantei-wa-mou-shindeiru-a4140/",
-    title: `Bài viết số ${i + 1}`,
-    avatar:
-      "https://i.pinimg.com/236x/ee/84/1f/ee841f68c56f2082c77d2b0995e2ad11.jpg",
-    description:
-      "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Temporibus, quasi. Quasi omnis doloribus facere nam provident vitae magnam placeat vero ipsam. Numquam iste ipsum optio ab placeat maiores repellat eos?",
-    content:
-      "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ad, consectetur voluptatum reprehenderit doloremque blanditiis obcaecati officia voluptas corporis dignissimos totam placeat quod velit fuga commodi eveniet, enim doloribus quaerat maiores?",
-  });
-}
-
-const IconText = ({ icon, text }) => (
-  <Space>
-    {React.createElement(icon)}
-    {text}
-  </Space>
-);
+import { ARTICLES_LIMIT } from "../../../constants/acticle";
+import { Button, Input, Row, Select } from "antd";
+import { useDispatch, useSelector } from "react-redux";
+import { getBlogListAction } from "../../../redux/actions/blog.action";
+import history from "../../../utils/history";
+import Loading from "../../../components/Loading";
+import moment from "moment";
+import "moment/locale/vi";
 
 function BlogPage() {
   document.title = TITLE.BLOG;
-  return (
-    <Style.BlogPage>
-      <Style.Hero src="">
-        <Style.Breadcrumb>
-          <BreadcrumbUI />
-        </Style.Breadcrumb>
+  const { blogList } = useSelector((state) => state.blogReducer);
+  const [sortValue, setSortValue] = useState("");
+  const [searchKey, setSearchKey] = useState("");
 
-        <Style.HeroTitle>Bài viết</Style.HeroTitle>
-      </Style.Hero>
-      <Style.BlogContainer>
-        <List
-          style={{ marginBottom: 30 }}
-          itemLayout="vertical"
-          size="large"
-          pagination={{
-            onChange: (page) => {
-              console.log(page);
-            },
-            pageSize: 5,
-          }}
-          dataSource={listData}
-          renderItem={(item) => (
-            <List.Item
-              key={item.title}
-              actions={[
-                <IconText
-                  icon={Icons.StarOutlined}
-                  text="156"
-                  key="list-vertical-star-o"
-                />,
-                <IconText
-                  icon={Icons.LikeOutlined}
-                  text="156"
-                  key="list-vertical-like-o"
-                />,
-                <IconText
-                  icon={Icons.MessageOutlined}
-                  text="2"
-                  key="list-vertical-message"
-                />,
-              ]}
-              extra={
-                <img
-                  width={272}
-                  alt="logo"
-                  src="https://static.zerochan.net/Siesta.%28Tantei.wa.Mou.Shindeiru%29.full.3342425.jpg"
-                />
-              }
-            >
-              <List.Item.Meta
-                avatar={<Avatar src={item.avatar} />}
-                title={<a href={item.href}>{item.title}</a>}
-                description={item.description}
-              />
-              {item.content}
-            </List.Item>
+  const dispatch = useDispatch();
+  moment.locale("vi");
+
+  useEffect(() => {
+    dispatch(getBlogListAction({ page: 1 }));
+  }, []);
+
+  function renderArticlesList() {
+    return blogList.data?.map((article, index) => {
+      return (
+        <Style.ArticleItem
+          key={`${article.id}-${index}`}
+          onClick={() => history.push(`/blog/${article.id}`)}
+        >
+          <div className="article-img">
+            <img src={article.thumb} alt="" />
+          </div>
+          <div className="article-content">
+            <span>{moment(article.createdAt).fromNow()}</span>
+            <h2>
+              <title>{article.title}</title>
+            </h2>
+            <p>{article.desc}</p>
+          </div>
+        </Style.ArticleItem>
+      );
+    });
+  }
+
+  function handleSearchBlog(value) {
+    setSearchKey(value);
+    dispatch(
+      getBlogListAction({
+        page: 1,
+        searchKey: value,
+        sortValue,
+      })
+    );
+  }
+
+  function handleChangeSelect(value) {
+    setSortValue(value);
+    dispatch(
+      getBlogListAction({
+        page: 1,
+        searchKey,
+        sortValue: value,
+      })
+    );
+  }
+
+  function handleShowMore() {
+    dispatch(
+      getBlogListAction({
+        page: blogList.page + 1,
+        searchKey: searchKey,
+        sortValue,
+        more: true,
+      })
+    );
+  }
+
+  return (
+    <>
+      <Style.BlogPage>
+        <Style.Hero src="">
+          <Style.Breadcrumb>
+            <BreadcrumbUI />
+          </Style.Breadcrumb>
+
+          <Style.HeroTitle>Bài viết</Style.HeroTitle>
+        </Style.Hero>
+        <Style.BlogContainer>
+          <Style.SortSearchBlog>
+            <Input
+              placeholder="Search..."
+              onChange={(e) => handleSearchBlog(e.target.value)}
+              value={searchKey}
+              suffix={<Icons.SearchOutlined />}
+            />
+            <div className="select-sort">
+              <Select
+                style={{ width: "100%" }}
+                value={sortValue}
+                onChange={handleChangeSelect}
+                placeholder="Sắp xếp theo..."
+              >
+                <Select.Option value="" disabled>
+                  Sắp xếp theo...
+                </Select.Option>
+                <Select.Option value="id-desc">Mới nhất</Select.Option>
+                <Select.Option value="id-asc">Cũ nhất</Select.Option>
+              </Select>
+            </div>
+          </Style.SortSearchBlog>
+          {blogList.load ? (
+            <Loading load={blogList.load} />
+          ) : (
+            <>
+              <Style.ArticleList>{renderArticlesList()}</Style.ArticleList>
+
+              {blogList.data?.length % ARTICLES_LIMIT === 0 && (
+                <Row justify="center" style={{ marginTop: 16 }}>
+                  <Button
+                    type="default"
+                    loading={blogList.loadMore}
+                    onClick={() => {
+                      handleShowMore();
+                    }}
+                  >
+                    Xem thêm
+                  </Button>
+                </Row>
+              )}
+            </>
           )}
-        />
-      </Style.BlogContainer>
-    </Style.BlogPage>
+        </Style.BlogContainer>
+      </Style.BlogPage>
+    </>
   );
 }
 

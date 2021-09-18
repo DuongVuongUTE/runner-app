@@ -1,53 +1,57 @@
 import React, { useState, useEffect } from "react";
-import { Layout, Menu, Breadcrumb } from 'antd';
+import { Layout, Menu, Breadcrumb } from "antd";
 
-import history from '../../utils/history';
+import history from "../../utils/history";
 
 import * as Icon from "@ant-design/icons";
-import * as Style from './styles';
+import * as Style from "./styles";
 
 const SIDEBAR_MENU = [
   {
-    title: 'Dashboard',
-    path: '/admin',
+    title: "Dashboard",
+    path: "/admin",
     icon: <Icon.HomeOutlined />,
-    subMenu: []
+    subMenu: [],
   },
   {
-    title: 'Quản Lý Sản Phẩm',
-    path: '/admin/products',
+    title: "Quản Lý Sản Phẩm",
+    path: "/admin/products",
     icon: <Icon.MedicineBoxOutlined />,
-    subMenu: []
+    subMenu: [],
   },
   {
-    title: 'Quán Lý Loại Giày',
-    path: '/admin/categories',
+    title: "Quán Lý Loại Giày",
+    path: "/admin/categories",
     icon: <Icon.QrcodeOutlined />,
-    subMenu: []
+    subMenu: [],
   },
   {
-    title: 'Quản Lý Khách Hàng',
-    path: '/admin/customers',
+    title: "Quản Lý Khách Hàng",
+    path: "/admin/customers",
     icon: <Icon.SolutionOutlined />,
-    subMenu: []
+    subMenu: [],
   },
   {
-    title: 'Quản Lý Đặt Hàng',
-    path: '/admin/orders',
+    title: "Quản Lý Đặt Hàng",
+    path: "/admin/orders",
     icon: <Icon.ShoppingOutlined />,
-    subMenu: []
+    subMenu: [],
   },
   {
-    title: 'Quản Lý tài khoản',
-    path: '/admin/accounts',
+    title: "Quản Lý tài khoản",
+    path: "/admin/accounts",
     icon: <Icon.UserOutlined />,
-    subMenu: []
+    subMenu: [],
   },
-
-]
+  {
+    title: "Quản Lý bài viết",
+    path: "/admin/blog",
+    icon: <Icon.EditOutlined />,
+    subMenu: [],
+  },
+];
 
 function Sidebar({ location }) {
-
   const [collapsed, setCollapsed] = useState(false);
   const [selectSiderItem, setSelectSiderItem] = useState(0);
   const onCollapse = (collapsed) => {
@@ -57,43 +61,37 @@ function Sidebar({ location }) {
 
   useEffect(() => {
     const siderbarIndex = SIDEBAR_MENU.findIndex((item, index) => {
-      return item.path === location.pathname
-    })
-    setSelectSiderItem(siderbarIndex)
+      return item.path === location.pathname;
+    });
+    setSelectSiderItem(siderbarIndex);
   }, [location]);
 
   function renderSidebarMenu() {
     return SIDEBAR_MENU.map((sidebarItem, sidebarIndex) => {
       return (
         <>
-          {sidebarItem.subMenu.length === 0
-            ? (
-              <Menu.Item
-                icon={sidebarItem.icon}
-                key={sidebarIndex}
-                active={location.pathname === sidebarItem.path}
-                onClick={() => history.push(sidebarItem.path)}
-              >
-
-                {sidebarItem.title}
-              </Menu.Item>
-            )
-            : (
-              <SubMenu
-                title={sidebarItem.title}
-                icon={<img src={sidebarItem.icon} />}
-                key={`sidebar-${sidebarIndex}`}
-                active={location.pathname === sidebarItem.path}
-              >
-
-                {renderSubMenu(sidebarItem.subMenu)}
-              </SubMenu>
-            )
-          }
-
+          {sidebarItem.subMenu.length === 0 ? (
+            <Menu.Item
+              icon={sidebarItem.icon}
+              key={sidebarIndex}
+              active={location.pathname === sidebarItem.path}
+              onClick={() => history.push(sidebarItem.path)}
+            >
+              {sidebarItem.title}
+            </Menu.Item>
+          ) : (
+            <SubMenu
+              title={sidebarItem.title}
+              icon={<img src={sidebarItem.icon} />}
+              key={`sidebar-${sidebarIndex}`}
+              active={location.pathname === sidebarItem.path}
+            >
+              {renderSubMenu(sidebarItem.subMenu)}
+            </SubMenu>
+          )}
         </>
-      )
-    })
+      );
+    });
   }
   function renderSubMenu(subMenu) {
     return subMenu.map((subMenuItem, subMenuIndex) => {
@@ -105,8 +103,8 @@ function Sidebar({ location }) {
         >
           {subMenuItem.title}
         </Menu.Item>
-      )
-    })
+      );
+    });
   }
   return (
     <>
@@ -122,7 +120,6 @@ function Sidebar({ location }) {
           {renderSidebarMenu()}
         </Style.CustomMenu>
       </Style.CustomSider>
-
     </>
   );
 }

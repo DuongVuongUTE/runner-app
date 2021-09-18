@@ -110,7 +110,7 @@ function Header({ type }) {
     //   path: "/about",
     // },
     {
-      title: "Blog",
+      title: "Bài viết",
       path: "/blog",
     },
     {

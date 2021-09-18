@@ -15,7 +15,9 @@ function SectionHome({ title, text, params, children, noContainer }) {
       {noContainer ? <>{children}</> : <Container>{children}</Container>}
       {text && (
         <Style.Button>
-          <Button onClick={() => history.push(params)}>{text}</Button>
+          <Button type="default" onClick={() => history.push(params)}>
+            {text}
+          </Button>
         </Style.Button>
       )}
     </Style.Section>

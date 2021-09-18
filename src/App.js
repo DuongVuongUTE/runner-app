@@ -27,10 +27,14 @@ import AccountListPage from "./pages/admin/AccountList";
 import ModifyProduct from "./pages/admin/ModifyProduct";
 import OrderListPage from "./pages/admin/OrderList";
 
+<<<<<<< HEAD
 import ProfileAdminPage from "./pages/admin/Profile";
 // import 
 
 import "antd/dist/antd.css";
+=======
+import "antd/dist/antd.less";
+>>>>>>> 0c00fa4 (blog)
 import "swiper/swiper.min.css";
 import "swiper/components/effect-fade/effect-fade.min.css";
 import "swiper/components/navigation/navigation.min.css";
@@ -45,6 +49,9 @@ import { getUserInfoAction } from "./redux/actions";
 import BlogPage from "./pages/user/Blog";
 import ProfilePage from "./pages/user/Profile";
 import ContactPage from "./pages/user/Contact";
+import BlogDetail from "./pages/user/BlogDetail";
+import BlogListPage from "./pages/admin/BlogList";
+import ModifyBlog from "./pages/admin/ModifyBlog";
 
 const THEME = {
   light: lightTheme,
@@ -83,6 +90,7 @@ function App() {
             path="/product/:productID"
             component={ProductDetailPage}
           />
+          <DefaultLayout exact path="/blog/:id" component={BlogDetail} />
           <DefaultLayout exact path="/cart" component={CartPage} />
           <DefaultLayout exact path="/checkout" component={CheckoutPage} />
 
@@ -92,6 +100,7 @@ function App() {
             path="/admin/products"
             component={ProductListPage}
           />
+          <AdminLayout exact path="/admin/blog" component={BlogListPage} />
           <AdminLayout
             exact
             path="/admin/categories"
@@ -119,11 +128,20 @@ function App() {
             path="/admin/products/edit/:id"
             component={ModifyProduct}
           />
+
           <AdminLayout
             exact
-            path="/admin/orders"
-            component={OrderListPage}
+            action="create"
+            path="/admin/blog/create"
+            component={ModifyBlog}
           />
+          <AdminLayout
+            exact
+            action="edit"
+            path="/admin/blog/edit/:id"
+            component={ModifyBlog}
+          />
+<<<<<<< HEAD
           {/* <AdminLayout
             exact
             path="/admin/profile"
@@ -135,6 +153,9 @@ function App() {
             component={ProfileAdminPage}
           />
           
+=======
+          <AdminLayout exact path="/admin/orders" component={OrderListPage} />
+>>>>>>> 0c00fa4 (blog)
 
           <FullLayout exact path="/login" component={LoginPage} />
           <FullLayout exact path="/register" component={RegisterPage} />

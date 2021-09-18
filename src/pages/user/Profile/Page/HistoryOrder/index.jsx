@@ -15,14 +15,26 @@ function HistoryOrder() {
 
   const columns = [
     { title: "Tên", dataIndex: "name", key: "name" },
-    { title: "Địa chỉ", dataIndex: "address", key: "address" },
+    {
+      title: "Địa chỉ",
+      dataIndex: "address",
+      key: "address",
+      width: 150,
+      ellipsis: true,
+    },
     { title: "SĐT", dataIndex: "phoneNumber", key: "phoneNumber" },
-    { title: "Tổng tiền", dataIndex: "totalPrice", key: "totalPrice" },
+    {
+      title: "Tổng tiền",
+      dataIndex: "totalPrice",
+      key: "totalPrice",
+      render: (value) => `${value.toLocaleString()}đ`,
+    },
     {
       title: "Thanh toán",
       dataIndex: "checkoutInfo",
       key: "checkoutInfo",
-      render: (value) => value.toUpperCase(),
+      render: (value) =>
+        value === "paypal" ? "Đã thanh toán (paypal)" : value.toUpperCase(),
     },
     {
       title: "Trạng thái",
@@ -72,6 +84,8 @@ function HistoryOrder() {
         Lịch sử mua hàng
       </Title>
       <Table
+        bordered
+        size="middle"
         columns={columns}
         pagination={false}
         expandable={{
