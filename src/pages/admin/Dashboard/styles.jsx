@@ -77,6 +77,6 @@ export const ShowTotalItem = styled.div`
     background-color: #99cd327f;
   }
   &.month{
-    background-color: orange;
+    background-color: #ffa6009d;
   }
 `
