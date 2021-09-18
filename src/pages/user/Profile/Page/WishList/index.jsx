@@ -1,30 +1,25 @@
-import React from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Row, Col, Button, Result, Space, Card } from "antd";
-import * as Icons from "@ant-design/icons";
-import { deleteWishlistItemAction } from "../../../../../redux/actions";
-import * as Style from "./style";
+import React, { useEffect } from "react";
+import { useSelector } from "react-redux";
+
+import { Row, Col, Button, Card } from "antd";
 import history from "../../../../../utils/history";
 import { TITLE } from "../../../../../constants/title";
+import empty from "../../../../../assets/images/empty_cart.png";
+
+import * as Style from "./style";
+
 const { Meta } = Card;
+
 function Wishlist() {
   document.title = TITLE.WISH_LIST;
-  const { userInfo } = useSelector((state) => state.userReducer);
   const { wishList } = useSelector((state) => state.wishlistReducer);
-  const dispatch = useDispatch();
 
-  function handleDeleteWish(index) {
-    const newWishlistData = [...wishList.data];
-    newWishlistData.splice(index, 1);
-    dispatch(
-      deleteWishlistItemAction({
-        userId: userInfo.data.id,
-        data: { wishlist: newWishlistData },
-      })
-    );
-  }
+  useEffect(() => {
+    const img = new Image();
+    img.src = empty;
+  }, []);
 
-  function renderCartList(params) {
+  function renderWishList(params) {
     return wishList?.data?.map((wishItem, wishIndex) => {
       return (
         <Col
@@ -55,22 +50,24 @@ function Wishlist() {
       {wishList.data.length === 0 ? (
         <Style.Empty>
           <h2>Danh sách yêu thích trống</h2>
-
-          <Button
-            onClick={() => history.push("/product")}
-            type="primary"
-            size="large"
-          >
-            Mua Ngay
-          </Button>
+          <img src={empty} alt="" />
+          <div>
+            <Button
+              onClick={() => history.push("/product")}
+              type="primary"
+              size="large"
+            >
+              Mua Ngay
+            </Button>
+          </div>
         </Style.Empty>
       ) : (
-        <Style.CartPage>
+        <Style.WishPage>
           <h2 style={{ textAlign: "center", marginBottom: 30 }}>
             Danh sách yêu thích
           </h2>
-          <Row gutter={[16, 16]}>{renderCartList()}</Row>
-        </Style.CartPage>
+          <Row gutter={[16, 16]}>{renderWishList()}</Row>
+        </Style.WishPage>
       )}
     </>
   );

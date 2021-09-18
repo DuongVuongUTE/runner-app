@@ -72,8 +72,9 @@ export const ArticleItem = styled.div`
         display: block;
         font-size: 18px;
         font-weight: 600;
+        line-height: 1.4;
         display: -webkit-box;
-        -webkit-line-clamp: 1;
+        -webkit-line-clamp: 2;
         -webkit-box-orient: vertical;
         overflow: hidden;
         text-overflow: ellipsis;
@@ -92,7 +93,7 @@ export const ArticleItem = styled.div`
     }
     p {
       display: -webkit-box;
-      -webkit-line-clamp: 3;
+      -webkit-line-clamp: 2;
       -webkit-box-orient: vertical;
       overflow: hidden;
       text-overflow: ellipsis;

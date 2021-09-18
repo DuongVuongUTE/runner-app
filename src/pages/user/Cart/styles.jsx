@@ -181,6 +181,10 @@ export const Empty = styled.div`
   background-color: #fff;
   justify-content: center;
   align-items: center;
+  @media screen and (max-width: 400px) {
+    margin: 10px 10px 0;
+  }
+
   div {
     text-align: center;
     img {

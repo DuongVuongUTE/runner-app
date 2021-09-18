@@ -505,6 +505,7 @@ function ProductInfo({
                 ) : (
                   <Space wrap>
                     <InputNumber
+                      size="large"
                       disabled={maxCount === 0 ? true : false}
                       min={1}
                       max={maxCount}
@@ -512,6 +513,7 @@ function ProductInfo({
                       value={productCount}
                     />
                     <Button
+                      size="large"
                       disabled={maxCount === 0 ? true : false}
                       type="primary"
                       icon={<Icons.ShoppingCartOutlined />}
@@ -522,6 +524,7 @@ function ProductInfo({
                   </Space>
                 )}
                 <Button
+                  size="large"
                   type="default"
                   danger
                   onClick={() => handleAddToWishlist()}

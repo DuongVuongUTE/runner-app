@@ -1,5 +1,11 @@
 import { createReducer } from "@reduxjs/toolkit";
-import { REQUEST, SUCCESS,FAILURE, ORDER_ACTION, USER_ACTION } from "../../constants";
+import {
+  REQUEST,
+  SUCCESS,
+  FAILURE,
+  ORDER_ACTION,
+  USER_ACTION,
+} from "../../constants";
 
 const initialState = {
   orderList: {
@@ -12,18 +18,23 @@ const initialState = {
     load: false,
     error: null,
   },
+<<<<<<< HEAD
   totalProductOrder: {
     dataWeek:[],
     dataMonth:[],
     totalWeek:0,
     totalMonth:0,
+=======
+  totalProcuctOrder: {
+    totalWeek: 0,
+    totalMonth: 0,
+>>>>>>> 0c00fa4 (blog)
     load: false,
     error: null,
   },
 };
 
 const orderReducerAdmin = createReducer(initialState, {
-  
   [REQUEST(ORDER_ACTION.GET_ORDER_LIST)]: (state, action) => {
     return {
       ...state,
@@ -42,7 +53,7 @@ const orderReducerAdmin = createReducer(initialState, {
         load: false,
         error: null,
       },
-    }
+    };
   },
   [FAILURE(ORDER_ACTION.GET_ORDER_LIST)]: (state, action) => {
     const { error } = action.payload;
@@ -53,19 +64,19 @@ const orderReducerAdmin = createReducer(initialState, {
         load: false,
         error,
       },
-    }
+    };
   },
   [SUCCESS(ORDER_ACTION.EDIT_ORDER_LIST)]: (state, action) => {
     const { data } = action.payload;
     const newOrderList = [...state.orderList.data];
     const orderIndex = newOrderList.findIndex((order) => order.id === data.id);
-    const newData = {...newOrderList[orderIndex],status : data.status}
+    const newData = { ...newOrderList[orderIndex], status: data.status };
     newOrderList.splice(orderIndex, 1, newData);
     return {
       ...state,
       orderList: {
         ...state.orderList,
-        data:newOrderList
+        data: newOrderList,
       },
     };
   },
@@ -78,7 +89,7 @@ const orderReducerAdmin = createReducer(initialState, {
         load: false,
         error: null,
       },
-    }
+    };
   },
 
   [REQUEST(ORDER_ACTION.GET_TOTAL_SOLD_ORDER_WEEK)]: (state, action) => {
@@ -94,22 +105,30 @@ const orderReducerAdmin = createReducer(initialState, {
   [SUCCESS(ORDER_ACTION.GET_TOTAL_SOLD_ORDER_WEEK)]: (state, action) => {
     const { data } = action.payload;
     let countProduct = 0;
-    
+
     data.forEach((item) => {
-      countProduct = countProduct + item.products.reduce((total, itemPr) => {
-        return total + itemPr.count
-      }, 0)
-    })
+      countProduct =
+        countProduct +
+        item.products.reduce((total, itemPr) => {
+          return total + itemPr.count;
+        }, 0);
+    });
     return {
       ...state,
+<<<<<<< HEAD
       totalProductOrder: {
         ...state.totalProductOrder,
         dataWeek:data,
         totalWeek : countProduct,
+=======
+      totalProcuctOrder: {
+        ...state.totalProcuctOrder,
+        totalWeek: countProduct,
+>>>>>>> 0c00fa4 (blog)
         load: false,
         error: null,
       },
-    }
+    };
   },
 
   [REQUEST(ORDER_ACTION.GET_TOTAL_SOLD_ORDER_MONTH)]: (state, action) => {
@@ -125,12 +144,14 @@ const orderReducerAdmin = createReducer(initialState, {
   [SUCCESS(ORDER_ACTION.GET_TOTAL_SOLD_ORDER_MONTH)]: (state, action) => {
     const { data } = action.payload;
     let countProduct = 0;
-    
+
     data.forEach((item) => {
-      countProduct = countProduct + item.products.reduce((total, itemPr) => {
-        return total + itemPr.count
-      }, 0)
-    })
+      countProduct =
+        countProduct +
+        item.products.reduce((total, itemPr) => {
+          return total + itemPr.count;
+        }, 0);
+    });
     return {
       ...state,
       totalProductOrder: {
@@ -140,9 +161,8 @@ const orderReducerAdmin = createReducer(initialState, {
         load: false,
         error: null,
       },
-    }
+    };
   },
-
 });
 
 export default orderReducerAdmin;

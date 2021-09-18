@@ -56,6 +56,7 @@ function Product({
           {productList.data.length % PRODUCT_LIMIT === 0 && (
             <Row justify="center" style={{ marginTop: 16 }}>
               <Button
+                type="default"
                 loading={productList.loadMore}
                 onClick={() => {
                   handleShowMore();

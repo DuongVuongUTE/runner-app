@@ -1,19 +1,8 @@
 import { useEffect } from "react";
-import {
-  Card,
-  Row,
-  Col,
-  Input,
-  Button,
-  List,
-  notification,
-  Space,
-  InputNumber,
-  Result,
-} from "antd";
+import { Row, Col, Input, Button, List, notification } from "antd";
 import * as Icons from "@ant-design/icons";
 import empty from "../../../assets/images/empty_cart.png";
-import { PlusOutlined, MinusOutlined, CloseOutlined } from "@ant-design/icons";
+import { PlusOutlined, MinusOutlined } from "@ant-design/icons";
 import { useSelector, useDispatch } from "react-redux";
 
 import history from "../../../utils/history";
@@ -22,9 +11,7 @@ import {
   minusItemCountAction,
   plusItemCountAction,
   deleteCartItemAction,
-  addToWishlistAction,
 } from "../../../redux/actions";
-import BreadcrumbUI from "../../../components/Breadcrumb";
 
 import * as Style from "./styles";
 import { Container } from "../../../styles/styles";
@@ -38,6 +25,11 @@ function CartPage() {
   let totalPrice = 0;
   let totalCount = 0;
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    const img = new Image();
+    img.src = empty;
+  }, []);
 
   function handlePlusCount(index) {
     const newCartData = [...cartList.data];

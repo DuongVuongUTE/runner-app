@@ -12,14 +12,17 @@ import SliderHome from "./components/SliderHome";
 import ArticlesHome from "./components/Articles";
 import GalleryHome from "./components/Gallery";
 import { useDispatch, useSelector } from "react-redux";
-import { getProductListAction } from "../../../redux/actions";
+import {
+  getBlogListAction,
+  getProductListAction,
+} from "../../../redux/actions";
 import Loading from "../../../components/Loading";
 import { TITLE } from "../../../constants/title";
 
 function HomePage() {
   document.title = TITLE.HOME;
   const { productList } = useSelector((state) => state.productReducer);
-
+  const { blogList } = useSelector((state) => state.blogReducer);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -27,6 +30,7 @@ function HomePage() {
     const img = new Image();
     img.src = register;
     dispatch(getProductListAction({ loadHome: true }));
+    dispatch(getBlogListAction({ page: 1 }));
   }, []);
 
   const shoesMenList = {
@@ -45,52 +49,6 @@ function HomePage() {
     ),
   };
 
-  const articlesList = [
-    {
-      id: 1,
-      title: "Adidas Falcon nổi bật mùa Hè với phối màu",
-      desc: "Cuối tháng 5, adidas Falcon đã cho ra mắt nhiều phối màu đón chào mùa Hè khiến giới trẻ yêu thích không thôi. Tưởng chừng thương hiệu sẽ tiếp tục",
-      thumb: "https://khangdev1998.github.io/shoe/image/articles1.jpg",
-      createdAt: "Thứ 2 10,05,2021",
-    },
-    {
-      id: 2,
-      title: "Saucony hồi sinh mẫu giày chạy bộ cổ điển của mình – Aya Runner",
-      desc: "Là một trong những đôi giày chạy bộ tốt nhất vào những năm 1994, 1995, Saucony Aya Runner vừa có màn trở lại vô cùng ấn tượng có vẻ như 2019",
-      thumb: "https://khangdev1998.github.io/shoe/image/articles2.jpg",
-
-      createdAt: "Thứ 3 10,06,2021",
-    },
-    {
-      id: 3,
-      title: "Những điều bạn chưa biết về giày Nike Air Max chính hãng",
-      desc: "Thương hiệu giày Nike từ lâu đã nổi tiếng trên thị trường giày với những sản phẩm ấn tượng, ghi dấu ấn trong lòng giới trẻ. Điều khiến Nike làm nên tên tuổi như vậy một phần đến từ việc thương hiệu giày này cho ra đời nhiều dòng sản phẩm đa dạng để chiếm lĩnh thị trường. Trong các dòng sản phẩm đó, giày Nike Air Max luôn chiếm được cảm tình của giới yêu giày, cách mua giày Nike Air Max với dịch vụ mua hộ hàng Mỹ và ship hàng Mỹ giá rẻ.",
-      thumb: "https://khangdev1998.github.io/shoe/image/articles3.jpg",
-      createdAt: "Thứ 5 10,08,2021",
-    },
-    {
-      id: 4,
-      title: "Adidas Falcon nổi bật mùa Hè với phối màu",
-      desc: "Cuối tháng 5, adidas Falcon đã cho ra mắt nhiều phối màu đón chào mùa Hè khiến giới trẻ yêu thích không thôi. Tưởng chừng thương hiệu sẽ tiếp tục",
-      thumb: "https://khangdev1998.github.io/shoe/image/articles4.jpg",
-      createdAt: "Thứ 2 10,05,2021",
-    },
-    {
-      id: 5,
-      title: "Adidas Falcon nổi bật mùa Hè với phối màu",
-      desc: "Cuối tháng 5, adidas Falcon đã cho ra mắt nhiều phối màu đón chào mùa Hè khiến giới trẻ yêu thích không thôi. Tưởng chừng thương hiệu sẽ tiếp tục",
-      thumb: "https://khangdev1998.github.io/shoe/image/articles5.jpg",
-      createdAt: "Thứ 2 10,05,2021",
-    },
-    {
-      id: 6,
-      title: "Saucony hồi sinh mẫu giày chạy bộ cổ điển của mình – Aya Runner",
-      desc: "Là một trong những đôi giày chạy bộ tốt nhất vào những năm 1994, 1995, Saucony Aya Runner vừa có màn trở lại vô cùng ấn tượng có vẻ như 2019",
-      thumb: "https://khangdev1998.github.io/shoe/image/articles6.jpg",
-
-      createdAt: "Thứ 3 10,06,2021",
-    },
-  ];
   return (
     <>
       {productList.load ? (
@@ -129,7 +87,7 @@ function HomePage() {
           </SectionHome>
           {/* Bài viết */}
           <SectionHome title="Bài viết mới nhất" text="xem thêm" params="/blog">
-            <ArticlesHome articlesList={articlesList} />
+            <ArticlesHome articlesList={blogList.data} />
           </SectionHome>
 
           {/* list ảnh giới thiệu */}

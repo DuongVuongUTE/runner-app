@@ -10,3 +10,4 @@ export * from "./department.constant";
 export * from "./admin/product.constant";
 export * from "./admin/common.constant";
 export * from "./wishlist.constant";
+export * from "./blog.constant";
