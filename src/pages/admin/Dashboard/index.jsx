@@ -11,7 +11,6 @@ import {
   getTotalSoldOrderWeek,
   getTotalSoldOrderMonth,
   getOrderListAction,
-  getCategoryListAction
 } from "../../../redux/actions";
 const STATUS = {
   waiting: "Đang chờ",
@@ -22,21 +21,36 @@ const STATUS = {
 
 function AdminDashboardPage(props) {
 
-  const firstOfWeek = moment().month("Feb").format("DD/MM/YYYY");
-  console.log("🚀 ~ file: index.jsx ~ line 25 ~ AdminDashboardPage ~ firstOfWeek", firstOfWeek)
+  const h = moment("10/30/2021").format("D")
+  console.log("🚀 ~ file: index.jsx ~ line 25 ~ AdminDashboardPage ~ h ", h)
+  const countDayOfMonth = moment().daysInMonth();
+  const dataMonth = [];
 
-  const { categoryList } = useSelector((state) => state.categoryReducer);
   const { orderList } = useSelector((state) => state.orderReducerAdmin);
   const { totalProductOrder } = useSelector((state) => state.orderReducerAdmin);
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(getCategoryListAction());
     dispatch(getTotalSoldOrderMonth());
     dispatch(getTotalSoldOrderWeek());
     dispatch(getOrderListAction({
       page: 1
     }));
   }, []);
+
+
+  for (let i = 1; i <= countDayOfMonth; i++) {
+    let count = 0;
+    totalProductOrder.dataMonth.forEach((item) => {
+      if (parseInt(moment(item.createdAt).format("D")) == i) {
+        count = count + 1;
+      }
+    })
+    dataMonth.push({
+      name: i, sl: count, pv: i
+    })
+  }
+
+  console.log("🚀 ~ file: index.jsx ~ line 28 ~ AdminDashboardPage ~ dataMonth", dataMonth)
 
   const monday = totalProductOrder.dataWeek.filter((item) => {
     return moment(item.createdAt).format("DD/MM/YYYY") === moment().day("Monday").format("DD/MM/YYYY")
@@ -190,10 +204,23 @@ function AdminDashboardPage(props) {
             }
           </Style.ShowTotalItem>
           <Style.ShowTotalItem className="month" >
-            <h3>Tổng sản phẩm bán được trong Tháng</h3>
+            <h3>Tổng đơn hàng bán được trong Tháng</h3>
             {totalProductOrder.load
               ? <Spin />
-              : <span>{totalProductOrder?.totalMonth}</span>
+              : <AreaChart style={{ background: "white" }} width={450} height={180} data={dataMonth}
+                margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
+                <defs>
+                  <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="5%" stopColor="#8884d8" stopOpacity={0.8} />
+                    <stop offset="95%" stopColor="#8884d8" stopOpacity={0} />
+                  </linearGradient>
+                </defs>
+                <XAxis dataKey="name" />
+                <CartesianGrid strokeDasharray="3 3" />
+                <Tooltip />
+                <Area type="monotone" dataKey="sl" stroke="#8884d8" fillOpacity={1} fill="url(#colorUv)" />
+
+              </AreaChart>
             }
           </Style.ShowTotalItem>
         </Style.CustomSpaceBox>
