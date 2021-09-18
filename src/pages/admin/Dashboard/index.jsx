@@ -21,11 +21,9 @@ const STATUS = {
 
 function AdminDashboardPage(props) {
 
-  const h = moment("10/30/2021").format("D")
-  console.log("🚀 ~ file: index.jsx ~ line 25 ~ AdminDashboardPage ~ h ", h)
+  const cunrentMonth = moment().format("MM")
   const countDayOfMonth = moment().daysInMonth();
   const dataMonth = [];
-
   const { orderList } = useSelector((state) => state.orderReducerAdmin);
   const { totalProductOrder } = useSelector((state) => state.orderReducerAdmin);
   const dispatch = useDispatch();
@@ -86,7 +84,7 @@ function AdminDashboardPage(props) {
 
   console.log(sunday)
 
-  const data = [
+  const dataWeek = [
     { name: 'T2', sl: countProductSold(monday), pv: 1 },
     { name: 'T3', sl: countProductSold(tuesday), pv: 2 },
     { name: 'T4', sl: countProductSold(wednesday), pv: 3 },
@@ -194,8 +192,7 @@ function AdminDashboardPage(props) {
             <h3>Thống kê sản phẩm bán được trong Tuần</h3>
             {totalProductOrder.load
               ? <Spin />
-              : <ComposedChart style={{ background: "white" }} width={350} height={180} data={data}
-                margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
+              : <ComposedChart style={{ background: "white" }} width={350} height={180} data={dataWeek}>
                 <XAxis dataKey="name" />
                 <Tooltip />
                 <CartesianGrid stroke="#f5f5f5" />
@@ -204,11 +201,10 @@ function AdminDashboardPage(props) {
             }
           </Style.ShowTotalItem>
           <Style.ShowTotalItem className="month" >
-            <h3>Tổng đơn hàng bán được trong Tháng</h3>
+            <h3>Thống kê đơn hàng bán được trong Tháng {cunrentMonth}</h3>
             {totalProductOrder.load
               ? <Spin />
-              : <AreaChart style={{ background: "white" }} width={450} height={180} data={dataMonth}
-                margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
+              : <AreaChart style={{ background: "white" }} width={450} height={180} data={dataMonth}>
                 <defs>
                   <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
                     <stop offset="5%" stopColor="#8884d8" stopOpacity={0.8} />
