@@ -30,7 +30,7 @@ import OrderListPage from "./pages/admin/OrderList";
 import ProfileAdminPage from "./pages/admin/Profile";
 // import
 
-import "antd/dist/antd.css";
+import "antd/dist/antd.less";
 import "swiper/swiper.min.css";
 import "swiper/components/effect-fade/effect-fade.min.css";
 import "swiper/components/navigation/navigation.min.css";
@@ -137,6 +137,7 @@ function App() {
             path="/admin/blog/edit/:id"
             component={ModifyBlog}
           />
+          <AdminLayout exact path="/admin/orders" component={OrderListPage} />
           {/* <AdminLayout
             exact
             path="/admin/profile"

@@ -11,18 +11,17 @@ import {
   getCategoryListAction,
   getProductListActionAdmin,
   deleteProductActionAdmin,
-  editProductActionAdmin
+  editProductActionAdmin,
 } from "../../../redux/actions";
 
-import * as Style from './styles'
+import * as Style from "./styles";
 
 function ProductListPage(props) {
-
   const { categoryList } = useSelector((state) => state.categoryReducer);
   const { productList } = useSelector((state) => state.productReducerAdmin);
-  const [searchKey, setSearchKey] = useState('');
+  const [searchKey, setSearchKey] = useState("");
 
-  const [isShowUpdateModal, setIsShowUpdateModal] = useState('');
+  const [isShowUpdateModal, setIsShowUpdateModal] = useState("");
   const [quantityData, setQuantityData] = useState({});
 
   const dispatch = useDispatch();
@@ -32,25 +31,30 @@ function ProductListPage(props) {
   }, []);
 
   function handleSearchProduct(value) {
-    console.log("🚀 ~ file: index.jsx ~ line 31 ~ handleSearchProduct ~ value", value)
+    console.log(
+      "🚀 ~ file: index.jsx ~ line 31 ~ handleSearchProduct ~ value",
+      value
+    );
     setSearchKey(value);
-    dispatch(getProductListActionAdmin({
-      searchKey: value
-    }));
+    dispatch(
+      getProductListActionAdmin({
+        searchKey: value,
+      })
+    );
   }
   const categoryFillter = categoryList.data.map((item, index) => {
     return {
       text: item.name,
       value: item.id,
-    }
-  })
+    };
+  });
 
   const tableColumn = [
     {
       dataIndex: "images",
       key: "images",
       width: 100,
-      render: (value) => (<Style.ShowImage src={value[0]}></Style.ShowImage>)
+      render: (value) => <Style.ShowImage src={value[0]}></Style.ShowImage>,
     },
     {
       title: "Tên sản phẩm",
@@ -64,11 +68,9 @@ function ProductListPage(props) {
       dataIndex: "categoryId",
       key: "categoryId",
       width: 100,
-      filters: [
-        ...categoryFillter
-      ],
+      filters: [...categoryFillter],
       onFilter: (value, record) => {
-        return record.categoryId == value
+        return record.categoryId == value;
       },
       render: (value) => {
         const categoryData = categoryList.data.find(
@@ -90,21 +92,21 @@ function ProductListPage(props) {
       dataIndex: "color",
       width: 80,
       key: "color",
-      render: (value) => (<Style.ShowColor color={value}></Style.ShowColor>),
+      render: (value) => <Style.ShowColor color={value}></Style.ShowColor>,
     },
     {
       title: "Số lượng",
       dataIndex: "quantity",
       width: 150,
       key: "quantity",
-      render: (value) => value ? value : 0
+      render: (value) => (value ? value : 0),
     },
     {
       title: "Số lượng đã bán",
       width: 200,
       dataIndex: "sold",
       key: "sold",
-      render: (value) => value ? value : 0
+      render: (value) => (value ? value : 0),
     },
     {
       title: "Ngày tạo",
@@ -122,7 +124,6 @@ function ProductListPage(props) {
     },
 
     {
-
       dataIndex: "action",
       key: "action",
       render: (_, record) => {
@@ -144,21 +145,26 @@ function ProductListPage(props) {
               type="primary"
               ghost
               onClick={() => {
-                { dispatch(setProductSelectActionAdmin(record)); }
-                history.push(`/admin/products/edit/${record.id}`)
-              }
-              }
+                {
+                  dispatch(setProductSelectActionAdmin(record));
+                }
+                history.push(`/admin/products/edit/${record.id}`);
+              }}
             >
               Sửa
             </Button>
             <Popconfirm
               title="Are you sure to delete this product?"
-              onConfirm={() => dispatch(deleteProductActionAdmin({ id: record.id }))}
+              onConfirm={() =>
+                dispatch(deleteProductActionAdmin({ id: record.id }))
+              }
               onCancel={() => null}
               okText="Yes"
               cancelText="No"
             >
-              <Button icon={<Icon.DeleteOutlined />} danger>Xóa</Button>
+              <Button icon={<Icon.DeleteOutlined />} danger>
+                Xóa
+              </Button>
             </Popconfirm>
           </Space>
         );
@@ -174,18 +180,19 @@ function ProductListPage(props) {
   });
 
   function handleSubmitForm(values) {
-    const { quantityAdd, quantity } = values
-    const quantityNew =
-      quantity
-        ? parseInt(parseInt(quantityAdd) + parseInt(quantity))
-        : parseInt(quantityAdd)
-    dispatch(editProductActionAdmin({
-      id: quantityData.id,
-      data: {
-        quantity: quantityNew
-      },
-    }))
-    setIsShowUpdateModal('');
+    const { quantityAdd, quantity } = values;
+    const quantityNew = quantity
+      ? parseInt(parseInt(quantityAdd) + parseInt(quantity))
+      : parseInt(quantityAdd);
+    dispatch(
+      editProductActionAdmin({
+        id: quantityData.id,
+        data: {
+          quantity: quantityNew,
+        },
+      })
+    );
+    setIsShowUpdateModal("");
   }
 
   return (
@@ -196,22 +203,24 @@ function ProductListPage(props) {
           <Style.CustomSpace>
             <Style.Search>
               <Input
-                style={{}} placeholder="Tìm kiếm..."
+                style={{}}
+                placeholder="Tìm kiếm..."
                 suffix={<Icon.SearchOutlined />}
                 onChange={(e) => handleSearchProduct(e.target.value)}
               />
             </Style.Search>
             <Style.CustomButton
               type="primary"
-              onClick={() => history.push('/admin/products/create')}
+              onClick={() => history.push("/admin/products/create")}
             >
               Thêm mới
             </Style.CustomButton>
           </Style.CustomSpace>
         </Style.CustomSpaceBox>
         <Style.CustomTable
-          scroll={{ y: 370, x:1700 }}
+          scroll={{ y: 450, x: 1700 }}
           columns={tableColumn}
+          size="small"
           dataSource={tableData}
           expandable={{
             expandedRowRender: (record) => {
@@ -221,16 +230,21 @@ function ProductListPage(props) {
                   dataSource={record.productOptions}
                   renderItem={(item) => (
                     <Style.ListItem>
-                      <Row justify="space-between" style={{ width: '100%', padding: "0 60px" }}>
+                      <Row
+                        justify="space-between"
+                        style={{ width: "100%", padding: "0 60px" }}
+                      >
                         <div>Size: {item.size}</div>
-                        <div>{(record.price + item.price).toLocaleString()}VNĐ</div>
+                        <div>
+                          {(record.price + item.price).toLocaleString()}VNĐ
+                        </div>
                       </Row>
                     </Style.ListItem>
                   )}
                 />
-              )
+              );
             },
-            rowExpandable: (record) => record.productOptions?.length > 0
+            rowExpandable: (record) => record.productOptions?.length > 0,
           }}
           loading={productList.load}
         />
