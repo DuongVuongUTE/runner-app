@@ -138,11 +138,7 @@ function App() {
             component={ModifyBlog}
           />
           <AdminLayout exact path="/admin/orders" component={OrderListPage} />
-          {/* <AdminLayout
-            exact
-            path="/admin/profile"
-            component={ProfileAdminPage}
-          /> */}
+
           <AdminLayout
             exact
             path="/admin/profile/:page"
