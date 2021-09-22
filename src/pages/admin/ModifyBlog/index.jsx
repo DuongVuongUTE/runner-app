@@ -100,135 +100,131 @@ function ModifyBlog({ action }) {
             </Button>
           </Space>
         </Style.CustomSpaceBox>
-        <div className="form">
-          <Form
-            form={blogForm}
-            className="form"
-            name="basic"
-            labelCol={{ span: 4 }}
-            initialValues={id ? blogDetail.data : {}}
-            onFinish={handleSubmitForm}
+        <Form
+          layout="vertical"
+          form={blogForm}
+          className="form"
+          name="basic"
+          initialValues={id ? blogDetail.data : {}}
+          onFinish={handleSubmitForm}
+        >
+          <Form.Item
+            label="Tiêu đề bài viết:"
+            name="title"
+            rules={[
+              { required: true, message: "bạn chưa nhập tiêu đề bài viết!" },
+            ]}
           >
-            <Form.Item
-              label="Tiêu đề bài viết:"
-              name="title"
-              rules={[
-                { required: true, message: "bạn chưa nhập tiêu đề bài viết!" },
-              ]}
-            >
-              <Input />
-            </Form.Item>
-            <Form.Item
-              label="Mô tả bài viết"
-              name="desc"
-              rules={[
-                { required: true, message: "bạn chưa nhập mô tả bài viết!" },
-              ]}
-            >
-              <Input />
-            </Form.Item>
-            <Row>
-              <Col span={4} style={{ textAlign: "right" }}>
-                <Space style={{ marginTop: 4 }} size={0}>
-                  <div
-                    style={{
-                      display: "inline-block",
-                      marginRight: "4px",
-                      color: "#ff4d4f",
-                      fontSize: "14px",
-                      fontFamily: "SimSun, sans-serif",
-                      lineHeight: 1,
-                    }}
-                  >
-                    *
-                  </div>
-                  <div style={{ marginRight: 8 }}>Hình ảnh bài viết :</div>
-                </Space>
-              </Col>
-              <Col span={18}>
-                <Upload
-                  accept="image/*"
-                  listType="picture"
-                  beforeUpload={() => false}
-                  onChange={(value) => handleUploadImage(value)}
-                  showUploadList={false}
+            <Input />
+          </Form.Item>
+          <Form.Item
+            label="Mô tả bài viết"
+            name="desc"
+            rules={[
+              { required: true, message: "bạn chưa nhập mô tả bài viết!" },
+            ]}
+          >
+            <Input />
+          </Form.Item>
+          <Row gutter={[15, 15]}>
+            <Col span={24}>
+              <Space size={0}>
+                <div
+                  style={{
+                    display: "inline-block",
+                    marginRight: "4px",
+                    color: "#ff4d4f",
+                    fontSize: "14px",
+                    fontFamily: "SimSun, sans-serif",
+                    lineHeight: 1,
+                  }}
                 >
-                  <Button icon={<Icon.UploadOutlined />}>
-                    Click to upload
-                  </Button>
-                </Upload>
-                {uploadImages.length > 0 && (
-                  <Row gutter={[8, 8]} style={{ marginTop: 8 }}>
-                    {uploadImages !== "" && (
-                      <Col span={6}>
-                        <Style.ImagesBox>
-                          <Image width="100%" src={uploadImages} />
-                          <div
-                            className="icon_delete"
-                            onClick={() => {
-                              setUploadImage("");
-                            }}
-                          >
-                            <Icon.CloseSquareOutlined />
-                          </div>
-                        </Style.ImagesBox>
-                      </Col>
-                    )}
-                  </Row>
-                )}
-                <div style={{ height: 24, color: "#ff4d4f" }}>
-                  {uploadError}
+                  *
                 </div>
-              </Col>
-            </Row>
-            <Form.Item
-              label="Nội dung bài viết"
-              name="content"
-              rules={[
-                { required: true, message: "Bạn chưa nhập nội dung bài viết!" },
-              ]}
-            >
-              <SunEditor
-                setOptions={{
-                  height: 300,
-                  font: [
-                    "Times New Roman",
-                    "Segoe UI",
-                    "Arial",
-                    "tohoma",
-                    "Courier New,Courier",
+                <div
+                  style={{ fontSize: "14px", fontWeight: "500", color: "#000" }}
+                >
+                  Hình ảnh bài viết :
+                </div>
+              </Space>
+            </Col>
+            <Col span={24}>
+              <Upload
+                accept="image/*"
+                listType="picture"
+                beforeUpload={() => false}
+                onChange={(value) => handleUploadImage(value)}
+                showUploadList={false}
+              >
+                <Button icon={<Icon.UploadOutlined />}>Click to upload</Button>
+              </Upload>
+              {uploadImages.length > 0 && (
+                <Row gutter={[8, 8]} style={{ marginTop: 8 }}>
+                  {uploadImages !== "" && (
+                    <Col span={6}>
+                      <Style.ImagesBox>
+                        <Image width="100%" src={uploadImages} />
+                        <div
+                          className="icon_delete"
+                          onClick={() => {
+                            setUploadImage("");
+                          }}
+                        >
+                          <Icon.CloseSquareOutlined />
+                        </div>
+                      </Style.ImagesBox>
+                    </Col>
+                  )}
+                </Row>
+              )}
+              <div style={{ height: 24, color: "#ff4d4f" }}>{uploadError}</div>
+            </Col>
+          </Row>
+          <Form.Item
+            label="Nội dung bài viết"
+            name="content"
+            rules={[
+              { required: true, message: "Bạn chưa nhập nội dung bài viết!" },
+            ]}
+          >
+            <SunEditor
+              setOptions={{
+                height: 300,
+                font: [
+                  "Poppins",
+                  "Segoe UI",
+                  "Arial",
+                  "tohoma",
+                  "Courier New,Courier",
+                ],
+                buttonList: [
+                  ["font", "formatBlock", "fontSize"],
+                  [
+                    "bold",
+                    "underline",
+                    "italic",
+                    "strike",
+                    "subscript",
+                    "superscript",
                   ],
-                  buttonList: [
-                    ["font", "formatBlock", "fontSize"],
-                    [
-                      "bold",
-                      "underline",
-                      "italic",
-                      "strike",
-                      "subscript",
-                      "superscript",
-                    ],
-                    [
-                      "fontColor",
-                      "hiliteColor",
-                      "outdent",
-                      "indent",
-                      "align",
-                      "list",
-                      "table",
-                    ],
-                    ["link", "image"],
+                  [
+                    "fontColor",
+                    "hiliteColor",
+                    "outdent",
+                    "indent",
+                    "align",
+                    "list",
+                    "table",
                   ],
-                  defaultStyle: `font-family: 'Segoe UI', 'Aria', sans-serif; font-size: 14px;`,
-                }}
-                defaultValue={blogForm.getFieldValue("content")}
-                onChange={(value) =>
-                  blogForm.setFieldsValue({ content: value })
-                }
-              />
-            </Form.Item>
-          </Form>
-        </div>
+                  ["link", "image"],
+                ],
+                defaultStyle: `font-family: 'Poppins', 'Aria', sans-serif; font-size: 14px;`,
+              }}
+              defaultValue={blogForm.getFieldValue("content")}
+              onChange={(value) => blogForm.setFieldsValue({ content: value })}
+            />
+          </Form.Item>
+        </Form>
       </Style.Container>
     </>
   );

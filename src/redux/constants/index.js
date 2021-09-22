@@ -11,3 +11,4 @@ export * from "./admin/product.constant";
 export * from "./admin/common.constant";
 export * from "./wishlist.constant";
 export * from "./blog.constant";
+export * from "./ticket.constant";

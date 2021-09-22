@@ -46,6 +46,23 @@ function* plusItemCountSaga(action) {
   }
 }
 
+function* totalInfoOrderSaga(action) {
+  try {
+    const { orderInfo } = action.payload;
+    yield put({
+      type: SUCCESS(CART_ACTION.TOTAL_INFO_CHECKOUT),
+      payload: {
+        orderInfo: orderInfo,
+      },
+    });
+  } catch (e) {
+    yield put({
+      type: FAILURE(CART_ACTION.TOTAL_INFO_CHECKOUT),
+      payload: e.message,
+    });
+  }
+}
+
 function* minusItemCountSaga(action) {
   try {
     const { userId, data } = action.payload;
@@ -85,6 +102,7 @@ function* deleteCartItemSaga(action) {
 export default function* cartSaga() {
   yield takeEvery(REQUEST(CART_ACTION.ADD_TO_CART), addToCartSaga);
   yield takeEvery(REQUEST(CART_ACTION.PLUS_ITEM_COUNT), plusItemCountSaga);
+  yield takeEvery(REQUEST(CART_ACTION.TOTAL_INFO_CHECKOUT), totalInfoOrderSaga);
   yield takeEvery(REQUEST(CART_ACTION.MINUS_ITEM_COUNT), minusItemCountSaga);
   yield takeEvery(REQUEST(CART_ACTION.DELETE_CART_ITEM), deleteCartItemSaga);
 }

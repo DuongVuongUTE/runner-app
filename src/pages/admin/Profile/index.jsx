@@ -146,97 +146,99 @@ function ProfileAdminPage() {
   return (
     <>
       <Style.ProfilePage>
-        <Container>
-          <Row gutter={[15, 15]}>
-            <Col xs={{ span: 24 }} lg={{ span: 6 }}>
-              {responseAction.edit_user.load ? (
-                <Loading load={responseAction.edit_user.load} />
-              ) : (
-                <Style.ProfileMenu>
-                  <div className="profile-top">
-                    <div className="profile-avatar">
-                      <Avatar
-                        className="profile-image"
-                        src={
-                          <Image
-                            preview={false}
-                            src={
-                              avatar
-                                ? URL.createObjectURL(avatar)
-                                : userInfo.data.avatar
-                            }
-                          />
-                        }
-                      ></Avatar>
-                      <span className="avatar-upload">
-                        <Button
-                          className="btn-upload"
-                          shape="circle"
-                          onClick={() => {
-                            inputFile.current.click();
-                            setVisible(true);
-                          }}
-                          icon={<Icons.EditOutlined />}
-                        ></Button>
-                        <input
-                          ref={inputFile}
-                          type="file"
-                          hidden
-                          id="avatar"
-                          name="avatar"
-                          accept="image/*"
-                          onChange={(e) => chageAvatar(e)}
+        <Row gutter={[15, 15]}>
+          <Col xs={{ span: 24 }} lg={{ span: 8 }}>
+            {responseAction.edit_user.load ? (
+              <Loading load={responseAction.edit_user.load} />
+            ) : (
+              <Style.ProfileMenu>
+                <div className="profile-top">
+                  <div className="profile-avatar">
+                    <Avatar
+                      className="profile-image"
+                      src={
+                        <Image
+                          preview={false}
+                          src={
+                            avatar
+                              ? URL.createObjectURL(avatar)
+                              : userInfo.data.avatar
+                          }
                         />
-                      </span>
-                    </div>
-                    <Space
-                      align="center"
-                      className={visible ? "btn-avatar active" : "btn-avatar"}
-                    >
+                      }
+                    ></Avatar>
+                    <span className="avatar-upload">
                       <Button
+                        className="btn-upload"
+                        shape="circle"
                         onClick={() => {
-                          updateAvatar();
+                          inputFile.current.click();
+                          setVisible(true);
                         }}
-                        icon={<Icons.CheckOutlined />}
-                      >
-                        Ok
-                      </Button>
-                      <Button
-                        onClick={() => {
-                          setAvatar("");
-                          setVisible(false);
-                        }}
-                        icon={<Icons.CloseOutlined />}
-                      >
-                        Huỷ
-                      </Button>
-                    </Space>
-                    <h3>{userInfo.data?.name}</h3>
+                        icon={<Icons.EditOutlined />}
+                      ></Button>
+                      <input
+                        ref={inputFile}
+                        type="file"
+                        hidden
+                        id="avatar"
+                        name="avatar"
+                        accept="image/*"
+                        onChange={(e) => chageAvatar(e)}
+                      />
+                    </span>
                   </div>
-                  <Menu
-                    mode="inline"
-                    selectedKeys={[activeMenu.menuItem]}
-                    openKeys={activeMenu.subMenu}
+                  <Space
+                    align="center"
+                    className={visible ? "btn-avatar active" : "btn-avatar"}
                   >
-                    {renderUserMenu()}
-                  </Menu>
-                </Style.ProfileMenu>
-              )}
-            </Col>
-            <Col xs={{ span: 24 }} lg={{ span: 18 }}>
-              <Style.ProfilePanel>
-                <Switch>
-                  <Route exact path="/admin/profile/user-info" component={UserInfo} />
-                  <Route
-                    exact
-                    path="/admin/profile/change-info"
-                    component={ChageInfo}
-                  />
-                </Switch>
-              </Style.ProfilePanel>
-            </Col>
-          </Row>
-        </Container>
+                    <Button
+                      onClick={() => {
+                        updateAvatar();
+                      }}
+                      icon={<Icons.CheckOutlined />}
+                    >
+                      Ok
+                    </Button>
+                    <Button
+                      onClick={() => {
+                        setAvatar("");
+                        setVisible(false);
+                      }}
+                      icon={<Icons.CloseOutlined />}
+                    >
+                      Huỷ
+                    </Button>
+                  </Space>
+                  <h3>{userInfo.data?.name}</h3>
+                </div>
+                <Menu
+                  mode="inline"
+                  selectedKeys={[activeMenu.menuItem]}
+                  openKeys={activeMenu.subMenu}
+                >
+                  {renderUserMenu()}
+                </Menu>
+              </Style.ProfileMenu>
+            )}
+          </Col>
+          <Col xs={{ span: 24 }} lg={{ span: 16 }}>
+            <Style.ProfilePanel>
+              <Switch>
+                <Route
+                  exact
+                  path="/admin/profile/user-info"
+                  component={UserInfo}
+                />
+                <Route
+                  exact
+                  path="/admin/profile/change-info"
+                  component={ChageInfo}
+                />
+              </Switch>
+            </Style.ProfilePanel>
+          </Col>
+        </Row>
       </Style.ProfilePage>
     </>
   );

@@ -65,12 +65,7 @@ function UserInfo() {
 
   return (
     <>
-      <Title
-        level={3}
-        style={{ textAlign: "center", padding: "0 0 15px", margin: 0 }}
-      >
-        Thông tin cá nhân
-      </Title>
+      <h2>Thông tin cá nhân</h2>
       <List
         size="small"
         bordered

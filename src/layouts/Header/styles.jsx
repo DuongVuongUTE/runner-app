@@ -11,7 +11,8 @@ export const Header = styled.div`
   height: ${(props) => props.theme.size.headerSize};
   background-color: ${(props) => props.theme.colors.whiteColor};
   transition: all 0.3s ease-in-out;
-  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  border-bottom: 1px solid #f0f0f0;
+  box-shadow: 0 4px 12px 0 rgb(0 0 0 / 5%);
   z-index: 100;
   &.sticky {
     transform: translateY(-100%);

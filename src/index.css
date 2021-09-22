@@ -25,6 +25,7 @@ img {
 }
 
 ::-webkit-scrollbar {
+  height: 10px;
   width: 10px;
   background-color: #f5f5f5;
 }

@@ -10,6 +10,7 @@ import {
   Table,
   Select,
 } from "antd";
+import * as Style from "../../style";
 
 function Confirm({
   confirmValues,
@@ -23,19 +24,21 @@ function Confirm({
   locationSelect,
   handleChageWard,
   location,
+  totalPrice,
+  orderInfo,
   next,
 }) {
   const confirm =
     Object.keys(confirmValues).length === 0
       ? {}
       : {
-          address: "Số 23",
-          city: "79",
-          district: "772",
-          email: "quocvuongta1023@gmail.com",
-          name: "Dương Vương",
-          phoneNumber: "0949443045",
-          ward: "27220",
+          address: confirmValues.address,
+          city: confirmValues.city,
+          district: confirmValues.district,
+          email: confirmValues.email,
+          name: confirmValues.name,
+          phoneNumber: confirmValues.phoneNumber,
+          ward: confirmValues.ward,
         };
   return (
     <div>
@@ -57,8 +60,8 @@ function Confirm({
         }}
       >
         <Card title="Thông tin đơn hàng" size="small">
-          <Table
-            size="medium"
+          <Style.CustomTable
+            size="small"
             columns={columns}
             pagination={false}
             expandable={{
@@ -71,6 +74,13 @@ function Confirm({
             dataSource={data}
             bordered
           />
+          <strong style={{ marginTop: 15, display: "inline-block" }}>
+            Tổng giá: {totalPrice.toLocaleString() + "₫"}{" "}
+            {orderInfo.percent !== 0 &&
+              `(nhập mã giảm ${orderInfo.percent * 100}% giá còn ${
+                orderInfo.total.toLocaleString() + "₫"
+              }`}
+          </strong>
         </Card>
         <Card
           title="Thông tin cá nhân"

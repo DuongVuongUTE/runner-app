@@ -19,7 +19,16 @@ function UserInfo() {
     <>
       <Title
         level={3}
-        style={{ textAlign: "center", padding: "0 0 15px", margin: 0 }}
+        style={{
+          textAlign: "center",
+          padding: "0 0 15px",
+          margin: 0,
+          fontSize: "20px",
+          textTransform: "uppercase",
+          color: "#1d3a98",
+          fontWeight: 900,
+          margin: 0,
+        }}
       >
         Thông tin cá nhân
       </Title>

@@ -49,6 +49,13 @@ function Header({ type }) {
 
   const menu = (
     <Menu>
+      {userInfo.data?.role === "admin" && (
+        <Menu.Item>
+          <Space size={5} align="center" onClick={() => history.push("/admin")}>
+            <Icons.ThunderboltOutlined /> <span>Trang Admin</span>
+          </Space>
+        </Menu.Item>
+      )}
       <Menu.Item>
         <Space
           size={5}

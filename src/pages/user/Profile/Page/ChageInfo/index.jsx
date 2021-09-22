@@ -49,12 +49,7 @@ function ChageInfo() {
 
   return (
     <div>
-      <Title
-        level={3}
-        style={{ textAlign: "center", padding: "0 0 15px", margin: 0 }}
-      >
-        Thay đổi mật khẩu
-      </Title>
+      <h2>Thay đổi mật khẩu</h2>
       <div>
         <Form
           form={form}

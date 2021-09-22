@@ -39,6 +39,7 @@ function BlogListPage(props) {
       dataIndex: "title",
       key: "title",
       sorter: (a, b) => a.title.length - b.title.length,
+      width: 300,
     },
 
     {
@@ -46,18 +47,21 @@ function BlogListPage(props) {
       dataIndex: "desc",
       key: "desc",
       ellipsis: true,
+      width: 300,
     },
     {
       title: "Ngày tạo",
       dataIndex: "createdAt",
       key: "createdAt",
       render: (value) => value && moment(value).format("DD/MM/YYYY HH:mm"),
+      width: 150,
     },
     {
       title: "Ngày sửa",
       dataIndex: "updatedAt",
       key: "updatedAt",
       render: (value) => value && moment(value).format("DD/MM/YYYY HH:mm"),
+      width: 150,
     },
 
     {
@@ -102,58 +106,32 @@ function BlogListPage(props) {
 
   return (
     <div>
-      <div style={{ padding: 10 }}>
-        <Style.CustomSpaceBox>
-          <Style.Title>Quản lý bài viết</Style.Title>
-          <Style.CustomSpace>
-            <Style.Search>
-              <Input
-                style={{}}
-                placeholder="Tìm kiếm..."
-                suffix={<Icon.SearchOutlined />}
-                value={searchKey}
-                onChange={(e) => handleSearchBlog(e.target.value)}
-              />
-            </Style.Search>
-            <Style.CustomButton
-              type="primary"
-              onClick={() => history.push("/admin/blog/create")}
-            >
-              Thêm mới
-            </Style.CustomButton>
-          </Style.CustomSpace>
-        </Style.CustomSpaceBox>
-        <Style.CustomTable
-          scroll={{ y: 370, x: 2000 }}
-          columns={tableColumn}
-          dataSource={tableData}
-          expandable={{
-            expandedRowRender: (record) => {
-              return (
-                <List
-                  size="small"
-                  dataSource={record.productOptions}
-                  renderItem={(item) => (
-                    <Style.ListItem>
-                      <Row
-                        justify="space-between"
-                        style={{ width: "100%", padding: "0 60px" }}
-                      >
-                        <div>Size: {item.size}</div>
-                        <div>
-                          {(record.price + item.price).toLocaleString()}VNĐ
-                        </div>
-                      </Row>
-                    </Style.ListItem>
-                  )}
-                />
-              );
-            },
-            rowExpandable: (record) => record.productOptions?.length > 0,
-          }}
-          loading={blogList.load}
-        />
-      </div>
+      <Style.CustomSpaceBox>
+        <Style.Title>Quản lý bài viết</Style.Title>
+        <Style.CustomSpace>
+          <Style.Search>
+            <Input
+              placeholder="Tìm kiếm..."
+              suffix={<Icon.SearchOutlined />}
+              value={searchKey}
+              onChange={(e) => handleSearchBlog(e.target.value)}
+            />
+          </Style.Search>
+          <Style.CustomButton
+            type="primary"
+            onClick={() => history.push("/admin/blog/create")}
+          >
+            Thêm mới
+          </Style.CustomButton>
+        </Style.CustomSpace>
+      </Style.CustomSpaceBox>
+      <Style.CustomTable
+        size="small"
+        scroll={{ x: 1250 }}
+        columns={tableColumn}
+        dataSource={tableData}
+        loading={blogList.load}
+      />
     </div>
   );
 }

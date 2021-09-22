@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { List, Row, Input, Table, Col } from "antd";
+import { List, Row, Input, Tag, Col } from "antd";
 import moment from "moment";
 import * as Icon from "@ant-design/icons";
 
@@ -53,13 +53,14 @@ function CustomerListPage(props) {
       dataIndex: "avatar",
       key: "avatar",
       render: (value) => <Style.ImageItem image={value}></Style.ImageItem>,
-      width: 150,
+      width: 100,
     },
     {
       title: "Tên",
       dataIndex: "name",
       key: "name",
       sorter: (a, b) => a.name.length - b.name.length,
+      width: 200,
     },
     {
       title: "Email",
@@ -118,9 +119,17 @@ function CustomerListPage(props) {
       dataIndex: "status",
       key: "status",
       render: (value) => (
-        <p style={{ color: value === "waiting" ? "#52c41a" : "yellow" }}>
-          {value}
-        </p>
+        <>
+          {value === "waiting" ? (
+            <Tag icon={<Icon.SyncOutlined spin />} color="processing">
+              {value}
+            </Tag>
+          ) : (
+            <Tag icon={<Icon.CheckCircleOutlined />} color="success">
+              {value}
+            </Tag>
+          )}
+        </>
       ),
     },
   ];
@@ -133,76 +142,67 @@ function CustomerListPage(props) {
 
   return (
     <div>
-      <div style={{ padding: 10 }}>
-        <Style.CustomSpaceBox>
-          <Style.Title>Quản lý khách hàng</Style.Title>
-          <Style.Search>
-            <Input
-              placeholder="Tìm kiếm..."
-              suffix={<Icon.SearchOutlined />}
-              onChange={(e) => handleSearchCustomer(e.target.value)}
-            />
-          </Style.Search>
-        </Style.CustomSpaceBox>
-        <Style.CustomTable
-          style={{ marginTop: 10 }}
-          scroll={{ y: 360, x: "1000px" }}
-          columns={tableColumn}
-          dataSource={tableData}
-          loading={userList.load}
-          expandable={{
-            expandedRowRender: (record) => {
-              return (
-                <Style.CustomTableChild
-                  pagination={false}
-                  columns={tableColumnChild}
-                  dataSource={record.orders.map((orderItem, orderIndex) => {
-                    return {
-                      key: orderIndex,
-                      ...orderItem,
-                    };
-                  })}
-                  expandable={{
-                    expandedRowRender: (record) => {
-                      return (
-                        <List
-                          size="small"
-                          dataSource={record.products}
-                          renderItem={(item) => (
-                            <Style.ListItem>
-                              <Row
-                                justify="space-between"
-                                style={{
-                                  width: "100%",
-                                  padding: "0 60px",
-                                  textAlign: "end",
-                                }}
-                              >
-                                <Col span={6}>
-                                  <Style.ShowImage
-                                    src={item.image}
-                                  ></Style.ShowImage>
-                                </Col>
-                                <Col span={6}>{item.name}</Col>
-                                <Col span={6}>SL: {item.count}</Col>
-                                <Col span={6}>
-                                  Tổng tiền: {item.price.toLocaleString()}VNĐ
-                                </Col>
-                              </Row>
-                            </Style.ListItem>
-                          )}
-                        />
-                      );
-                    },
-                    rowExpandable: (record) => record.products?.length > 0,
-                  }}
-                ></Style.CustomTableChild>
-              );
-            },
-            rowExpandable: (record) => record.orders?.length > 0,
-          }}
-        />
-      </div>
+      <Style.CustomSpaceBox>
+        <Style.Title>Quản lý khách hàng</Style.Title>
+        <Style.Search>
+          <Input
+            placeholder="Tìm kiếm..."
+            suffix={<Icon.SearchOutlined />}
+            onChange={(e) => handleSearchCustomer(e.target.value)}
+          />
+        </Style.Search>
+      </Style.CustomSpaceBox>
+      <Style.CustomTable
+        size="small"
+        scroll={{ x: "1000px" }}
+        columns={tableColumn}
+        dataSource={tableData}
+        loading={userList.load}
+        expandable={{
+          expandedRowRender: (record) => {
+            return (
+              <Style.CustomTableChild
+                pagination={false}
+                columns={tableColumnChild}
+                dataSource={record.orders.map((orderItem, orderIndex) => {
+                  return {
+                    key: orderIndex,
+                    ...orderItem,
+                  };
+                })}
+                expandable={{
+                  expandedRowRender: (record) => {
+                    return (
+                      <List
+                        size="small"
+                        dataSource={record.products}
+                        renderItem={(item) => (
+                          <Style.ListItem>
+                            <Row style={{ width: "100%" }}>
+                              <Col span={2}>
+                                <Style.ShowImage
+                                  src={item.image}
+                                ></Style.ShowImage>
+                              </Col>
+                              <Col span={10}>{item.name}</Col>
+                              <Col span={6}>Số lượng: {item.count}</Col>
+                              <Col span={6}>
+                                Tổng tiền: {item.price.toLocaleString()}VNĐ
+                              </Col>
+                            </Row>
+                          </Style.ListItem>
+                        )}
+                      />
+                    );
+                  },
+                  rowExpandable: (record) => record.products?.length > 0,
+                }}
+              ></Style.CustomTableChild>
+            );
+          },
+          rowExpandable: (record) => record.orders?.length > 0,
+        }}
+      />
     </div>
   );
 }

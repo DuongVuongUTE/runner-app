@@ -5,6 +5,10 @@ export const addToCartAction = createAction(REQUEST(CART_ACTION.ADD_TO_CART));
 export const plusItemCountAction = createAction(
   REQUEST(CART_ACTION.PLUS_ITEM_COUNT)
 );
+
+export const totalInfoCheckoutAction = createAction(
+  REQUEST(CART_ACTION.TOTAL_INFO_CHECKOUT)
+);
 export const minusItemCountAction = createAction(
   REQUEST(CART_ACTION.MINUS_ITEM_COUNT)
 );

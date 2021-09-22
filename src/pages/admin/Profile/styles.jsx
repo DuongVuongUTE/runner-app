@@ -1,20 +1,16 @@
 import styled from "styled-components";
 
 export const ProfilePage = styled.div`
-  padding: 15px 0 30px;
-  min-height: 100vh;
-  /* background-color: #f3f3f3; */
+  min-height: 70vh;
 `;
 
 export const ProfileMenu = styled.div`
-  /* background-color: #fff; */
   border: 1px solid #dee2e6;
   .profile-top {
     display: flex;
     flex-direction: column;
     padding: 15px 0;
     text-align: center;
-    /* border-bottom: 1px solid #dee2e6; */
     .profile-avatar {
       position: relative;
       display: inline-block;
@@ -32,7 +28,6 @@ export const ProfileMenu = styled.div`
         margin: 0;
         width: 150px;
         height: 150px;
-        /* border: 2px solid #eee; */
       }
       .avatar-upload {
         display: inline-block;
@@ -66,6 +61,4 @@ export const ProfilePanel = styled.div`
   background-color: #fff;
   position: relative;
   min-height: 465px;
-  padding: 15px;
-  /* border: 1px solid #dee2e6; */
 `;

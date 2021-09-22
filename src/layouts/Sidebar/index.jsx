@@ -3,61 +3,63 @@ import { Layout, Menu, Breadcrumb } from "antd";
 
 import history from "../../utils/history";
 
-import * as Icon from "@ant-design/icons";
-import * as Style from "./styles";
+import * as Icons from "@ant-design/icons";
+
+const { SubMenu } = Menu;
 
 const SIDEBAR_MENU = [
   {
     title: "Dashboard",
     path: "/admin",
-    icon: <Icon.HomeOutlined />,
+    icon: <Icons.HomeOutlined />,
     subMenu: [],
   },
   {
     title: "Quản Lý Sản Phẩm",
     path: "/admin/products",
-    icon: <Icon.MedicineBoxOutlined />,
+    icon: <Icons.MedicineBoxOutlined />,
     subMenu: [],
   },
   {
     title: "Quán Lý Loại Giày",
     path: "/admin/categories",
-    icon: <Icon.QrcodeOutlined />,
+    icon: <Icons.QrcodeOutlined />,
     subMenu: [],
   },
   {
     title: "Quản Lý Khách Hàng",
     path: "/admin/customers",
-    icon: <Icon.SolutionOutlined />,
+    icon: <Icons.SolutionOutlined />,
     subMenu: [],
   },
   {
     title: "Quản Lý Đặt Hàng",
     path: "/admin/orders",
-    icon: <Icon.ShoppingOutlined />,
+    icon: <Icons.ShoppingOutlined />,
     subMenu: [],
   },
   {
     title: "Quản Lý tài khoản",
     path: "/admin/accounts",
-    icon: <Icon.UserOutlined />,
+    icon: <Icons.UserOutlined />,
     subMenu: [],
   },
   {
     title: "Quản Lý bài viết",
     path: "/admin/blog",
-    icon: <Icon.EditOutlined />,
+    icon: <Icons.EditOutlined />,
+    subMenu: [],
+  },
+  {
+    title: "Quản Lý mã giảm giá",
+    path: "/admin/ticket",
+    icon: <Icons.GiftOutlined />,
     subMenu: [],
   },
 ];
 
 function Sidebar({ location }) {
-  const [collapsed, setCollapsed] = useState(false);
   const [selectSiderItem, setSelectSiderItem] = useState(0);
-  const onCollapse = (collapsed) => {
-    setCollapsed(collapsed);
-  };
-  const { SubMenu } = Menu;
 
   useEffect(() => {
     const siderbarIndex = SIDEBAR_MENU.findIndex((item, index) => {
@@ -108,18 +110,9 @@ function Sidebar({ location }) {
   }
   return (
     <>
-      <Style.CustomSider
-        width={270}
-        theme="light"
-        collapsible
-        collapsed={collapsed}
-        // trigger={null}
-        onCollapse={onCollapse}
-      >
-        <Style.CustomMenu selectedKeys={[`${selectSiderItem}`]} mode="inline">
-          {renderSidebarMenu()}
-        </Style.CustomMenu>
-      </Style.CustomSider>
+      <Menu theme="light" mode="inline">
+        {renderSidebarMenu()}
+      </Menu>
     </>
   );
 }

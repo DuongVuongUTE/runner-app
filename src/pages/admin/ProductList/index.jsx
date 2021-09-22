@@ -31,10 +31,6 @@ function ProductListPage(props) {
   }, []);
 
   function handleSearchProduct(value) {
-    console.log(
-      "🚀 ~ file: index.jsx ~ line 31 ~ handleSearchProduct ~ value",
-      value
-    );
     setSearchKey(value);
     dispatch(
       getProductListActionAdmin({
@@ -58,7 +54,7 @@ function ProductListPage(props) {
     },
     {
       title: "Tên sản phẩm",
-      width: 200,
+      width: 300,
       dataIndex: "name",
       key: "name",
       sorter: (a, b) => a.name.length - b.name.length,
@@ -197,58 +193,57 @@ function ProductListPage(props) {
 
   return (
     <div>
-      <div style={{ padding: 10 }}>
-        <Style.CustomSpaceBox>
-          <Style.Title>Quản lý sản phẩm</Style.Title>
-          <Style.CustomSpace>
-            <Style.Search>
-              <Input
-                style={{}}
-                placeholder="Tìm kiếm..."
-                suffix={<Icon.SearchOutlined />}
-                onChange={(e) => handleSearchProduct(e.target.value)}
+      <Style.CustomSpaceBox>
+        <Style.Title>Quản lý sản phẩm</Style.Title>
+        <Style.CustomSpace>
+          <Style.Search>
+            <Input
+              style={{}}
+              placeholder="Tìm kiếm..."
+              suffix={<Icon.SearchOutlined />}
+              onChange={(e) => handleSearchProduct(e.target.value)}
+            />
+          </Style.Search>
+          <Style.CustomButton
+            type="primary"
+            onClick={() => history.push("/admin/products/create")}
+          >
+            Thêm mới
+          </Style.CustomButton>
+        </Style.CustomSpace>
+      </Style.CustomSpaceBox>
+      <Style.CustomTable
+        scroll={{ x: 1700 }}
+        columns={tableColumn}
+        size="small"
+        dataSource={tableData}
+        expandable={{
+          expandedRowRender: (record) => {
+            return (
+              <List
+                size="small"
+                dataSource={record.productOptions}
+                renderItem={(item) => (
+                  <Style.ListItem>
+                    <Row
+                      justify="space-between"
+                      style={{ width: "100%", padding: "0 60px" }}
+                    >
+                      <div>Size: {item.size}</div>
+                      <div>
+                        {(record.price + item.price).toLocaleString()}VNĐ
+                      </div>
+                    </Row>
+                  </Style.ListItem>
+                )}
               />
-            </Style.Search>
-            <Style.CustomButton
-              type="primary"
-              onClick={() => history.push("/admin/products/create")}
-            >
-              Thêm mới
-            </Style.CustomButton>
-          </Style.CustomSpace>
-        </Style.CustomSpaceBox>
-        <Style.CustomTable
-          scroll={{ y: 450, x: 1700 }}
-          columns={tableColumn}
-          size="small"
-          dataSource={tableData}
-          expandable={{
-            expandedRowRender: (record) => {
-              return (
-                <List
-                  size="small"
-                  dataSource={record.productOptions}
-                  renderItem={(item) => (
-                    <Style.ListItem>
-                      <Row
-                        justify="space-between"
-                        style={{ width: "100%", padding: "0 60px" }}
-                      >
-                        <div>Size: {item.size}</div>
-                        <div>
-                          {(record.price + item.price).toLocaleString()}VNĐ
-                        </div>
-                      </Row>
-                    </Style.ListItem>
-                  )}
-                />
-              );
-            },
-            rowExpandable: (record) => record.productOptions?.length > 0,
-          }}
-          loading={productList.load}
-        />
-      </div>
+            );
+          },
+          rowExpandable: (record) => record.productOptions?.length > 0,
+        }}
+        loading={productList.load}
+      />
+
       <UpdateQuantityModel
         isShowUpdateModal={isShowUpdateModal}
         setIsShowUpdateModal={setIsShowUpdateModal}
