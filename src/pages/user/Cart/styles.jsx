@@ -17,6 +17,18 @@ export const CartPage = styled.div`
       width: 100%;
       display: flex;
       justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+    }
+    .list-item-ticket {
+      display: flex;
+      width: 100%;
+      gap: 5px;
+      flex-direction: column;
+      div {
+        display: flex;
+        flex: 1;
+      }
     }
     .ant-list {
       background-color: #fff;

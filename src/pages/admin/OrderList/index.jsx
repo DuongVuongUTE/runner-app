@@ -174,57 +174,55 @@ function OrderListPage() {
   return (
     <>
       <div>
-        <div style={{ padding: 10 }}>
-          <Style.CustomSpaceBox>
-            <Style.Title>Quản lý khách hàng</Style.Title>
-            <Style.Search>
-              <Input
-                placeholder="Tìm kiếm..."
-                suffix={<Icon.SearchOutlined />}
-                onChange={(e) => handleSearchOrder(e.target.value)}
-              />
-            </Style.Search>
-          </Style.CustomSpaceBox>
-          <Style.CustomTable
-            scroll={{ y: 360, x: 1500 }}
-            style={{ marginTop: 10 }}
-            columns={tableColumn}
-            dataSource={tableData}
-            loading={orderList.load}
-            expandable={{
-              expandedRowRender: (record) => {
-                return (
-                  <List
-                    size="small"
-                    dataSource={record.products}
-                    renderItem={(item) => (
-                      <Style.ListItem>
-                        <Row
-                          justify="space-between"
-                          style={{
-                            width: "100%",
-                            padding: "0 60px",
-                            textAlign: "end",
-                          }}
-                        >
-                          <Col span={6}>
-                            <Style.ShowImage src={item.image}></Style.ShowImage>
-                          </Col>
-                          <Col span={6}>{item.name}</Col>
-                          <Col span={6}>SL: {item.count}</Col>
-                          <Col span={6}>
-                            Tổng tiền: {item.price.toLocaleString()}VNĐ
-                          </Col>
-                        </Row>
-                      </Style.ListItem>
-                    )}
-                  />
-                );
-              },
-              rowExpandable: (record) => record.products?.length > 0,
-            }}
-          />
-        </div>
+        <Style.CustomSpaceBox>
+          <Style.Title>Quản lý đặt hàng</Style.Title>
+          <Style.Search>
+            <Input
+              placeholder="Tìm kiếm..."
+              suffix={<Icon.SearchOutlined />}
+              onChange={(e) => handleSearchOrder(e.target.value)}
+            />
+          </Style.Search>
+        </Style.CustomSpaceBox>
+        <Style.CustomTable
+          size="small"
+          scroll={{ x: 1500 }}
+          columns={tableColumn}
+          dataSource={tableData}
+          loading={orderList.load}
+          expandable={{
+            expandedRowRender: (record) => {
+              return (
+                <List
+                  size="small"
+                  dataSource={record.products}
+                  renderItem={(item) => (
+                    <Style.ListItem>
+                      <Row
+                        style={{
+                          width: "100%",
+                        }}
+                      >
+                        <Col span={2}>
+                          <Style.ShowImage src={item.image}></Style.ShowImage>
+                        </Col>
+                        <Col span={6}>{item.name}</Col>
+                        <Col span={4}>Thương hiệu: {item.category}</Col>
+                        <Col span={4}>Sản phẩm: {item.department}</Col>
+                        <Col span={4}>Số lượng: {item.count}</Col>
+                        <Col span={4}>
+                          Tổng tiền: {item.price.toLocaleString()}VNĐ
+                        </Col>
+                      </Row>
+                    </Style.ListItem>
+                  )}
+                />
+              );
+            },
+            rowExpandable: (record) => record.products?.length > 0,
+          }}
+        />
+
         <UpdateStatusModel
           isShowUpdateModal={isShowUpdateModal}
           setIsShowUpdateModal={setIsShowUpdateModal}

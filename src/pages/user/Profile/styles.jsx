@@ -68,4 +68,16 @@ export const ProfilePanel = styled.div`
   min-height: 465px;
   padding: 15px;
   border: 1px solid #dee2e6;
+  @media screen and (max-width: 767px) {
+    padding: 7.5px;
+  }
+  h2 {
+    font-size: 20px;
+    text-transform: uppercase;
+    color: #330867;
+    font-weight: 900;
+    margin: 0;
+    padding: 15px 0 25px;
+    text-align: center;
+  }
 `;

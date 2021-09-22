@@ -63,9 +63,7 @@ function Wishlist() {
         </Style.Empty>
       ) : (
         <Style.WishPage>
-          <h2 style={{ textAlign: "center", marginBottom: 30 }}>
-            Danh sách yêu thích
-          </h2>
+          <h2>Danh sách yêu thích</h2>
           <Row gutter={[16, 16]}>{renderWishList()}</Row>
         </Style.WishPage>
       )}

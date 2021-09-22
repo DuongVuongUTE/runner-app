@@ -10,3 +10,4 @@ export * from "./admin/product.action";
 export * from "./admin/common.action";
 export * from "./wishlist.action";
 export * from "./blog.action";
+export * from "./ticket.action";

@@ -7,7 +7,6 @@ import {
   FAILURE,
   ORDER_ACTION,
   CART_ACTION,
-  PRODUCT_ACTION,
 } from "../constants";
 import { SERVER_API_URL } from "./apiUrl";
 import history from "../../utils/history";
@@ -122,7 +121,7 @@ function* getOrderWeekSaga(action) {
         }),
       },
     });
-    
+
     yield put({
       type: SUCCESS(ORDER_ACTION.GET_TOTAL_SOLD_ORDER_WEEK),
       payload: {

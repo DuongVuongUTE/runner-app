@@ -211,7 +211,10 @@ function CheckoutPage() {
             " - " +
             location.cities.find((city) => city.code === values.city).name,
           products: cartList.data,
-          totalPrice,
+          totalPrice:
+            cartList.orderInfo.total !== 0
+              ? cartList.orderInfo.total
+              : totalPrice,
           paymentID: paymentID,
           checkoutInfo: checkoutInfo,
           status: "waiting",
@@ -244,9 +247,11 @@ function CheckoutPage() {
           userInfo={userInfo}
           columns={columns}
           data={data}
+          orderInfo={cartList.orderInfo}
           handleChageCity={handleChageCity}
           handleChageDistrict={handleChageDistrict}
           locationSelect={locationSelect}
+          totalPrice={totalPrice}
           handleChageWard={handleChageWard}
           location={location}
           next={next}
@@ -258,12 +263,12 @@ function CheckoutPage() {
       content: (
         <Payment
           tranSuccess={tranSuccess}
-          total={totalPrice}
           prev={prev}
           next={next}
           columns={columns}
           data={data}
           confirmValues={confirmValues}
+          orderInfo={cartList.orderInfo}
           totalPrice={totalPrice}
           location={location}
           handleOrder={handleOrder}

@@ -1,11 +1,5 @@
 import { createReducer } from "@reduxjs/toolkit";
-import {
-  REQUEST,
-  SUCCESS,
-  FAILURE,
-  ORDER_ACTION,
-  USER_ACTION,
-} from "../../constants";
+import { REQUEST, SUCCESS, FAILURE, ORDER_ACTION } from "../../constants";
 
 const initialState = {
   orderList: {

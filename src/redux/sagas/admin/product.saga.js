@@ -1,19 +1,23 @@
 import { put, takeEvery, debounce } from "redux-saga/effects";
 import axios from "axios";
-import { REQUEST, SUCCESS, FAILURE, PRODUCT_ACTION_ADMIN } from "../../constants";
+import {
+  REQUEST,
+  SUCCESS,
+  FAILURE,
+  PRODUCT_ACTION_ADMIN,
+} from "../../constants";
 import { SERVER_API_URL } from "../apiUrl";
 
 function* getProductListSaga(action) {
   try {
-    const page = action.payload?.page;
     const searchKey = action.payload?.searchKey;
     const result = yield axios({
       method: "GET",
-      url:`${SERVER_API_URL}/products`,
+      url: `${SERVER_API_URL}/products`,
       params: {
         _sort: "id",
         _order: "desc",
-        _embed:'productOptions',
+        _embed: "productOptions",
         ...(searchKey && { q: searchKey }),
       },
     });
@@ -89,7 +93,7 @@ function* getProductDetailSaga(action) {
       method: "GET",
       url: `${SERVER_API_URL}/products/${id}`,
       params: {
-        _embed: "productOptions"
+        _embed: "productOptions",
       },
     });
     yield put({
@@ -110,9 +114,9 @@ function* createOptionAdminSaga(action) {
   try {
     const { data } = action.payload;
     const result = yield axios({
-      method: 'POST',
+      method: "POST",
       url: `${SERVER_API_URL}/productOptions`,
-      data: data
+      data: data,
     });
     yield put({
       type: SUCCESS(PRODUCT_ACTION_ADMIN.CREATE_OPTION),
@@ -125,7 +129,7 @@ function* createOptionAdminSaga(action) {
     yield put({
       type: FAILURE(PRODUCT_ACTION_ADMIN.CREATE_OPTION),
       payload: {
-        error: e.error
+        error: e.error,
       },
     });
   }
@@ -133,11 +137,11 @@ function* createOptionAdminSaga(action) {
 
 function* editOptionAdminSaga(action) {
   try {
-    const { data,id } = action.payload;
+    const { data, id } = action.payload;
     const result = yield axios({
-      method: 'PATCH',
+      method: "PATCH",
       url: `${SERVER_API_URL}/productOptions/${id}`,
-      data: data
+      data: data,
     });
     yield put({
       type: SUCCESS(PRODUCT_ACTION_ADMIN.EDIT_OPTION),
@@ -145,12 +149,12 @@ function* editOptionAdminSaga(action) {
         data: result.data,
       },
     });
-    yield put({ type: REQUEST(PRODUCT_ACTION_ADMIN.GET_PRODUCT_LIST_ADMIN)});
+    yield put({ type: REQUEST(PRODUCT_ACTION_ADMIN.GET_PRODUCT_LIST_ADMIN) });
   } catch (e) {
     yield put({
       type: FAILURE(PRODUCT_ACTION_ADMIN.EDIT_OPTION),
       payload: {
-        error: e.error
+        error: e.error,
       },
     });
   }
@@ -160,7 +164,7 @@ function* deleteOptionAdminSaga(action) {
   try {
     const { id } = action.payload;
     yield axios({
-      method: 'DELETE',
+      method: "DELETE",
       url: `${SERVER_API_URL}/productOptions/${id}`,
     });
     yield put({
@@ -174,7 +178,7 @@ function* deleteOptionAdminSaga(action) {
     yield put({
       type: FAILURE(PRODUCT_ACTION_ADMIN.DELETE_OPTION),
       payload: {
-        error: e.error
+        error: e.error,
       },
     });
   }
@@ -186,11 +190,32 @@ export default function* adminProductSaga() {
     REQUEST(PRODUCT_ACTION_ADMIN.GET_PRODUCT_LIST_ADMIN),
     getProductListSaga
   );
-  yield takeEvery(REQUEST(PRODUCT_ACTION_ADMIN.CREATE_PRODUCT_ADMIN), createProductSaga);
-  yield takeEvery(REQUEST(PRODUCT_ACTION_ADMIN.EDIT_PRODUCT_ADMIN), editProductSaga);
-  yield takeEvery(REQUEST(PRODUCT_ACTION_ADMIN.DELETE_PRODUCT_ADMIN), deleteProductSaga);
-  yield takeEvery(REQUEST(PRODUCT_ACTION_ADMIN.CREATE_OPTION), createOptionAdminSaga);
-  yield takeEvery(REQUEST(PRODUCT_ACTION_ADMIN.DELETE_OPTION), deleteOptionAdminSaga);
-  yield takeEvery(REQUEST(PRODUCT_ACTION_ADMIN.EDIT_OPTION), editOptionAdminSaga);
-  yield takeEvery(REQUEST(PRODUCT_ACTION_ADMIN.GET_PRODUCT_DETAIL_ADMIN), getProductDetailSaga);
+  yield takeEvery(
+    REQUEST(PRODUCT_ACTION_ADMIN.CREATE_PRODUCT_ADMIN),
+    createProductSaga
+  );
+  yield takeEvery(
+    REQUEST(PRODUCT_ACTION_ADMIN.EDIT_PRODUCT_ADMIN),
+    editProductSaga
+  );
+  yield takeEvery(
+    REQUEST(PRODUCT_ACTION_ADMIN.DELETE_PRODUCT_ADMIN),
+    deleteProductSaga
+  );
+  yield takeEvery(
+    REQUEST(PRODUCT_ACTION_ADMIN.CREATE_OPTION),
+    createOptionAdminSaga
+  );
+  yield takeEvery(
+    REQUEST(PRODUCT_ACTION_ADMIN.DELETE_OPTION),
+    deleteOptionAdminSaga
+  );
+  yield takeEvery(
+    REQUEST(PRODUCT_ACTION_ADMIN.EDIT_OPTION),
+    editOptionAdminSaga
+  );
+  yield takeEvery(
+    REQUEST(PRODUCT_ACTION_ADMIN.GET_PRODUCT_DETAIL_ADMIN),
+    getProductDetailSaga
+  );
 }

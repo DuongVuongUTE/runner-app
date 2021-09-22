@@ -16,6 +16,7 @@ import typeReducer from "./type.reducer";
 import departmentReducer from "./department.reducer";
 import orderReducer from "./order.reducer";
 import blogReducer from "./blog.reducer";
+import ticketReducer from "./ticket.reducer";
 
 let sagaMiddleware = createSagaMiddleware();
 
@@ -32,6 +33,7 @@ const store = configureStore({
     productReducerAdmin: productReducerAdmin,
     orderReducer: orderReducer,
     blogReducer: blogReducer,
+    ticketReducer: ticketReducer,
     commonProductReducerAdmin: commonProductReducerAdmin,
     orderReducerAdmin: orderReducerAdmin,
   },

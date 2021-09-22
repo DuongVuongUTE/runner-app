@@ -4,6 +4,11 @@ import { REQUEST, SUCCESS, CART_ACTION, USER_ACTION } from "../constants";
 const initialState = {
   cartList: {
     data: [],
+    orderInfo: {
+      userId: null,
+      total: 0,
+      percent: 0,
+    },
     load: false,
     error: null,
   },
@@ -39,6 +44,17 @@ const cartReducer = createReducer(initialState, {
       cartList: {
         ...state.cartList,
         data: data,
+      },
+    };
+  },
+
+  [SUCCESS(CART_ACTION.TOTAL_INFO_CHECKOUT)]: (state, action) => {
+    const { orderInfo } = action.payload;
+    return {
+      ...state,
+      cartList: {
+        ...state.cartList,
+        orderInfo,
       },
     };
   },

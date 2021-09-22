@@ -5,21 +5,16 @@ import moment from "moment";
 import * as Icon from "@ant-design/icons";
 import ModifyAccountModal from "./components/ModifyAccountModal";
 
-import {
-  getUserListAction,
-  editUserListAction,
-  loginAction
-} from "../../../redux/actions";
+import { getUserListAction, editUserListAction } from "../../../redux/actions";
 
-import * as Style from './styles'
+import * as Style from "./styles";
 
 function AccountListPage(props) {
-
   const [uploadImages, setUploadImage] = useState();
   const [isShowModifyModal, setIsShowModifyModal] = useState(false);
   const [modifyUserData, setModifyUserData] = useState({});
   const { userList } = useSelector((state) => state.userReducer);
-  const [searchKey, setSearchKey] = useState('');
+  const [searchKey, setSearchKey] = useState("");
   const { userInfo } = useSelector((state) => state.userReducer);
 
   const dispatch = useDispatch();
@@ -29,49 +24,57 @@ function AccountListPage(props) {
   }, []);
 
   function handleSubmitForm(values) {
-    dispatch(editUserListAction({
-      id: modifyUserData.id,
-      data: {
-        ...values,
-        avatar: uploadImages
-      },
-    }));
-    setIsShowModifyModal('');
+    dispatch(
+      editUserListAction({
+        id: modifyUserData.id,
+        data: {
+          ...values,
+          avatar: uploadImages,
+        },
+      })
+    );
+    setIsShowModifyModal("");
   }
 
   const tableColumn = [
     {
       dataIndex: "avatar",
-      width: 150,
+      width: 100,
       key: "avatar",
-      render: (value) => (<Style.ImageItem image={value}></Style.ImageItem>)
+      render: (value) => <Style.ImageItem image={value}></Style.ImageItem>,
     },
     {
       title: "Tên",
       dataIndex: "name",
-      width: 150,
+      width: 250,
       key: "name",
       sorter: (a, b) => a.name.length - b.name.length,
-      sortDirections: ['descend'],
+      sortDirections: ["descend"],
     },
     {
       title: "Email",
       dataIndex: "email",
       key: "email",
+      width: 250,
     },
     {
       title: "Giới tính",
       dataIndex: "gender",
       width: 100,
       key: "gender",
-      render: (value) => value == "female" ? "Nữ" : "Nam"
+      render: (value) => (value == "female" ? "Nữ" : "Nam"),
     },
     {
       title: "Quyền",
       dataIndex: "role",
       width: 100,
       key: "role",
-      render:(value)=> value == "admin" ? <Tag color="#8f9117">{value}</Tag> : <Tag color="#126d19">{value}</Tag>
+      render: (value) =>
+        value == "admin" ? (
+          <Tag color="#8f9117">{value}</Tag>
+        ) : (
+          <Tag color="#126d19">{value}</Tag>
+        ),
     },
     {
       title: "Ngày tạo",
@@ -96,20 +99,23 @@ function AccountListPage(props) {
       key: "status",
       filters: [
         {
-          text: 'Kích hoạt',
-          value: 'active'
+          text: "Kích hoạt",
+          value: "active",
         },
         {
-          text: 'Khóa',
-          value: 'block'
-        }
+          text: "Khóa",
+          value: "block",
+        },
       ],
       onFilter: (value, record) => {
-        return record.status == value
+        return record.status == value;
       },
-      render: (value) => value == "block"
-        ? (<span style={{ color: 'red', whiteSpace: "500" }}>Khóa</span>)
-        : (<span style={{ color: '#52c41a', whiteSpace: "500" }}>Kích hoạt</span>)
+      render: (value) =>
+        value == "block" ? (
+          <span style={{ color: "red", whiteSpace: "500" }}>Khóa</span>
+        ) : (
+          <span style={{ color: "#52c41a", whiteSpace: "500" }}>Kích hoạt</span>
+        ),
     },
     {
       title: "",
@@ -128,7 +134,6 @@ function AccountListPage(props) {
             >
               Sửa
             </Button>
-
           </Space>
         );
       },
@@ -143,31 +148,33 @@ function AccountListPage(props) {
   });
   function handleSearchAccount(value) {
     setSearchKey(value);
-    dispatch(getUserListAction({
-      searchKey: value
-    }));
+    dispatch(
+      getUserListAction({
+        searchKey: value,
+      })
+    );
   }
 
   return (
     <div>
-      <div style={{ padding: 10 }}>
-        <Style.CustomSpace>
-          <Style.Title style={{ marginBottom: 26 }} >Quản Lý tài khoản</Style.Title>
-          <Style.Search>
-            <Input
-              placeholder="Tìm kiếm..."
-              suffix={<Icon.SearchOutlined />}
-              onChange={(e) => handleSearchAccount(e.target.value)}
-            />
-          </Style.Search>
-        </Style.CustomSpace>
-        <Style.CustomTable
-          scroll={{ y: 360, x: 1200 }}
-          columns={tableColumn}
-          dataSource={tableData}
-          loading={userList.load}
-        />
-      </div>
+      <Style.CustomSpace>
+        <Style.Title>Quản Lý tài khoản</Style.Title>
+        <Style.Search>
+          <Input
+            placeholder="Tìm kiếm..."
+            suffix={<Icon.SearchOutlined />}
+            onChange={(e) => handleSearchAccount(e.target.value)}
+          />
+        </Style.Search>
+      </Style.CustomSpace>
+      <Style.CustomTable
+        size="small"
+        scroll={{ x: 1200 }}
+        columns={tableColumn}
+        dataSource={tableData}
+        loading={userList.load}
+      />
+
       <ModifyAccountModal
         isShowModifyModal={isShowModifyModal}
         setIsShowModifyModal={setIsShowModifyModal}

@@ -1,10 +1,9 @@
 import { Button, Row, List, Table, Card } from "antd";
 import React from "react";
 import PaypalButton from "./PaypalButton";
-
+import * as Style from "../../style";
 function Payment({
   tranSuccess,
-  total,
   prev,
   next,
   confirmValues,
@@ -13,6 +12,7 @@ function Payment({
   columns,
   data,
   handleOrder,
+  orderInfo,
 }) {
   const dataList = [
     `Tên khách hàng: ${confirmValues.name}`,
@@ -27,13 +27,21 @@ function Payment({
     } - ${
       location.cities.find((city) => city.code === confirmValues.city).name
     }`,
-    `Tổng tiền: ${totalPrice.toLocaleString()}đ`,
+    `Tổng tiền phải thanh toán:
+      ${totalPrice.toLocaleString()}₫
+      ${
+        orderInfo.percent !== 0
+          ? `nhập mã giảm ${
+              orderInfo.percent * 100
+            }% giá còn ${orderInfo.total.toLocaleString()}₫`
+          : ""
+      }`,
   ];
   return (
     <div>
       <Button onClick={() => prev()}>Quay lại</Button>
       <Card style={{ marginTop: 15 }} title="Thông tin đơn hàng" size="small">
-        <Table
+        <Style.CustomTable
           size="small"
           columns={columns}
           pagination={false}
@@ -49,6 +57,7 @@ function Payment({
         />
         <List
           style={{ marginTop: 10 }}
+          bordered
           size="small"
           dataSource={dataList}
           renderItem={(item) => <List.Item>{item}</List.Item>}
@@ -74,7 +83,7 @@ function Payment({
             Thanh toán khi nhận hàng
           </Button>
         </div>
-        <PaypalButton total={total} tranSuccess={tranSuccess} />
+        <PaypalButton total={totalPrice} tranSuccess={tranSuccess} />
       </div>
     </div>
   );

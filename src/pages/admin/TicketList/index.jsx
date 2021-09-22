@@ -4,34 +4,34 @@ import { Row, Button, Input, Space, Popconfirm } from "antd";
 
 import * as Icon from "@ant-design/icons";
 
-import ModifyCategoryModal from "./components/ModifyCategoryModal";
+import ModifyTicketModal from "./components/ModifyTicketModal";
 
 import {
-  getCategoryListAction,
-  createCategoryAction,
-  editCategoryAction,
   deleteCategoryAction,
+  getTicketListAction,
+  createTicketAction,
+  editTicketAction,
 } from "../../../redux/actions";
 
 import * as Style from "./styles";
 
-function CategoryListPage(props) {
+function TicketListPage(props) {
   const [searchKey, setSearchKey] = useState("");
   const [isShowModifyModal, setIsShowModifyModal] = useState("");
-  const [modifyCategoryData, setModifyCategoryData] = useState({});
+  const [modifyTicketData, setModifyTicketData] = useState({});
 
-  const { categoryList } = useSelector((state) => state.categoryReducer);
+  const { ticketList } = useSelector((state) => state.ticketReducer);
 
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getCategoryListAction());
+    dispatch(getTicketListAction());
   }, []);
 
-  function handleSearchCategory(value) {
+  function handleSearchTicket(value) {
     setSearchKey(value);
     dispatch(
-      getCategoryListAction({
+      getTicketListAction({
         searchKey: value,
       })
     );
@@ -39,58 +39,40 @@ function CategoryListPage(props) {
   function handleSubmitForm(values) {
     if (isShowModifyModal === "create") {
       dispatch(
-        createCategoryAction({
-          data: values,
+        createTicketAction({
+          data: {
+            ...values,
+            percent: parseFloat(values.percent / 100),
+          },
         })
       );
     } else {
       dispatch(
-        editCategoryAction({
-          id: modifyCategoryData.id,
-          data: values,
+        editTicketAction({
+          id: modifyTicketData.id,
+          data: {
+            ...values,
+            percent: parseFloat(values.percent / 100),
+          },
         })
       );
     }
     setIsShowModifyModal("");
   }
-  function totalQuantityProduct(productData) {
-    return productData.reduce(
-      (totalProduct, productItem) =>
-        productItem.quantity
-          ? totalProduct + productItem.quantity
-          : totalProduct,
-      0
-    );
-  }
-  function totalSoldProduct(productData) {
-    return productData.reduce(
-      (totalProduct, productItem) =>
-        productItem.sold ? totalProduct + productItem.sold : totalProduct,
-      0
-    );
-  }
+
   const tableColumn = [
     {
-      title: "loại",
-      dataIndex: "name",
-      key: "name",
-      sorter: (a, b) => a.name.length - b.name.length,
+      title: "Mã giảm giá",
+      dataIndex: "code",
+      key: "code",
+      sorter: (a, b) => a.code.length - b.code.length,
     },
     {
-      title: "Tổng số lượng",
-      dataIndex: "products",
-      key: "products",
-      sorter: (a, b) =>
-        totalQuantityProduct(a.products) - totalQuantityProduct(b.products),
-      render: (value) => totalQuantityProduct(value),
-    },
-    {
-      title: "Đã bán",
-      dataIndex: "products",
-      key: "products",
-      sorter: (a, b) =>
-        totalSoldProduct(a.products) - totalSoldProduct(b.products),
-      render: (value) => totalSoldProduct(value),
+      title: "Tỉ lệ giảm",
+      dataIndex: "percent",
+      key: "percent",
+      sorter: (a, b) => a.percent - b.percent,
+      render: (value) => `${value * 100}%`,
     },
     {
       title: "",
@@ -105,19 +87,19 @@ function CategoryListPage(props) {
               ghost
               onClick={() => {
                 setIsShowModifyModal("edit");
-                setModifyCategoryData(record);
+                setModifyTicketData(record);
               }}
             >
               Sửa
             </Button>
             <Popconfirm
-              title="Are you sure to delete this category?"
+              title="Are you sure to delete this ticket?"
               onConfirm={() =>
                 dispatch(deleteCategoryAction({ id: record.id }))
               }
               onCancel={() => null}
-              okText="Yes"
-              cancelText="No"
+              okText="Có"
+              cancelText="Không"
             >
               <Button danger icon={<Icon.DeleteOutlined />}>
                 Xóa
@@ -129,30 +111,30 @@ function CategoryListPage(props) {
     },
   ];
 
-  const tableData = categoryList.data.map((categoryItem, categoryIndex) => {
+  const tableData = ticketList.data.map((ticketItem, ticketIndex) => {
     return {
-      key: categoryIndex,
-      ...categoryItem,
+      key: ticketIndex,
+      ...ticketItem,
     };
   });
 
   return (
     <div>
       <Style.CustomSpaceBox>
-        <Style.Title>Quản lý loại sản phẩm</Style.Title>
+        <Style.Title>Quản lý mã giảm giá</Style.Title>
         <Style.CustomSpace>
           <Style.Search>
             <Input
               placeholder="Tìm kiếm..."
               suffix={<Icon.SearchOutlined />}
-              onChange={(e) => handleSearchCategory(e.target.value)}
+              onChange={(e) => handleSearchTicket(e.target.value)}
             />
           </Style.Search>
           <Button
             type="primary"
             onClick={() => {
               setIsShowModifyModal("create");
-              setModifyCategoryData({ name: "", price: 0 });
+              setModifyTicketData({ code: "", percent: 0 });
             }}
           >
             Thêm mới
@@ -164,17 +146,17 @@ function CategoryListPage(props) {
         size="small"
         columns={tableColumn}
         dataSource={tableData}
-        loading={categoryList.load}
+        loading={ticketList.load}
       />
 
-      <ModifyCategoryModal
+      <ModifyTicketModal
         isShowModifyModal={isShowModifyModal}
         setIsShowModifyModal={setIsShowModifyModal}
         handleSubmitForm={handleSubmitForm}
-        modifyCategoryData={modifyCategoryData}
+        modifyTicketData={modifyTicketData}
       />
     </div>
   );
 }
 
-export default CategoryListPage;
+export default TicketListPage;

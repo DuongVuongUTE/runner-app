@@ -10,6 +10,7 @@ import departmentSaga from "./department.saga";
 import adminProductSaga from "./admin/product.saga";
 import wishlistSaga from "./wishlist.saga";
 import blogSaga from "./blog.saga";
+import ticketSaga from "./ticket.saga";
 
 export default function* rootSaga() {
   yield fork(productSaga);
@@ -22,4 +23,5 @@ export default function* rootSaga() {
   yield fork(adminProductSaga);
   yield fork(wishlistSaga);
   yield fork(blogSaga);
+  yield fork(ticketSaga);
 }

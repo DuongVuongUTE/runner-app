@@ -2,18 +2,20 @@ import React from "react";
 import Hero from "../../../components/Hero";
 import { TITLE } from "../../../constants/title";
 import { Container } from "../../../styles/styles";
+import * as Style from "./style";
 
 function ContactPage() {
   document.title = TITLE.CONTACT;
   return (
-    <div>
+    <Style.Contact>
       <Hero title="Liên hệ" />
       <Container>
-        <div>
-          <h2 style={{ textAlign: "center" }}>Runner Inn</h2>
-        </div>
+        <Style.ContactContent>
+          <h2>Runner Inn</h2>
+          <p>Website bán giày trực tuyến</p>
+        </Style.ContactContent>
       </Container>
-    </div>
+    </Style.Contact>
   );
 }
 

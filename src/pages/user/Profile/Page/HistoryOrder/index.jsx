@@ -1,7 +1,6 @@
 import React from "react";
 import { Space, Table, Image, Typography, Badge } from "antd";
 import { useSelector } from "react-redux";
-import { Redirect } from "react-router";
 
 import * as Style from "./style";
 import { TITLE } from "../../../../../constants/title";
@@ -10,7 +9,6 @@ const { Title } = Typography;
 
 function HistoryOrder() {
   document.title = TITLE.HISTORY_ORDER;
-  const { userInfo } = useSelector((state) => state.userReducer);
   const { orderList } = useSelector((state) => state.orderReducer);
 
   const columns = [
@@ -19,7 +17,7 @@ function HistoryOrder() {
       title: "Địa chỉ",
       dataIndex: "address",
       key: "address",
-      width: 150,
+      width: 250,
       ellipsis: true,
     },
     { title: "SĐT", dataIndex: "phoneNumber", key: "phoneNumber" },
@@ -42,11 +40,13 @@ function HistoryOrder() {
       key: "status",
       render: (value) => {
         return value === "waiting" ? (
-          <Badge status="processing" text={value} />
+          <Badge status="processing" text={"Đang chờ"} />
+        ) : value === "confirm" ? (
+          <Badge color={"purple"} text={"Xác nhận"} />
         ) : value === "shipping" ? (
-          <Badge status="warning" text={value} />
+          <Badge status="warning" text={"Đang chuyển hàng"} />
         ) : (
-          <Badge status="success" text={value} />
+          <Badge status="success" text={"Đã giao"} />
         );
       },
     },
@@ -77,15 +77,10 @@ function HistoryOrder() {
 
   return (
     <Style.HistoryOrder>
-      <Title
-        level={3}
-        style={{ textAlign: "center", padding: "0 0 15px", margin: 0 }}
-      >
-        Lịch sử mua hàng
-      </Title>
-      <Table
+      <h2>Lịch sử mua hàng</h2>
+      <Style.CustomTable
         bordered
-        size="middle"
+        size="small"
         columns={columns}
         pagination={false}
         expandable={{
@@ -94,7 +89,7 @@ function HistoryOrder() {
           ),
           rowExpandable: (record) => record.name !== "Not Expandable",
         }}
-        scroll={{ x: "max-content" }}
+        scroll={{ x: "1200px" }}
         dataSource={data}
       />
     </Style.HistoryOrder>

@@ -1,5 +1,5 @@
-import { useEffect } from "react";
-import { Row, Col, Input, Button, List, notification } from "antd";
+import { useEffect, useState } from "react";
+import { Row, Col, Input, Button, List, notification, message } from "antd";
 import * as Icons from "@ant-design/icons";
 import empty from "../../../assets/images/empty_cart.png";
 import { PlusOutlined, MinusOutlined } from "@ant-design/icons";
@@ -11,6 +11,8 @@ import {
   minusItemCountAction,
   plusItemCountAction,
   deleteCartItemAction,
+  getTicketListAction,
+  totalInfoCheckoutAction,
 } from "../../../redux/actions";
 
 import * as Style from "./styles";
@@ -21,15 +23,24 @@ import Hero from "../../../components/Hero";
 function CartPage() {
   document.title = TITLE.CART;
   const { cartList } = useSelector((state) => state.cartReducer);
+  const { ticketList } = useSelector((state) => state.ticketReducer);
   const { userInfo } = useSelector((state) => state.userReducer);
   let totalPrice = 0;
   let totalCount = 0;
+  const [ticket, setTicket] = useState("");
+  const [percent, setPercent] = useState(0);
+  const [total, setTotal] = useState(0);
   const dispatch = useDispatch();
 
   useEffect(() => {
     const img = new Image();
     img.src = empty;
+    dispatch(getTicketListAction());
   }, []);
+
+  useEffect(() => {
+    countTotal();
+  }, [cartList.data]);
 
   function handlePlusCount(index) {
     const newCartData = [...cartList.data];
@@ -77,15 +88,58 @@ function CartPage() {
     );
   }
 
+  function handleCheckTicket() {
+    if (ticket) {
+      const checkCode = ticketList.data?.find(
+        (ticketItem) => ticketItem.code.toLowerCase() === ticket.toLowerCase()
+      );
+      if (checkCode) {
+        totalPrice = totalPrice - totalPrice * checkCode.percent;
+        setPercent(checkCode.percent);
+        setTicket("");
+        setTotal(totalPrice);
+      } else {
+        message.error("không có mã giảm giá này");
+        setTicket("");
+        setPercent(0);
+        setTotal(0);
+      }
+    }
+  }
+
   function handleCheckout() {
     if (!userInfo.data.id) {
       notification.warn({
         message: "Bạn chưa đăng nhập",
       });
     } else {
+      dispatch(
+        totalInfoCheckoutAction({
+          orderInfo: {
+            userId: userInfo.data.id,
+            total: total ? total : totalPrice,
+            percent: percent,
+          },
+        })
+      );
       history.push("/checkout");
     }
   }
+
+  function countTotal() {
+    let totalNum = 0;
+    cartList?.data?.map((cartItem, cartIndex) => {
+      totalNum = cartItem.option.id
+        ? totalNum + (cartItem.price + cartItem.option.price) * cartItem.count
+        : totalNum + cartItem.price * cartItem.count;
+    });
+    if (percent) {
+      setTotal(totalNum - totalNum * percent);
+    } else {
+      setTotal(totalNum);
+    }
+  }
+
   function renderCartList(params) {
     return cartList?.data?.map((cartItem, cartIndex) => {
       totalCount = cartItem.option.id
@@ -207,9 +261,30 @@ function CartPage() {
                       </div>
                     </List.Item>
                     <List.Item>
+                      <div className="list-item-ticket">
+                        <span>Mã giảm giá</span>
+                        <div>
+                          <Input
+                            onChange={(e) => setTicket(e.target.value)}
+                            value={ticket}
+                          />
+                          <Button onClick={() => handleCheckTicket()}>
+                            Xác nhận
+                          </Button>
+                        </div>
+                      </div>
+                    </List.Item>
+                    <List.Item>
                       <div className="list-item">
-                        <strong>Tổng tiền</strong>
-                        <strong>{totalPrice.toLocaleString() + "₫"}</strong>
+                        <strong>
+                          Tổng tiền
+                          {percent !== 0 && ` (giảm ${percent * 100}%)`}
+                        </strong>
+                        <strong>
+                          {total
+                            ? total.toLocaleString() + "₫"
+                            : totalPrice.toLocaleString() + "₫"}
+                        </strong>
                       </div>
                     </List.Item>
                   </List>

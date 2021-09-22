@@ -79,19 +79,19 @@ function FilterProduct({
     );
   }
 
-  function renderSizeCheckbox() {
-    const sizeCheckbox = SIZE_LIST.map((sizeItem) => ({
-      label: sizeItem.size,
-      value: sizeItem.id,
-    }));
-    return (
-      <Checkbox.Group
-        options={sizeCheckbox}
-        onChange={(value) => handleFilterSize(value)}
-        value={sizeSelected}
-      />
-    );
-  }
+  // function renderSizeCheckbox() {
+  //   const sizeCheckbox = SIZE_LIST.map((sizeItem) => ({
+  //     label: sizeItem.size,
+  //     value: sizeItem.id,
+  //   }));
+  //   return (
+  //     <Checkbox.Group
+  //       options={sizeCheckbox}
+  //       onChange={(value) => handleFilterSize(value)}
+  //       value={sizeSelected}
+  //     />
+  //   );
+  // }
 
   function renderColorCheckbox() {
     const colorCheckbox = COLOR_MENU.map((colorItem) => ({
@@ -128,19 +128,20 @@ function FilterProduct({
       />
     );
   }
-  function renderRatingCheckbox() {
-    const ratingCheckbox = RATING_LIST.map((ratingItem) => ({
-      label: <Rate disabled value={ratingItem.rating} />,
-      value: ratingItem.rating,
-    }));
-    return (
-      <Checkbox.Group
-        options={ratingCheckbox}
-        onChange={(value) => handleFilterRating(value)}
-        value={ratingSelected}
-      />
-    );
-  }
+
+  // function renderRatingCheckbox() {
+  //   const ratingCheckbox = RATING_LIST.map((ratingItem) => ({
+  //     label: <Rate disabled value={ratingItem.rating} />,
+  //     value: ratingItem.rating,
+  //   }));
+  //   return (
+  //     <Checkbox.Group
+  //       options={ratingCheckbox}
+  //       onChange={(value) => handleFilterRating(value)}
+  //       value={ratingSelected}
+  //     />
+  //   );
+  // }
   return (
     <Style.Filter>
       <h3>
@@ -204,7 +205,7 @@ function FilterProduct({
           </Panel>
         ) : null}
 
-        <Panel
+        {/* <Panel
           header={
             <>
               <div class="title-collapse">
@@ -215,7 +216,7 @@ function FilterProduct({
           key="4"
         >
           <div className="checkbox-normal">{renderSizeCheckbox()}</div>
-        </Panel>
+        </Panel> */}
         <Panel
           header={
             <>
@@ -253,7 +254,7 @@ function FilterProduct({
             />
           </div>
         </Panel>
-        <Panel
+        {/* <Panel
           header={
             <>
               <div class="title-collapse">
@@ -264,7 +265,7 @@ function FilterProduct({
           key="7"
         >
           <div>{renderRatingCheckbox()}</div>
-        </Panel>
+        </Panel> */}
       </Collapse>
     </Style.Filter>
   );

@@ -48,6 +48,7 @@ import ContactPage from "./pages/user/Contact";
 import BlogDetail from "./pages/user/BlogDetail";
 import BlogListPage from "./pages/admin/BlogList";
 import ModifyBlog from "./pages/admin/ModifyBlog";
+import TicketListPage from "./pages/admin/TicketList";
 
 const THEME = {
   light: lightTheme,
@@ -97,6 +98,7 @@ function App() {
             component={ProductListPage}
           />
           <AdminLayout exact path="/admin/blog" component={BlogListPage} />
+          <AdminLayout exact path="/admin/ticket" component={TicketListPage} />
           <AdminLayout
             exact
             path="/admin/categories"
@@ -137,6 +139,7 @@ function App() {
             path="/admin/blog/edit/:id"
             component={ModifyBlog}
           />
+
           <AdminLayout exact path="/admin/orders" component={OrderListPage} />
 
           <AdminLayout
