@@ -1,5 +1,5 @@
 import React from "react";
-import { Space, Table, Image, Typography, Badge } from "antd";
+import { Space, Table, Image, Typography, Badge, Empty } from "antd";
 import { useSelector } from "react-redux";
 
 import * as Style from "./style";
@@ -52,7 +52,7 @@ function HistoryOrder() {
     },
   ];
 
-  const data = orderList.data.map((orderItem, orderIndex) => {
+  const data = orderList.data?.map((orderItem, orderIndex) => {
     return {
       key: orderIndex,
       ...orderItem,
@@ -78,20 +78,24 @@ function HistoryOrder() {
   return (
     <Style.HistoryOrder>
       <h2>Lịch sử mua hàng</h2>
-      <Style.CustomTable
-        bordered
-        size="small"
-        columns={columns}
-        pagination={false}
-        expandable={{
-          expandedRowRender: (record) => (
-            <p style={{ margin: 0 }}>{record.description}</p>
-          ),
-          rowExpandable: (record) => record.name !== "Not Expandable",
-        }}
-        scroll={{ x: "1200px" }}
-        dataSource={data}
-      />
+      {orderList.data?.length > 0 ? (
+        <Style.CustomTable
+          bordered
+          size="small"
+          columns={columns}
+          pagination={false}
+          expandable={{
+            expandedRowRender: (record) => (
+              <p style={{ margin: 0 }}>{record.description}</p>
+            ),
+            rowExpandable: (record) => record.name !== "Not Expandable",
+          }}
+          scroll={{ x: "1200px" }}
+          dataSource={data}
+        />
+      ) : (
+        <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
+      )}
     </Style.HistoryOrder>
   );
 }

@@ -85,34 +85,7 @@
       "name": "Hoài Anh",
       "avatar": "https://res.cloudinary.com/vuongute/image/upload/v1631719158/runner-images/e5rc2jng0y7hpi8b7vmd.jpg",
       "gender": "female",
-      "carts": [
-        {
-          "productId": 31,
-          "count": 1,
-          "name": "Deviate NITRO Women's Running Shoes",
-          "price": 3500000,
-          "color": "000000",
-          "image": "https://images.puma.com/image/upload/f_auto,q_auto,b_rgb:fafafa,w_2000,h_2000/global/194453/07/sv03/fnd/PNA/fmt/png/Deviate-NITRO-Women's-Running-Shoes",
-          "quantity": 20,
-          "category": "Puma",
-          "type": "Giày chạy bộ",
-          "department": "Giày nữ",
-          "option": {}
-        },
-        {
-          "productId": 33,
-          "count": 1,
-          "name": "Scorch Runner Men's Running Shoes",
-          "price": 900000,
-          "color": "e7352b",
-          "image": "https://images.puma.com/image/upload/f_auto,q_auto,b_rgb:fafafa,w_2000,h_2000/global/194459/12/sv03/fnd/PNA/fmt/png/Scorch-Runner-Men's-Running-Shoes",
-          "quantity": 7,
-          "category": "Puma",
-          "type": "Giày chạy bộ",
-          "department": "Giày nam",
-          "option": {}
-        }
-      ],
+      "carts": [],
       "wishlist": [
         {
           "productId": "26",
@@ -177,7 +150,7 @@
       ],
       "role": "user",
       "createdAt": 1630734004121,
-      "updatedAt": 1632237979196,
+      "updatedAt": 1632320825518,
       "id": 5,
       "status": "block"
     },
