@@ -231,7 +231,7 @@ function ProductListPage(props) {
                     >
                       <div>Size: {item.size}</div>
                       <div>
-                        {(record.price + item.price).toLocaleString()}VNĐ
+                        {(item.price).toLocaleString()}VNĐ
                       </div>
                     </Row>
                   </Style.ListItem>

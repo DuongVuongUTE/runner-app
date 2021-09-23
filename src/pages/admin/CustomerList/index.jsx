@@ -8,6 +8,13 @@ import { getUserListAction } from "../../../redux/actions";
 
 import * as Style from "./styles";
 
+const STATUS = {
+  waiting: "Đang chờ",
+  shipping: "Đang chuyển hàng",
+  delivery: "Đã giao",
+  confirm: "xác nhận",
+};
+
 function CustomerListPage(props) {
   const { userList } = useSelector((state) => state.userReducer);
   const [searchKey, setSearchKey] = useState("");
@@ -122,11 +129,11 @@ function CustomerListPage(props) {
         <>
           {value === "waiting" ? (
             <Tag icon={<Icon.SyncOutlined spin />} color="processing">
-              {value}
+              { STATUS[value] }
             </Tag>
           ) : (
             <Tag icon={<Icon.CheckCircleOutlined />} color="success">
-              {value}
+              {STATUS[value]}
             </Tag>
           )}
         </>
