@@ -61,8 +61,9 @@ const orderReducerAdmin = createReducer(initialState, {
       newOrderWaitingList.shift(data)
     }
     else{
-      const Index = newOrderWaitingList.findIndex((order) => order.id === data.id);
-      newOrderWaitingList.splice(Index,1)
+      const IndexOrderList = newOrderWaitingList.findIndex((order) => order.id === data.id);
+      if(IndexOrderList != -1)
+      newOrderWaitingList.splice(IndexOrderList,1)
     }
     const newOrderList = [...state.orderList.data];
     const orderIndex = newOrderList.findIndex((order) => order.id === data.id);

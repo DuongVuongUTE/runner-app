@@ -2607,9 +2607,9 @@
       "totalPrice": 8510000,
       "paymentID": "",
       "checkoutInfo": "cod",
-      "status": "delivery",
+      "status": "shipping",
       "createdAt": 1632475198543,
-      "updatedAt": 1632476430168,
+      "updatedAt": 1632477394657,
       "id": 17
     }
   ],
