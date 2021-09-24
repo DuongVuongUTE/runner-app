@@ -36,7 +36,7 @@
       "carts": [
         {
           "productId": 32,
-          "count": 1,
+          "count": 7,
           "name": "Deviate Nitro Elite Racer SP Men's Running Sneakers",
           "price": 4600000,
           "color": "multiColor",
@@ -62,7 +62,7 @@
       ],
       "role": "admin",
       "createdAt": 1630471043599,
-      "updatedAt": 1632316365712,
+      "updatedAt": 1632374030354,
       "id": 3
     },
     {

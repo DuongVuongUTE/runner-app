@@ -80,7 +80,7 @@ function UserInfo() {
         </Space>
       </Row>
       <Modal
-        title="Thay đổi mật khẩu"
+        title="Thay đổi thông tin cá nhân"
         visible={isModalVisible}
         onCancel={() => setIsModalVisible(false)}
         footer={null}
