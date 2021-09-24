@@ -5,7 +5,7 @@ import * as Styles from "./styles";
 import { Redirect, Route } from "react-router-dom";
 
 import HeaderAdmin from "../HeaderAdmin";
-import Siderbar from "../Sidebar";
+import Sidebar from "../Sidebar";
 import BreadcrumbLayout from "../Breadcrumb";
 
 const { Content, Sider } = Layout;
@@ -49,7 +49,7 @@ function AdminLayout({ exact, path, component: Component, action }) {
                         collapsed={collapsed}
                         onCollapse={onCollapse}
                       >
-                        <Siderbar {...routeProps} />
+                        <Sidebar {...routeProps} />
                       </Sider>
                       <Layout className="content-layout">
                         <div style={{ padding: "0 15px" }}>

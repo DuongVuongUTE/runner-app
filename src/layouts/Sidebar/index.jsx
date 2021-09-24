@@ -59,13 +59,13 @@ const SIDEBAR_MENU = [
 ];
 
 function Sidebar({ location }) {
-  const [selectSiderItem, setSelectSiderItem] = useState(0);
+  const [selectSideItem, setSelectSideItem] = useState(0);
 
   useEffect(() => {
-    const siderbarIndex = SIDEBAR_MENU.findIndex((item, index) => {
+    const sidebarIndex = SIDEBAR_MENU.findIndex((item, index) => {
       return item.path === location.pathname;
     });
-    setSelectSiderItem(siderbarIndex);
+    setSelectSideItem(sidebarIndex);
   }, [location]);
 
   function renderSidebarMenu() {

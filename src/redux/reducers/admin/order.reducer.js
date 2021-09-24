@@ -56,6 +56,14 @@ const orderReducerAdmin = createReducer(initialState, {
   },
   [SUCCESS(ORDER_ACTION.EDIT_ORDER_LIST)]: (state, action) => {
     const { data } = action.payload;
+    const newOrderWaitingList = [...state.orderWaitingList.data]
+    if(data.status == "waiting"){
+      newOrderWaitingList.shift(data)
+    }
+    else{
+      const Index = newOrderWaitingList.findIndex((order) => order.id === data.id);
+      newOrderWaitingList.splice(Index,1)
+    }
     const newOrderList = [...state.orderList.data];
     const orderIndex = newOrderList.findIndex((order) => order.id === data.id);
     const newData = { ...newOrderList[orderIndex], status: data.status };
@@ -66,6 +74,10 @@ const orderReducerAdmin = createReducer(initialState, {
         ...state.orderList,
         data: newOrderList,
       },
+      orderWaitingList:{
+        ...state.orderWaitingList,
+        data: newOrderWaitingList
+      }
     };
   },
   [SUCCESS(ORDER_ACTION.GET_ORDER_WAITING)]: (state, action) => {

@@ -71,46 +71,11 @@
       "name": "tuyet t2",
       "avatar": "https://thuthuatnhanh.com/wp-content/uploads/2020/09/avatar-cho-con-gai-mau-hong-cute.jpg",
       "gender": "female",
-      "carts": [
-        {
-          "productId": 27,
-          "count": 1,
-          "name": "ALPHAMAGMA SHOES",
-          "price": 3000000,
-          "color": "000000",
-          "image": "https://assets.adidas.com/images/h_840,f_auto,q_auto:sensitive,fl_lossy,c_fill,g_auto/f740aaa3326c4c03b767ad0a00a34e30_9366/Alphamagma_Shoes_Black_GV7917_01_standard.jpg",
-          "category": "Adidas",
-          "quantity": 17,
-          "type": "Giày chạy bộ",
-          "department": "Giày nữ",
-          "option": {
-            "id": 100,
-            "size": 36,
-            "price": 3000000
-          }
-        },
-        {
-          "productId": 34,
-          "count": 1,
-          "name": "Future Z 4.2 TT Soccer Cleats JR",
-          "price": 1250000,
-          "color": "1790c8",
-          "image": "https://images.puma.com/image/upload/f_auto,q_auto,b_rgb:fafafa,w_2000,h_2000/global/106509/01/sv03/fnd/PNA/fmt/png/Future-Z-4.2-TT-Soccer-Cleats-JR",
-          "category": "Puma",
-          "quantity": 5,
-          "type": "Giày đá bóng",
-          "department": "Giày trẻ em",
-          "option": {
-            "id": 92,
-            "size": 37,
-            "price": 1260000
-          }
-        }
-      ],
+      "carts": [],
       "wishlist": [],
       "role": "admin",
       "createdAt": 1630593094197,
-      "updatedAt": 1632369563143,
+      "updatedAt": 1632475198683,
       "id": 4,
       "status": "active"
     },
@@ -1132,10 +1097,10 @@
         "https://assets.adidas.com/images/h_840,f_auto,q_auto:sensitive,fl_lossy,c_fill,g_auto/d5ab169b628b4b1f8642ad0a00a37b60_9366/Alphamagma_Shoes_Black_GV7917_42_detail.jpg"
       ],
       "departmentId": 2,
-      "quantity": 17,
-      "sold": 0,
+      "quantity": 16,
+      "sold": 1,
       "createdAt": 1628858111692,
-      "updatedAt": 1631801997119
+      "updatedAt": 1632475198537
     },
     {
       "id": 28,
@@ -1302,9 +1267,9 @@
       ],
       "departmentId": 3,
       "createdAt": 1628858111692,
-      "updatedAt": 1632314703326,
-      "quantity": 5,
-      "sold": 5
+      "updatedAt": 1632475198542,
+      "quantity": 4,
+      "sold": 6
     }
   ],
   "departments": [
@@ -2596,6 +2561,56 @@
       "createdAt": 1632364839155,
       "updatedAt": 1632364839155,
       "id": 16
+    },
+    {
+      "userId": 4,
+      "name": "tuyet t2",
+      "email": "hotuyet214@gmail.com",
+      "phoneNumber": "0337987824",
+      "address": "tran cao van - Phường 02 - Quận 11 - Thành phố Hồ Chí Minh",
+      "products": [
+        {
+          "productId": 27,
+          "count": 1,
+          "name": "ALPHAMAGMA SHOES",
+          "price": 3000000,
+          "color": "000000",
+          "image": "https://assets.adidas.com/images/h_840,f_auto,q_auto:sensitive,fl_lossy,c_fill,g_auto/f740aaa3326c4c03b767ad0a00a34e30_9366/Alphamagma_Shoes_Black_GV7917_01_standard.jpg",
+          "category": "Adidas",
+          "quantity": 17,
+          "type": "Giày chạy bộ",
+          "department": "Giày nữ",
+          "option": {
+            "id": 100,
+            "size": 36,
+            "price": 3000000
+          }
+        },
+        {
+          "productId": 34,
+          "count": 1,
+          "name": "Future Z 4.2 TT Soccer Cleats JR",
+          "price": 1250000,
+          "color": "1790c8",
+          "image": "https://images.puma.com/image/upload/f_auto,q_auto,b_rgb:fafafa,w_2000,h_2000/global/106509/01/sv03/fnd/PNA/fmt/png/Future-Z-4.2-TT-Soccer-Cleats-JR",
+          "category": "Puma",
+          "quantity": 5,
+          "type": "Giày đá bóng",
+          "department": "Giày trẻ em",
+          "option": {
+            "id": 92,
+            "size": 37,
+            "price": 1260000
+          }
+        }
+      ],
+      "totalPrice": 8510000,
+      "paymentID": "",
+      "checkoutInfo": "cod",
+      "status": "delivery",
+      "createdAt": 1632475198543,
+      "updatedAt": 1632476430168,
+      "id": 17
     }
   ],
   "tickets": [
