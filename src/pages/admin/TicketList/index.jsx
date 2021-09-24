@@ -7,7 +7,7 @@ import * as Icon from "@ant-design/icons";
 import ModifyTicketModal from "./components/ModifyTicketModal";
 
 import {
-  deleteCategoryAction,
+  deleteTicketAction,
   getTicketListAction,
   createTicketAction,
   editTicketAction,
@@ -93,9 +93,9 @@ function TicketListPage(props) {
               Sửa
             </Button>
             <Popconfirm
-              title="Are you sure to delete this ticket?"
+              title="Bạn có chắc chắn muốn xóa mã giảm giá này không?"
               onConfirm={() =>
-                dispatch(deleteCategoryAction({ id: record.id }))
+                dispatch(deleteTicketAction({ id: record.id }))
               }
               onCancel={() => null}
               okText="Có"

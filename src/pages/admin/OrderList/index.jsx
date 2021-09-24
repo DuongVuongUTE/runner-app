@@ -8,6 +8,7 @@ import * as Icon from "@ant-design/icons";
 import {
   getOrderListAction,
   editOrderListAction,
+  getOrderWaitingAction
 } from "../../../redux/actions";
 
 import * as Style from "./styles";
@@ -153,6 +154,9 @@ function OrderListPage() {
           ...values,
         },
       })
+    );
+    dispatch(
+      getOrderWaitingAction()
     );
     setIsShowUpdateModal("");
   }

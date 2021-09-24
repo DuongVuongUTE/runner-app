@@ -38,7 +38,7 @@ function ProductListPage(props) {
       })
     );
   }
-  const categoryFillter = categoryList.data.map((item, index) => {
+  const categoryFilter = categoryList.data.map((item, index) => {
     return {
       text: item.name,
       value: item.id,
@@ -64,7 +64,7 @@ function ProductListPage(props) {
       dataIndex: "categoryId",
       key: "categoryId",
       width: 100,
-      filters: [...categoryFillter],
+      filters: [...categoryFilter],
       onFilter: (value, record) => {
         return record.categoryId == value;
       },
@@ -150,13 +150,13 @@ function ProductListPage(props) {
               Sửa
             </Button>
             <Popconfirm
-              title="Are you sure to delete this product?"
+              title="Bạn có chắc chắn muốn xóa không ?"
               onConfirm={() =>
                 dispatch(deleteProductActionAdmin({ id: record.id }))
               }
               onCancel={() => null}
-              okText="Yes"
-              cancelText="No"
+              okText="có"
+              cancelText="không"
             >
               <Button icon={<Icon.DeleteOutlined />} danger>
                 Xóa

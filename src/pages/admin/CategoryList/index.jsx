@@ -54,20 +54,27 @@ function CategoryListPage(props) {
     setIsShowModifyModal("");
   }
   function totalQuantityProduct(productData) {
-    return productData.reduce(
-      (totalProduct, productItem) =>
-        productItem.quantity
-          ? totalProduct + productItem.quantity
-          : totalProduct,
-      0
-    );
+    if(productData){
+      return productData.reduce(
+        (totalProduct, productItem) =>
+          productItem.quantity
+            ? totalProduct + productItem.quantity
+            : totalProduct,
+        0
+      );
+    }
+    else
+     return 0
   }
   function totalSoldProduct(productData) {
-    return productData.reduce(
-      (totalProduct, productItem) =>
-        productItem.sold ? totalProduct + productItem.sold : totalProduct,
-      0
-    );
+    if(productData){
+      return productData.reduce(
+        (totalProduct, productItem) =>
+          productItem.sold ? totalProduct + productItem.sold : totalProduct,
+        0
+      );
+    }
+    return 0
   }
   const tableColumn = [
     {
@@ -111,13 +118,13 @@ function CategoryListPage(props) {
               Sửa
             </Button>
             <Popconfirm
-              title="Are you sure to delete this category?"
+              title="Bạn có chắc chắn muốn xóa không?"
               onConfirm={() =>
                 dispatch(deleteCategoryAction({ id: record.id }))
               }
               onCancel={() => null}
-              okText="Yes"
-              cancelText="No"
+              okText="có"
+              cancelText="không"
             >
               <Button danger icon={<Icon.DeleteOutlined />}>
                 Xóa
