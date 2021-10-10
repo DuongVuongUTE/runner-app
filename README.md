@@ -1,6 +1,7 @@
 # Ecommerce Runner Shoes
 
-### [Live Site](http://runner-web.surge.sh/)
+### [Live Site Surge](http://runner-web.surge.sh/)
+### [Live Site Vercel](https://runner-app-virid.vercel.app/)
 
 ### [API](https://api-vuong-demo.herokuapp.com/)
 
