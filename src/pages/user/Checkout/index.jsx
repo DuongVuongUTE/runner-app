@@ -51,13 +51,13 @@ function CheckoutPage() {
     const getLocation = async () => {
       setLoading(true);
       const wards = await axios.get(
-        "https://location-api-vn.herokuapp.com/wards"
+        "https://location-api-0ho5.onrender.com/wards"
       );
       const districts = await axios.get(
-        "https://location-api-vn.herokuapp.com/districts"
+        "https://location-api-0ho5.onrender.com/districts"
       );
       const cities = await axios.get(
-        "https://location-api-vn.herokuapp.com/cities"
+        "https://location-api-0ho5.onrender.com/cities"
       );
       setLocation({
         wards: wards.data,
